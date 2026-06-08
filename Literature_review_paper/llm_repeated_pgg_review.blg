@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: llm_repeated_pgg_review.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: plainnat.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Database file #1: references.bib
+Warning--can't use both volume and number fields in fan2024rational
+You've used 81 entries,
+            2773 wiz_defined-function locations,
+            1041 strings with 21412 characters,
+and the built_in function-call counts, 41796 in all, are:
+= -- 3597
+> -- 2948
+< -- 43
++ -- 994
+- -- 911
+* -- 3581
+:= -- 6495
+add.period$ -- 275
+call.type$ -- 81
+change.case$ -- 541
+chr.to.int$ -- 79
+cite$ -- 163
+duplicate$ -- 1693
+empty$ -- 3126
+format.name$ -- 1032
+if$ -- 8648
+int.to.chr$ -- 3
+int.to.str$ -- 1
+missing$ -- 70
+newline$ -- 444
+num.names$ -- 326
+pop$ -- 1115
+preamble$ -- 1
+purify$ -- 465
+quote$ -- 0
+skip$ -- 1411
+stack$ -- 0
+substring$ -- 1291
+swap$ -- 168
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 866
+warning$ -- 1
+while$ -- 328
+width$ -- 0
+write$ -- 1091
+(There was 1 warning)

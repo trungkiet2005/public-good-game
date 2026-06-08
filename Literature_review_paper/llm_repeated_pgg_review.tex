@@ -1,0 +1,978 @@
+% =====================================================================
+%  Large Language Model Agents in Repeated Public Goods Games:
+%  A Literature Review and Research Agenda
+%
+%  Compile:  pdflatex -> bibtex -> pdflatex -> pdflatex
+%  Engine:   pdfLaTeX (MiKTeX)         Bib style: plainnat (natbib)
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- encoding & fonts ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ---------- layout ----------
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+
+% ---------- math ----------
+\usepackage{amsmath,amssymb}
+
+% ---------- tables & figures ----------
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+\usepackage[edges]{forest}   % taxonomy tree (Figure 1)
+\usepackage{adjustbox}       % scale the tree to fit the page
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+% ---------- lists ----------
+\usepackage{enumitem}
+\setlist{noitemsep,topsep=2pt}
+
+% ---------- bibliography ----------
+\usepackage[round,authoryear]{natbib}
+\bibliographystyle{plainnat}
+
+% ---------- hyperlinks ----------
+\usepackage{xcolor}
+% taxonomy-tree branch colours (one per major part of the review)
+\definecolor{cPGG}{HTML}{C2185B}   % Background: Public Goods Game
+\definecolor{cAgent}{HTML}{1565C0}  % LLMs as strategic/economic agents
+\definecolor{cRep}{HTML}{2E7D32}    % LLMs in repeated games
+\definecolor{cCore}{HTML}{E65100}   % LLMs in PGG & commons (core)
+\definecolor{cSyn}{HTML}{6A1B9A}    % Synthesis & research agenda
+\usepackage[colorlinks=true,linkcolor=blue!55!black,
+            citecolor=teal!65!black,urlcolor=blue!55!black]{hyperref}
+
+% ---------- handy macros ----------
+\newcommand{\pgg}{public goods game}
+\newcommand{\PGG}{Public Goods Game}
+\newcommand{\llm}{LLM}
+\newcommand{\eg}{e.g.,\ }
+\newcommand{\ie}{i.e.,\ }
+
+\title{\textbf{Large Language Model Agents in Repeated Public Goods Games:\\
+A Literature Review and Research Agenda}}
+
+% NOTE: replace the placeholder author/affiliation below with your own.
+\author{T. C. Nguyen\\[2pt]
+\small \texttt{tcnguyen2365@gmail.com}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+The \pgg{} (PGG) is the canonical model of the tension between individual
+self-interest and collective welfare, and its repeated form is the natural
+setting in which cooperation can be built, sustained, or eroded over time. As
+large language models (LLMs) are increasingly deployed as autonomous, mutually
+interacting agents, a fast-growing literature asks whether they cooperate,
+free-ride, reciprocate, punish, and form norms the way humans do. This review
+is organised around the intersection of these two threads---\emph{LLM agents in
+repeated public goods games}---and is intended as an orienting map for new
+research in the area. We first consolidate the classical PGG background needed
+to read and benchmark agent studies: the formal model, the marginal per-capita
+return, the gap between the Nash equilibrium and the social optimum, the role of
+repetition, and the robust experimental and evolutionary regularities of human
+play (over-contribution with decay, conditional cooperation, the power of
+punishment, reputation, and institutional choice). We then survey, in depth, the
+emerging body of work on LLMs as strategic and economic agents, in repeated
+two-player social dilemmas, and---most directly---in public goods games and
+common-pool resource dilemmas, including studies of institutional sanctioning,
+emergent norms, and cooperation among populations of language models. Drawing
+the threads together, we find that current LLM--PGG research is concentrated on
+short horizons, a handful of models, and a narrow slice of the classical design
+space, leaving the long-run dynamics that define \emph{repeated} cooperation
+largely unexplored. We close with a structured analysis of open problems and a
+concrete research agenda---spanning long-horizon dynamics, conditional
+cooperation, the reward--punishment asymmetry, the reasoning--cooperation
+trade-off, reputation, heterogeneous and mixed populations, threshold/collective-risk
+variants, and evolutionary analysis of LLM-authored strategies---meant to help
+identify where genuine novelty remains.
+
+\medskip
+\noindent\textbf{Keywords:} public goods game; cooperation; repeated games;
+social dilemmas; large language models; multi-agent systems; free-riding;
+sanctioning institutions.
+\end{abstract}
+
+% =====================================================================
+\section{Introduction}
+% =====================================================================
+
+Cooperation among self-interested actors is one of the central puzzles of the
+social and biological sciences \citep{nowak2006five}. Its sharpest formal
+expression is the \emph{\pgg{}} (PGG): a group of individuals each privately
+decide how much of an endowment to contribute to a common pool that is multiplied
+and shared equally, so that the group is best off when everyone contributes while
+each individual is privately best off contributing nothing
+\citep{samuelson1954pure,olson1965logic,ledyard1995public}. The PGG distils the
+``free-rider problem'' and the ``tragedy of the commons''
+\citep{hardin1968tragedy} into a few parameters, which is why it has become the
+workhorse of experimental economics, evolutionary biology, and political science
+for studying when and why cooperation succeeds or collapses.
+
+Two features make the \emph{repeated} \pgg{} especially important. First, almost
+all real collective-action problems---team production, taxation, environmental
+protection, open-source software, content moderation---are played out over many
+interactions rather than once. Second, repetition is precisely what opens the
+door to reciprocity, reputation, punishment, and norm formation: mechanisms that
+can turn a one-shot dilemma with a bleak toward defection into a setting where
+cooperation is an equilibrium \citep{vansegbroeck2012emergence,fehr2000cooperation}.
+Decades of human experiments and evolutionary models have mapped this repeated
+landscape in detail (Section~\ref{sec:background}).
+
+A new class of decision-makers has now entered the picture. Large language models
+(LLMs) are increasingly deployed not as passive tools but as \emph{autonomous
+agents} that plan, negotiate, and act in multi-agent systems
+\citep{park2023generative,guo2024multiagent}. When many such agents interact,
+their collective behaviour becomes a first-order question for both AI safety and
+the social sciences: do LLM agents cooperate for the common good, or do they
+free-ride; do they reciprocate and forgive; do they enforce norms; and does this
+behaviour match, exceed, or fall short of human cooperation? Because the PGG is
+the standard instrument for asking exactly these questions about humans, it is a
+natural and increasingly popular testbed for LLM agents as well
+\citep{guzman2025corrupted,sreedhar2025simulating,piatti2024govsim}.
+
+\paragraph{Purpose and scope.}
+This article reviews the literature at the intersection of \emph{LLM agents} and
+\emph{repeated public goods games}, with two goals. The first is descriptive: to
+give a reader who is new to the area a coherent map of what has already been
+done---both the classical PGG results that any agent study must be read against,
+and the rapidly expanding set of LLM experiments in social dilemmas. The second
+is generative: to synthesise these findings into an explicit list of open
+problems and a research agenda, so that genuine novelty can be located rather
+than rediscovered. The review is therefore deliberately weighted toward the LLM
+literature (Sections~\ref{sec:agents}--\ref{sec:agenda}), while keeping a compact
+but self-contained treatment of PGG theory and human evidence
+(Section~\ref{sec:background}) as the foundation and the benchmark.
+
+\paragraph{Method.}
+We draw on (i) the foundational and survey literature of public goods experiments
+and evolutionary game theory, and (ii) the 2022--2025 wave of papers that place
+LLMs in games, social dilemmas, and multi-agent simulations. For the latter we
+prioritise work that involves \emph{repeated} interaction and/or the \emph{public
+goods / commons} structure, while also covering closely related two-player and
+norm-formation studies that inform method and interpretation.
+
+\paragraph{Roadmap.}
+Section~\ref{sec:background} establishes the PGG background: the formal model, the
+role of repetition, the main variants, and the robust regularities of human play.
+Section~\ref{sec:agents} reviews LLMs as strategic and economic agents.
+Section~\ref{sec:repeated} surveys LLMs in repeated two-player games and social
+dilemmas. Section~\ref{sec:llmpgg}---the core of the review---examines LLMs in
+public goods and common-pool resource games, including sanctioning and emergent
+norms. Section~\ref{sec:synthesis} consolidates what is known and exposes the
+gaps. Section~\ref{sec:agenda} proposes a concrete research agenda for LLMs in
+repeated PGGs. Section~\ref{sec:conclusion} concludes.
+Figure~\ref{fig:taxonomy} gives a visual taxonomy of the reviewed literature,
+organised to mirror this structure.
+
+% ---------------------------------------------------------------
+% Figure 1: taxonomy tree
+% ---------------------------------------------------------------
+\begin{figure}[p]
+\centering
+\begin{adjustbox}{max width=\textwidth,max totalheight=0.85\textheight,center}
+\begin{forest}
+  forked edges,
+  for tree={
+    grow'=east,
+    draw=black!50,
+    rounded corners=2pt,
+    line width=0.5pt,
+    node options={align=left},
+    inner xsep=4pt,
+    inner ysep=3pt,
+    anchor=west,
+    edge={draw=black!45, line width=0.5pt},
+    l sep=8pt,
+    s sep=3pt,
+    font=\footnotesize,
+    text width=3.0cm,                                   % default: every node wraps
+    if n children=0{text width=5.4cm, font=\scriptsize}{}, % leaves: wider, smaller
+  },
+  where level=0{text width=2.6cm, font=\small\bfseries, fill=black!8}{},
+  [{LLM Agents in Repeated Public Goods Games}
+    %------------------ Branch 1 : PGG background ------------------
+    [{Background:\\Public Goods Game (\S\ref{sec:background})},
+        fill=cPGG!32, draw=cPGG!60!black,
+        for descendants={fill=cPGG!10, draw=cPGG!55!black}
+      [{Model \&\\theory}
+        [{Payoff, MPCR, Nash vs.\ optimum \citep{samuelson1954pure,olson1965logic,ledyard1995public}}]
+        [{Repetition \& folk theorem \citep{camerer2003behavioral}}]
+      ]
+      [{Variants}
+        [{Punishment / reward \citep{fehr2000cooperation,andreoni2003carrot}}]
+        [{Institutional choice \citep{gurerk2006competitive}}]
+        [{Threshold / collective-risk \citep{milinski2008collective,santos2011risk}}]
+        [{Common-pool resource \citep{ostrom1990governing}}]
+      ]
+      [{Human\\regularities}
+        [{Over-contribution \& decay \citep{isaac1988groupsize,andreoni1988free}}]
+        [{Conditional cooperation \citep{fischbacher2001conditional,fischbacher2010social}}]
+        [{Punishment \& reputation \citep{fehr2002altruistic,milinski2002reputation}}]
+      ]
+      [{Evolutionary\\dynamics}
+        [{Replicator, networks, diversity \citep{hofbauer1998evolutionary,santos2008social}}]
+        [{Repeated fairness, risk \citep{vansegbroeck2012emergence,santos2011risk}}]
+      ]
+    ]
+    %------------------ Branch 2 : strategic/economic agents ------------------
+    [{LLMs as Strategic \&\\Economic Agents (\S\ref{sec:agents})},
+        fill=cAgent!30, draw=cAgent!60!black,
+        for descendants={fill=cAgent!10, draw=cAgent!55!black}
+      [{Simulated economic agents \citep{horton2023homosilicus,mei2024turing,brookins2024playing}}]
+      [{Strategic reasoning \& limits \citep{fan2024rational,lore2024strategic,duan2024gtbench,hua2024gametheoretic}}]
+      [{Generative-agent architectures \citep{park2023generative,li2024econagent}}]
+    ]
+    %------------------ Branch 3 : repeated games ------------------
+    [{LLMs in Repeated Games \&\\Social Dilemmas (\S\ref{sec:repeated})},
+        fill=cRep!30, draw=cRep!60!black,
+        for descendants={fill=cRep!10, draw=cRep!55!black}
+      [{Repeated 2-player / IPD \citep{akata2025playing,fontana2025nicer,willis2025cooperate,tonini2025superadditive}}]
+      [{Trust \& communication \citep{xie2024trust,xu2023werewolf}}]
+    ]
+    %------------------ Branch 4 : PGG & commons (core) ------------------
+    [{LLMs in Public Goods\\Games \& the Commons (\S\ref{sec:llmpgg})},
+        fill=cCore!38, draw=cCore!65!black,
+        for descendants={fill=cCore!13, draw=cCore!60!black}
+      [{Replicating \& benchmarking human PGG \citep{bao2023cognitive,sreedhar2025simulating,xie2024chatbots}}]
+      [{Reasoning, free-riding, sanctioning \citep{guzman2025corrupted,li2025spontaneous,long2025mirror,madmoun2025communication}}]
+      [{Commons \& sustainability \citep{piatti2024govsim,mosquera2024meltingpot,nguyen2025navigating,gupta2025social}}]
+      [{Threshold / collective-risk \citep{slumbers2025port,willis2026hundreds}}]
+      [{Reputation, norms \& populations \citep{leng2023llmsocial,horiguchi2024evolution,vallinder2024cultural,ashery2025emergent,cross2025validating,zhu2026gossip,liu2026memory}}]
+    ]
+    %------------------ Branch 5 : synthesis & agenda ------------------
+    [{Synthesis \&\\Research Agenda (\S\ref{sec:synthesis}--\ref{sec:agenda})},
+        fill=cSyn!30, draw=cSyn!60!black,
+        for descendants={fill=cSyn!10, draw=cSyn!55!black}
+      [{Established: cooperate partly like humans; model/prompt-dependent; reasoning $\downarrow$ cooperation}]
+      [{Gaps: short horizons; conditional cooperation; reward vs.\ punishment; reputation}]
+      [{Agenda: long-horizon benchmark; threshold/risk PGG; evolutionary analysis; mixed populations}]
+    ]
+  ]
+\end{forest}
+\end{adjustbox}
+\caption{A taxonomy of the literature on LLM agents in repeated public goods
+games, mirroring the structure of this review. Branch colours denote the major
+parts: the PGG background (Section~\ref{sec:background}), LLMs as strategic and
+economic agents (Section~\ref{sec:agents}), LLMs in repeated games and social
+dilemmas (Section~\ref{sec:repeated}), LLMs in public goods and commons games
+(Section~\ref{sec:llmpgg}, the core), and the synthesis and research agenda
+(Sections~\ref{sec:synthesis}--\ref{sec:agenda}). Leaf nodes list representative
+references.}
+\label{fig:taxonomy}
+\end{figure}
+
+% =====================================================================
+\section{Background: The Public Goods Game}
+\label{sec:background}
+% =====================================================================
+
+This section provides the conceptual grounding needed to interpret and benchmark
+LLM studies. Readers familiar with the PGG may skim to
+Section~\ref{sec:agents}; the stylized facts in Table~\ref{tab:facts} are the
+human baseline against which agent behaviour is repeatedly compared in later
+sections.
+
+% ---------------------------------------------------------------
+\subsection{The linear public goods game}
+% ---------------------------------------------------------------
+
+In the standard linear PGG, $N$ players each receive an endowment $e$ and
+simultaneously choose a contribution $c_i\in[0,e]$ to a common pool. The pool is
+multiplied by a factor $\alpha$ (with $1<\alpha<N$) and divided equally. Player
+$i$'s payoff is
+\begin{equation}
+\pi_i \;=\; \underbrace{(e-c_i)}_{\text{kept}} \;+\;
+\frac{\alpha}{N}\sum_{j=1}^{N} c_j .
+\label{eq:pgg}
+\end{equation}
+The ratio $\mathrm{MPCR}=\alpha/N$ is the \emph{marginal per-capita return}: the
+private return to each unit contributed. Because $\alpha<N$ implies
+$\mathrm{MPCR}<1$, every unit a player contributes yields them less than a unit
+kept, so contributing nothing is the dominant strategy and $c_i=0$ for all $i$ is
+the unique Nash equilibrium. Yet because $\alpha>1$, total welfare is maximised
+when everyone contributes fully ($c_i=e$). The wedge between the individually
+rational outcome (universal free-riding) and the Pareto optimum (full
+contribution) is the social dilemma in its purest form
+\citep{ledyard1995public,camerer2003behavioral}.
+
+% ---------------------------------------------------------------
+\subsection{Why repetition matters}
+% ---------------------------------------------------------------
+
+In a \emph{one-shot} PGG, or in a \emph{finitely} repeated PGG solved by backward
+induction, the theoretical prediction is unrelenting defection. The picture
+changes once interaction is genuinely repeated. In an \emph{infinitely} (or
+indefinitely) repeated game, the folk theorem implies that cooperation can be
+sustained as a subgame-perfect equilibrium when players are patient enough,
+because future cooperation can be made contingent on present behaviour through
+strategies such as conditional cooperation and trigger strategies
+\citep{camerer2003behavioral}. Repetition is thus not a technical detail but the
+very thing that makes reciprocity, reputation, punishment, and norm formation
+possible. It is also where human behaviour departs most strikingly from naive
+theory (Section~\ref{subsec:facts}), and---as this review emphasises---where the
+behaviour of LLM agents is least understood.
+
+% ---------------------------------------------------------------
+\subsection{Variants relevant to agent studies}
+% ---------------------------------------------------------------
+
+Several PGG variants recur in the agent literature and are worth naming:
+\begin{itemize}
+  \item \textbf{PGG with punishment / reward.} After contributions are revealed,
+  players may pay a cost to reduce (punish) or increase (reward) another's payoff.
+  Costly peer punishment dramatically raises cooperation in human experiments
+  \citep{fehr2000cooperation,fehr2002altruistic}, and rewards and punishments have
+  distinct effects \citep{andreoni2003carrot}.
+  \item \textbf{Institutional / sanctioning choice.} Players choose between a
+  sanction-free institution and one that permits punishment; over time people
+  migrate to the sanctioning institution, which out-competes its rival
+  \citep{gurerk2006competitive}. This design is directly adapted in recent
+  LLM work \citep{guzman2025corrupted}.
+  \item \textbf{Threshold / collective-risk PGG.} A collective benefit (or the
+  avoidance of a loss) is realised only if total contributions reach a threshold;
+  otherwise players risk losing their endowment. This captures climate-change-type
+  dilemmas \citep{milinski2008collective,santos2011risk} and is discussed in
+  Section~\ref{subsec:evo}.
+  \item \textbf{Common-pool resource (CPR) / commons.} The ``inverse'' of the
+  contribution PGG: players \emph{extract} from a shared, regenerating resource,
+  and over-extraction causes collapse \citep{ostrom1990governing}. LLM versions
+  of this dilemma are prominent \citep{piatti2024govsim}.
+  \item \textbf{Structured populations.} Contributions interact through networks
+  or are subject to evolutionary updating; heterogeneity and network structure
+  strongly shape cooperation \citep{santos2008social,szabo2007evolutionary}.
+\end{itemize}
+
+% ---------------------------------------------------------------
+\subsection{Robust regularities of human play}
+\label{subsec:facts}
+% ---------------------------------------------------------------
+
+Five decades of laboratory work have produced a set of remarkably robust
+``stylized facts'' (Table~\ref{tab:facts}). People do \emph{not} free-ride
+completely: initial contributions in linear PGGs typically average around
+40--60\% of the endowment \citep{ledyard1995public,zelmer2003linear}. But under
+repetition without any cooperation-supporting mechanism, contributions
+\emph{decay} toward (though rarely reaching) the free-riding prediction
+\citep{isaac1988groupsize,andreoni1988free}. The decay is best explained not by
+pure confusion---though confusion contributes \citep{andreoni1995kindness,
+houser2002revisiting}---but by the heterogeneity of types and \emph{imperfect
+conditional cooperation}: roughly half of subjects raise their contribution when
+others do, but by slightly less than matching, so beliefs and contributions
+ratchet downward over time \citep{fischbacher2001conditional,fischbacher2010social,
+croson2007theories}. Framing, group size and the MPCR, communication, reputation,
+and---above all---the opportunity to punish free-riders are the main levers that
+move cooperation \citep{andreoni1995warmglow,isaac1994groupsize,
+fehr2000cooperation,milinski2002reputation,chaudhuri2011sustaining}. These
+regularities are the natural benchmark for any claim that LLM agents do or do not
+``behave like humans''.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Robust regularities of human behaviour in (repeated) public goods
+games. These constitute the empirical baseline against which LLM agents are
+compared in Sections~\ref{sec:llmpgg}--\ref{sec:synthesis}.}
+\label{tab:facts}
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth} Y@{}}
+\toprule
+\textbf{Regularity} & \textbf{Summary and key references} \\
+\midrule
+Partial cooperation, not full free-riding &
+Initial contributions average $\sim$40--60\% of endowment, far above the Nash
+prediction of zero \citep{ledyard1995public,zelmer2003linear}. \\
+Decay under repetition &
+Without supporting mechanisms, contributions decline toward zero over rounds
+\citep{isaac1988groupsize,andreoni1988free}. \\
+Conditional cooperation &
+$\sim$50\% of people are conditional cooperators who match others imperfectly;
+$\sim$30\% are free-riders \citep{fischbacher2001conditional,fischbacher2010social}. \\
+Kindness \emph{and} confusion &
+Cooperation reflects genuine other-regard plus decision error in roughly equal
+measure \citep{andreoni1995kindness,houser2002revisiting}. \\
+Framing effects &
+Positive (``warm-glow'') vs.\ negative framing changes cooperation for identical
+payoffs \citep{andreoni1995warmglow}. \\
+MPCR and group size &
+Higher MPCR raises contributions; group-size effects are largely an MPCR artefact
+\citep{isaac1988groupsize,isaac1994groupsize}. \\
+Punishment sustains cooperation &
+Costly peer punishment sharply raises and stabilises contributions, even when
+individually costly \citep{fehr2000cooperation,fehr2002altruistic}. \\
+Reputation and institutions &
+Indirect reciprocity and a choice of sanctioning institutions both rescue
+cooperation \citep{milinski2002reputation,gurerk2006competitive,rockenbach2006efficient}. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ---------------------------------------------------------------
+\subsection{Repeated-group and evolutionary dynamics}
+\label{subsec:evo}
+% ---------------------------------------------------------------
+
+Beyond the laboratory, evolutionary game theory studies how cooperation fares
+when strategies are updated over time within a population, typically through the
+replicator dynamics $\dot{x}=x(1-x)(f_C-f_D)$, where $x$ is the fraction of
+cooperators and $f_C,f_D$ their average payoffs
+\citep{hofbauer1998evolutionary,sigmund2010calculus}. In well-mixed populations
+cooperation tends to vanish, but a battery of mechanisms can reverse this:
+network reciprocity and social diversity \citep{santos2008social,szabo2007evolutionary,
+perc2017statistical}, optional participation \citep{hauert2002volunteering},
+the emergence of costly punishment \citep{hauert2007freedom,boyd2003evolution},
+institutions learned through social imitation \citep{sigmund2010social}, and
+multilevel selection \citep{traulsen2006evolution}; \citet{nowak2006five}
+organises these into five canonical rules.
+
+Two strands are especially relevant to \emph{repeated} PGGs and to the LLM agenda.
+First, \citet{vansegbroeck2012emergence} model the \emph{repeated} $N$-person
+game directly: agents are ``reciprocators'' who contribute only if at least $M$
+others contributed in the previous round, and evolution selects for an
+intermediate, moderate notion of fairness $M^\ast$, producing cyclic alternations
+between cooperation and defection rather than a static equilibrium. Second, the
+\emph{collective-risk} dilemma combines repetition with a threshold and the risk
+of catastrophic loss: in \citeauthor{milinski2008collective}'s
+\citeyearpar{milinski2008collective} climate experiment, groups reached the target
+only when the perceived risk of loss was high, and \citet{santos2011risk} show
+analytically that a high risk of collective failure---together with small group
+size and stringent thresholds---is what turns cooperation from a losing strategy
+into a viable one. These results give concrete, quantitative hypotheses (the role
+of risk, thresholds, group size, and reciprocation rules) that LLM studies have
+barely begun to test.
+
+% =====================================================================
+\section{LLMs as Strategic and Economic Agents}
+\label{sec:agents}
+% =====================================================================
+
+Before turning to multi-agent public goods settings, it is useful to summarise
+what is known about individual LLM behaviour in economic and strategic tasks,
+because these capabilities and biases propagate into the PGG.
+
+\paragraph{LLMs as simulated economic agents.}
+\citet{horton2023homosilicus} argued that an LLM endowed with a persona can serve
+as ``\emph{homo silicus}''---a simulated economic agent whose responses reproduce
+classic behavioural results, suggesting LLMs can act as in-silico subjects for
+economics. \citet{mei2024turing} formalised this with a behavioural Turing test
+across a battery of personality measures and games (dictator, trust, public goods,
+prisoner's dilemma), finding that GPT-4 generally behaves within the human
+distribution and is often \emph{more} cooperative and altruistic than the median
+person. \citet{brookins2024playing} similarly found GPT to display stronger
+fairness and higher cooperation than typical human benchmarks in dictator and
+prisoner's dilemma games. The recurring theme is partial human-likeness with a
+prosocial tilt---and substantial sensitivity to how the situation is framed.
+
+\paragraph{Strategic reasoning: capability and limits.}
+A parallel line evaluates whether LLMs reason strategically in the game-theoretic
+sense. Results are mixed. \citet{fan2024rational} report that even GPT-4 deviates
+systematically from rational benchmarks in dictator, rock--paper--scissors, and
+ring-network games. \citet{lore2024strategic} disentangle the effects of formal
+game structure from contextual framing across the prisoner's dilemma, stag hunt,
+and snowdrift, showing that LLMs are swayed by surface framing more than humans.
+\citet{duan2024gtbench} introduce \textsc{GTBench}, a suite of game-theoretic
+tasks, and find LLMs strong on probabilistic, incomplete-information games but
+weak on deterministic, complete-information ones. \citet{hua2024gametheoretic}
+show that deviations from equilibrium grow with game complexity and propose
+explicit ``game-theoretic workflows'' to improve equilibrium computation, while
+\citet{gandhi2023strategic} demonstrate that structured chain-of-thought prompting
+(tracking states, values, and beliefs) markedly improves strategic play. The
+implication for PGGs is twofold: LLM cooperation is real but is mediated by
+prompting and framing, and ``better reasoning'' does not automatically translate
+into better strategic---or more cooperative---behaviour.
+
+\paragraph{Generative-agent architectures.}
+Methodologically, much multi-agent PGG work builds on the generative-agent
+paradigm of \citet{park2023generative}, in which agents are equipped with memory,
+reflection, and planning modules and exhibit believable emergent social behaviour
+in a sandbox. \citet{li2024econagent} extend this to macroeconomic simulation
+with perception/memory/reflection agents. These architectures supply the
+machinery---persistent memory, identities, and natural-language interaction---that
+distinguishes a multi-agent LLM PGG from a sequence of isolated prompts, and that
+will be central to studying \emph{repeated} cooperation.
+
+% =====================================================================
+\section{LLMs in Repeated Games and Social Dilemmas}
+\label{sec:repeated}
+% =====================================================================
+
+The closest precedent to repeated PGGs is the study of LLMs in repeated
+two-player social dilemmas, where the dynamics of reciprocity and forgiveness can
+be observed cleanly.
+
+\paragraph{Repeated two-player games.}
+\citet{akata2025playing} systematically played families of repeated $2\times2$
+games with LLMs and found a characteristic profile: LLMs coordinate well but are
+\emph{unforgiving} in the iterated prisoner's dilemma, defecting persistently
+after a single defection by the opponent---behaviour that is individually
+defensible but corrosive to long-run cooperation. \citet{fontana2025nicer}, by
+contrast, report that several models are ``nicer than humans'' in the iterated
+prisoner's dilemma, though newer models can be more exploitative, underscoring
+that conclusions are model-dependent. \citet{phelps2023investigating} use
+experimental-economics prompts to probe emergent goal-like dispositions and show
+that persona and framing strongly steer cooperation. \citet{willis2025cooperate}
+take an evolutionary view: they prompt LLMs to \emph{author} full iterated-PD
+strategies and then analyse those strategies with evolutionary game theory,
+revealing systematic, model-specific biases toward aggression or cooperation.
+\citet{tonini2025superadditive} show that pairing within-team repetition with
+between-team competition yields ``super-additive'' cooperation, raising even
+one-shot cooperation rates---an LLM echo of multilevel selection.
+
+\paragraph{Trust, communication, and other multi-agent games.}
+\citet{xie2024trust} find, using behavioural trust games, that LLM agents exhibit
+trust behaviour aligning closely with humans for GPT-4. Communication-rich games
+such as Werewolf reveal emergent strategic behaviours (trust, bluffing,
+leadership) from frozen models \citep{xu2023werewolf}. Together these studies
+establish that LLM agents can reciprocate, trust, and communicate strategically
+over repeated interactions---but also that they carry strong, idiosyncratic, and
+prompt-sensitive dispositions that must be controlled for when moving to the
+$N$-player public goods setting.
+
+% =====================================================================
+\section{LLMs in Public Goods Games and the Commons}
+\label{sec:llmpgg}
+% =====================================================================
+
+We now reach the core of the review: studies that place LLM agents directly in
+public goods or common-pool resource dilemmas. Table~\ref{tab:llm} summarises the
+key studies along the design dimensions that matter most for repeated cooperation.
+
+% ---------------------------------------------------------------
+\subsection{Replicating human PGG behaviour}
+% ---------------------------------------------------------------
+
+The earliest direct placements of an LLM in a PGG simply elicited contributions:
+\citet{bao2023cognitive} had GPT play a voluntary-contribution game and linked its
+contribution level to cognitive uncertainty. Behavioural-economics benchmark
+batteries now routinely include the PGG among a suite of canonical games
+\citep{mei2024turing,xie2024chatbots,leng2023llmsocial}, generally finding that
+capable LLMs contribute at or above human levels, but with pronounced variation
+across model families.
+
+\citet{sreedhar2025simulating} ask whether multi-agent LLM systems can reproduce
+human prosocial behaviour in the PGG. Using a generative-agent architecture with
+three or four player agents, they replicate three classic human treatments---name
+framing (``Teamwork'' vs.\ ``Taxation''), transparency of contributions, and
+varying endowments---and find that LLM agents reproduce the \emph{direction} of
+each human effect (\eg priming toward teamwork raises contributions; transparency
+raises contributions; large endowments lower the contributed fraction), although
+they tend to \emph{overestimate the magnitude}. They further show that effects can
+transfer from non-PGG experiments and that, with added communication channels,
+agents display ``unbounded'' real-world behaviours such as collaborating and even
+cheating. The study is important evidence that LLMs encode a usable model of human
+cooperative tendencies, and that this model is steerable by the same levers
+(framing, transparency, endowment) that move humans. Its limits---mostly one-shot
+or short (five-round) games, a single primary model, no sanctioning---also mark
+where repeated-PGG work must go.
+
+% ---------------------------------------------------------------
+\subsection{Reasoning, free-riding, and institutional sanctioning}
+% ---------------------------------------------------------------
+
+The work closest to a genuine \emph{repeated PGG with institutions} is
+\citet{guzman2025corrupted}. Adapting the institutional-choice design of
+\citet{gurerk2006competitive}, they run a 15-round PGG with seven LLM agents who
+each round choose between a \emph{sanctioning institution} (SI), in which members
+may pay to reward (\(+1\) at cost \(1\)) or punish (\(-3\) at cost \(1\)) one
+another, and a \emph{sanction-free institution} (SFI); contributions are
+multiplied by 1.6 and shared within the chosen institution. Their findings are
+striking and directly relevant:
+\begin{itemize}
+  \item \textbf{Four behavioural archetypes} emerge across models---\emph{increasingly
+  cooperative}, \emph{increasingly defecting}, \emph{no change}, and
+  \emph{unstable (oscillating)}---closely mirroring the heterogeneity seen in
+  human and evolutionary studies.
+  \item \textbf{Reasoning models cooperate \emph{less}.} Traditional models
+  (\eg GPT-4o, DeepSeek-V3, Llama-3.3-70B) sustain high cooperation comparable to
+  humans, whereas reasoning-optimised models (the o1/o3 family) frequently
+  collapse to free-riding---``corrupted by reasoning''. This is a pointed
+  counterexample to the assumption that stronger reasoning yields better
+  collective outcomes.
+  \item \textbf{Reward, not punishment.} Although capable LLMs replicate human
+  cooperative \emph{outcomes}, they do so through a different \emph{mechanism}:
+  humans rely heavily on punishment ($\sim$1.66 punish/reward ratio), whereas all
+  LLMs strongly prefer rewards, raising doubts about whether they grasp deterrence
+  and the stability of the cooperation they achieve.
+\end{itemize}
+This study is the clearest demonstration to date that the \emph{repeated},
+institution-rich PGG is a revealing probe of LLM cooperation, and that
+architecture (reasoning vs.\ not) is a first-order determinant of outcomes.
+
+The headline result---that reasoning optimisation can \emph{erode}
+cooperation---has since been corroborated and extended. \citet{li2025spontaneous}
+find, across the PGG and five other cooperation games, that eliciting
+chain-of-thought ``calculated'' reasoning systematically lowers giving and norm
+enforcement relative to more ``spontaneous'' responses, and
+\citet{backmann2025moralsim} (MoralSim) show that no frontier model stays
+cooperative once payoffs conflict with stated moral norms in repeated prisoner's
+dilemma and PGG play. \citet{long2025mirror} add a twist: in an iterated PGG,
+telling a model that its co-player is ``another AI'' versus ``itself''
+measurably shifts contributions. A complementary line uses the repeated PGG
+constructively: \citet{madmoun2025communication} show that cheap-talk
+communication restores cooperation in an iterated PGG with punishment (while a
+rationality-maximising training curriculum suppresses it),
+\citet{warnakulasuriya2025evolution} replicate punishment-driven norm emergence in
+an $N$-player sanctioning dilemma, and \citet{liang2025everyone} redesign a
+sequential PGG as a mechanism that makes contribution the unique equilibrium for
+multi-LLM ensembles. The consistent thread is that, as for humans, LLM cooperation
+in the repeated PGG is fragile to ``rational'' framing and strongly helped by
+communication and sanctions.
+
+% ---------------------------------------------------------------
+\subsection{Common-pool resources and sustainability}
+% ---------------------------------------------------------------
+
+\citet{piatti2024govsim} introduce \textsc{GovSim}, a common-pool resource
+simulation (fishery/pasture/pollution variants) in which LLM agents repeatedly
+harvest a regenerating resource. Most models over-harvest and drive the resource
+to collapse; only the strongest models, and only when allowed to \emph{communicate}
+and to engage in ``universalisation'' moral reasoning (``what if everyone did
+this?''), achieve sustainable cooperation. \textsc{GovSim} is the commons (or
+``inverse'') counterpart to the contribution PGG and demonstrates two themes that
+recur throughout this review: communication is a powerful lever for LLM
+cooperation, and sustainability over long horizons is fragile and
+model-dependent.
+
+The commons side has since become comparatively well populated.
+\citet{mosquera2024meltingpot} were among the first to place LLM-augmented agents
+in DeepMind's \textsc{Melting Pot} ``Commons Harvest'' substrate, and
+\citet{chaconchamorro2025resilience} use the same family of environments to
+compare the \emph{cooperative resilience} of humans and LLMs under stochastic
+disruptions. Building on \textsc{GovSim}, \citet{nguyen2025navigating} equip
+agents with an explicit ``consideration of future consequences'' to sustain shared
+resources, while \citet{gupta2025social} embed Ostrom-style social learning and
+norm-based punishment so that conservation norms emerge endogenously without reward
+shaping. Across these studies the message echoes \citet{piatti2024govsim}:
+collapse is the default outcome, and communication, foresight, and norms are what
+avert it.
+
+% ---------------------------------------------------------------
+\subsection{Threshold and collective-risk dilemmas}
+% ---------------------------------------------------------------
+
+The threshold / collective-risk variant---contribute enough to avert a
+catastrophic loss, or risk losing everything (Section~\ref{subsec:evo})---is the
+LLM niche most directly connected to the climate-style dilemmas of
+\citet{milinski2008collective} and \citet{santos2011risk}, and it remains almost
+empty. The closest work is \citet{slumbers2025port}, who have LLM agents play
+\emph{Port of Mars}, a multi-round collective-risk social dilemma with a
+catastrophe threshold; however, it is framed as a test of whether LLMs can
+substitute for human experimental subjects rather than as a study of
+threshold-cooperation dynamics, and it uses a single model.
+\citet{willis2026hundreds} include a collective-risk dilemma among three
+population-scale games, but in a paradigm where models \emph{author} strategies
+that are then executed automatically, rather than deliberating round by round. A
+dedicated, multi-model study of LLM agents \emph{playing} a repeated
+collective-risk PGG---probing risk sensitivity, threshold behaviour, group size,
+and framing---does not yet appear to exist, a gap we return to in
+Section~\ref{sec:agenda}.
+
+% ---------------------------------------------------------------
+\subsection{Reputation, norms, and populations of agents}
+% ---------------------------------------------------------------
+
+A further cluster studies cooperation and norms among \emph{populations} of LLM
+agents. \citet{leng2023llmsocial} run canonical behavioural-economics games
+(including the PGG) and show that LLM reasoning invoking fairness or altruism
+predicts prosocial choices. \citet{horiguchi2024evolution} find that agents
+conversing in natural language can spontaneously develop social norms and even
+\emph{metanorms} (punishing those who fail to punish), echoing the second-order
+free-rider problem central to human cooperation theory.
+\citet{vallinder2024cultural} study indirect reciprocity across
+\emph{generations} of agents in an iterated Donor Game and find that cooperation
+emerges for some model families (\eg Claude) but not others, and is shaped by the
+availability of punishment and by cultural transmission. \citet{ashery2025emergent}
+show that decentralised LLM populations spontaneously converge on shared
+conventions, with tipping points driven by committed minorities. These studies
+collectively show that the ingredients of repeated-PGG cooperation---reciprocity,
+reputation, punishment, norms---can all emerge among LLM agents, but unevenly and
+with strong model and design dependence.
+
+Two further threads sharpen this picture. On \emph{reputation},
+\citet{cross2025validating} show that generative LLM agents reproduce the
+empirical boost that gossip and ostracism give to PGG contributions, and
+\citet{zhu2026gossip} build a decentralised gossip network in which self-interested
+agents form reputations and ostracise defectors---directly importing indirect
+reciprocity into the LLM PGG. On \emph{scale and horizon},
+\citet{willis2026hundreds} push social-dilemma simulations to hundreds of agents
+(finding that newer models trend toward \emph{worse} collective equilibria),
+\citet{liu2026memory} run social dilemmas including PGG-type games for 500 rounds
+and report a ``memory curse'' in which longer recall \emph{erodes} cooperation, and
+\citet{tewolde2026coopeval} benchmark cooperation-sustaining mechanisms
+(repetition, reputation, mediation, contracts) across prisoner's dilemma and
+public-goods settings.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{Representative studies of LLM agents in public goods, commons, and
+closely related social dilemmas, along the design dimensions most relevant to
+\emph{repeated} cooperation. ``Rounds'' indicates the degree of repetition;
+``Sanction'' indicates whether punishment/reward or institutional choice is
+available; ``Comm.'' indicates free-form natural-language communication.}
+\label{tab:llm}
+\begin{tabularx}{\textwidth}{@{}p{0.17\textwidth} p{0.15\textwidth} c c c Y@{}}
+\toprule
+\textbf{Study} & \textbf{Game} & \textbf{Rounds} & \textbf{Sanc.} &
+\textbf{Comm.} & \textbf{Key finding} \\
+\midrule
+\citet{sreedhar2025simulating} & PGG (contribution) & 1--5 & No & Partly &
+LLMs reproduce the direction of human framing/transparency/endowment effects, but
+overshoot the magnitude. \\
+\citet{guzman2025corrupted} & PGG + institutional choice & 15 & Yes & No &
+Reasoning models free-ride; traditional models cooperate; all LLMs prefer reward
+over punishment. \\
+\citet{li2025spontaneous} & PGG (+5 coop.\ games) & Many & Yes & No &
+Chain-of-thought ``calculated'' reasoning lowers giving and norm enforcement. \\
+\citet{piatti2024govsim} & Common-pool resource & Many & No & Yes &
+Most models over-harvest and collapse; communication + universalisation enable
+sustainability. \\
+\citet{slumbers2025port} & Collective-risk (Port of Mars) & 9 & No & Yes &
+LLMs play a catastrophe-threshold dilemma; tested as human-subject surrogates. \\
+\citet{nguyen2025navigating} & Common-pool resource & Many & No & Yes &
+``Consideration of future consequences'' sustains the shared resource. \\
+\citet{leng2023llmsocial} & PGG, dictator, PD & 1 & No & No &
+Reasoning that cites fairness/altruism predicts prosocial LLM actions. \\
+\citet{horiguchi2024evolution} & Norms game & Many & Yes & Yes &
+Agents develop norms and metanorms (punishing non-punishers) in natural language. \\
+\citet{vallinder2024cultural} & Donor game (indirect recip.) & Many (gen.) & Yes &
+No & Cooperation emerges for some model families; shaped by punishment and cultural
+transmission. \\
+\citet{akata2025playing} & Repeated $2\times2$ (incl.\ IPD) & Many & No & No &
+LLMs coordinate well but are unforgiving in the IPD. \\
+\citet{willis2025cooperate} & Iterated PD (evolutionary) & Many & No & No &
+LLM-authored strategies show model-specific aggression/cooperation biases. \\
+\citet{tonini2025superadditive} & IPD + group competition & Many & No & No &
+Within-team repetition $+$ between-team competition yields super-additive
+cooperation. \\
+\citet{cross2025validating} & PGG + gossip/ostracism & Many & Yes & Yes &
+Generative agents reproduce reputation and punishment effects on contributions. \\
+\citet{liu2026memory} & Social dilemmas (incl.\ PGG) & 500 & No & No &
+``Memory curse'': longer recall erodes cooperative intent over long horizons. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\section{Synthesis: What Is Established, and What Is Missing}
+\label{sec:synthesis}
+% =====================================================================
+
+% ---------------------------------------------------------------
+\subsection{What the literature has established}
+% ---------------------------------------------------------------
+
+Reading the agent studies against the human baseline of
+Section~\ref{sec:background}, several conclusions are now reasonably well
+supported:
+\begin{enumerate}
+  \item \textbf{LLMs can cooperate, and partly like humans.} Across PGGs and
+  related games, capable LLMs contribute substantially and reproduce the
+  \emph{direction} of major human effects (framing, transparency, endowment,
+  benefits of communication) \citep{sreedhar2025simulating,mei2024turing,
+  piatti2024govsim}.
+  \item \textbf{Behaviour is strongly model- and prompt-dependent.} Cooperation
+  varies sharply across model families and is sensitive to framing and persona
+  \citep{fontana2025nicer,lore2024strategic,vallinder2024cultural}; conclusions
+  rarely generalise across all models.
+  \item \textbf{Reasoning optimisation can reduce cooperation.} The
+  reasoning-tuned o1/o3 family free-rides more than standard models in the
+  repeated institutional PGG \citep{guzman2025corrupted}, and ``calculated''
+  chain-of-thought lowers giving across the PGG and related games
+  \citep{li2025spontaneous,backmann2025moralsim}---complicating the assumption that
+  capability implies prosociality.
+  \item \textbf{Mechanism, not just outcome, differs from humans.} LLMs lean on
+  rewards rather than punishment \citep{guzman2025corrupted} and can be
+  unforgiving after a single defection \citep{akata2025playing}---outcomes can
+  match humans while the underlying strategy does not.
+  \item \textbf{The ingredients of repeated cooperation can emerge.}
+  Reciprocity, reputation, punishment, norms, and even metanorms appear among LLM
+  agents \citep{horiguchi2024evolution,vallinder2024cultural,ashery2025emergent},
+  but unevenly.
+\end{enumerate}
+
+% ---------------------------------------------------------------
+\subsection{Methodological gaps}
+% ---------------------------------------------------------------
+
+The field is young, and its methods are correspondingly narrow:
+\begin{itemize}
+  \item \textbf{Short horizons.} Most ``repeated'' LLM PGGs run only a handful to
+  a few tens of rounds (Table~\ref{tab:llm}); only isolated recent work reaches
+  hundreds of rounds \citep{liu2026memory}. The long-run phenomena that
+  \emph{define} repeated cooperation---steady-state contribution decay, endgame
+  effects, the slow build-up of reputation, cyclic cooperation/defection
+  \citep{vansegbroeck2012emergence}---remain largely untested.
+  \item \textbf{Few models, weak statistics.} Studies often use one or two
+  proprietary models, sometimes with single runs per condition, limiting
+  statistical power and reproducibility.
+  \item \textbf{Narrow design slice.} Communication, persistent identity,
+  reputation, threshold/risk structures, and large groups are each present in only
+  a subset of studies, and rarely in combination.
+  \item \textbf{No standard benchmark.} There is no agreed-upon repeated-PGG
+  protocol, set of metrics, or human-baseline comparison, making cross-study
+  synthesis difficult.
+\end{itemize}
+
+% ---------------------------------------------------------------
+\subsection{Conceptual gaps mapped to the classical literature}
+% ---------------------------------------------------------------
+
+More importantly, mapping agent studies onto the human/evolutionary PGG
+literature exposes specific, high-value questions that remain open:
+\begin{itemize}
+  \item \textbf{Conditional cooperation.} Are LLMs conditional cooperators in the
+  precise sense of \citet{fischbacher2001conditional}---and do they exhibit the
+  same imperfect, self-serving matching that drives human decay? A strategy-method
+  analog for LLMs is largely missing.
+  \item \textbf{Contribution decay.} Do LLM contributions decay over long
+  horizons as human contributions do \citep{isaac1988groupsize,fischbacher2010social},
+  and is any decay driven by belief updating or by context-window/memory
+  effects---as the ``memory curse'' of \citet{liu2026memory} begins to suggest?
+  \item \textbf{Reward--punishment asymmetry.} Why do LLMs prefer reward to
+  punishment \citep{guzman2025corrupted}, is it robust across designs, and does it
+  create a second-order free-rider problem in enforcement?
+  \item \textbf{The reasoning--cooperation trade-off.} What mechanism makes
+  reasoning models free-ride---chain-of-thought toward ``rational'' defection,
+  RLHF objectives, or framing? Can alignment or prompting restore cooperation
+  without harming capability?
+  \item \textbf{Reputation and indirect reciprocity.} Human cooperation is
+  rescued by reputation \citep{milinski2002reputation,rockenbach2006efficient},
+  yet leading LLM PGGs \emph{anonymise} agents each round
+  \citep{guzman2025corrupted}. First steps re-introduce gossip and reputation
+  \citep{cross2025validating,zhu2026gossip}, but persistent identities and indirect
+  reciprocity in the institutional PGG remain largely open.
+  \item \textbf{Heterogeneous and mixed populations.} Almost all studies use
+  homogeneous model populations. Mixed-model societies, and LLM--human mixed
+  groups, are barely explored despite their practical importance.
+  \item \textbf{Threshold/collective-risk PGGs.} The risk-driven cooperation of
+  \citet{milinski2008collective} and \citet{santos2011risk} has only just begun to
+  be probed with LLMs---through a single-model collective-risk simulation
+  \citep{slumbers2025port} and a strategy-authoring population study
+  \citep{willis2026hundreds}. Whether LLM agents \emph{deliberating} round by round
+  are risk-sensitive in the way that rescues human cooperation, and how this varies
+  across models and framings, remains essentially unknown.
+  \item \textbf{Evolutionary/population analysis.} \citet{willis2025cooperate}
+  analyse LLM-authored \emph{IPD} strategies with evolutionary game theory, and
+  \citet{willis2026hundreds} extend the strategy-authoring paradigm to PGG,
+  collective-risk, and commons games at population scale; a complementary analysis
+  of LLM agents \emph{playing} the $N$-person PGG turn by turn (their ESS,
+  replicator dynamics, invasion by free-riders) is still open.
+\end{itemize}
+
+% =====================================================================
+\section{A Research Agenda for LLMs in Repeated Public Goods Games}
+\label{sec:agenda}
+% =====================================================================
+
+The gaps above suggest a coherent programme. We organise it as a design space
+plus a set of concrete, novel directions.
+
+\paragraph{A design space for repeated-PGG agent experiments.}
+A study can be positioned along independent axes, most of which are currently
+under-sampled: (i) \emph{horizon} (few rounds vs.\ hundreds; known vs.\ unknown
+endpoint, to expose endgame effects); (ii) \emph{enforcement} (none / peer
+punishment / reward / pool punishment / institutional choice
+\citep{gurerk2006competitive,sigmund2010social}); (iii) \emph{information}
+(anonymous vs.\ persistent identities and reputation); (iv) \emph{communication}
+(none vs.\ free-form negotiation, shown to be pivotal in \citep{piatti2024govsim});
+(v) \emph{population} (single model, mixed models, LLM--human mixes); (vi)
+\emph{payoff structure} (linear vs.\ threshold/collective-risk vs.\ commons); and
+(vii) \emph{memory} (context window, summarisation, external memory).
+
+\paragraph{Promising and largely novel directions.}
+\begin{enumerate}
+  \item \textbf{Long-horizon dynamics and benchmarking against human stylized
+  facts.} Run PGGs over many rounds and test directly for decay, conditional
+  cooperation, and endgame effects against Table~\ref{tab:facts}; only isolated
+  studies yet reach this regime \citep{liu2026memory}. A standardised, open
+  repeated-PGG benchmark (fixed protocol, metrics, human baselines)---in the spirit
+  of emerging mechanism benchmarks \citep{tewolde2026coopeval}---would itself be a
+  substantial contribution.
+  \item \textbf{A strategy-method characterisation of LLM conditional
+  cooperation.} Adapt \citet{fischbacher2001conditional} to elicit each model's
+  contribution as a function of others' average contribution, classifying models
+  as conditional cooperators, free-riders, or other types.
+  \item \textbf{Mechanistic study of the reasoning--cooperation trade-off.}
+  Causally isolate why reasoning models defect \citep{guzman2025corrupted} by
+  varying chain-of-thought, decoding, persona, and alignment, and test
+  interventions that restore cooperation.
+  \item \textbf{Reputation and indirect reciprocity with persistent identities.}
+  Building on first gossip-based studies \citep{cross2025validating,zhu2026gossip},
+  re-introduce persistent identity and reputation into the institutional PGG and
+  test whether LLM cooperation responds as human cooperation does
+  \citep{milinski2002reputation,rockenbach2006efficient}.
+  \item \textbf{The reward--punishment asymmetry and second-order free-riding.}
+  Systematically probe why LLMs avoid punishment, whether they sustain enforcement,
+  and whether metanorms \citep{horiguchi2024evolution} stabilise it.
+  \item \textbf{Threshold and collective-risk PGGs with LLMs.} Port the
+  climate-style dilemma \citep{milinski2008collective,santos2011risk} to LLM
+  agents and measure risk sensitivity, threshold behaviour, and the effect of
+  group size. Existing work either uses a single model or has models author
+  strategies \citep{slumbers2025port,willis2026hundreds}; a systematic, multi-model
+  study of agents \emph{deliberating} round by round would occupy a still-open,
+  high-impact niche.
+  \item \textbf{Evolutionary analysis of LLM PGG strategies.} Where
+  \citet{willis2025cooperate} and \citet{willis2026hundreds} have models
+  \emph{author} strategies, complement this by extracting the effective strategies
+  of agents that \emph{play} the $N$-person PGG turn by turn, then study their
+  evolutionary stability and invasibility under replicator dynamics.
+  \item \textbf{Heterogeneous and mixed-population societies.} Compose groups of
+  different model families, and of LLMs with humans, to study cooperation,
+  exploitation, and convention formation \citep{ashery2025emergent} in realistic
+  mixed settings.
+  \item \textbf{Cooperation as an AI-safety property.} Frame multi-agent
+  cooperation in repeated PGGs as an alignment target, connecting the empirical
+  findings to the governance of deployed multi-agent systems
+  \citep{guo2024multiagent,sun2025gametheory}.
+\end{enumerate}
+
+\noindent
+Taken together, these directions share a common logic: the human and evolutionary
+PGG literature provides a rich, quantitative set of hypotheses about \emph{repeated}
+cooperation, while current LLM studies have tested only a small corner of it. The
+clearest novelty therefore lies in (a) genuinely long-horizon experiments, (b)
+designs that re-introduce the mechanisms humans rely on (punishment, reputation,
+risk), and (c) bringing evolutionary and benchmarking rigour to LLM-authored
+strategies.
+
+% =====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+% =====================================================================
+
+The \pgg{} has been, for half a century, the sharpest lens on the conflict
+between private incentive and collective good, and its repeated form is where the
+mechanisms that rescue cooperation---reciprocity, reputation, punishment, norms,
+and institutions---actually operate. As large language models become interacting
+agents, the same lens is now being turned on them. The emerging evidence is that
+capable LLMs cooperate substantially and reproduce many human regularities, that
+their behaviour is highly model- and prompt-dependent, that reasoning optimisation
+can paradoxically erode cooperation, and that they often achieve cooperative
+outcomes through non-human mechanisms (reward over punishment, unforgiving
+reciprocity). Yet the studies establishing these points have so far explored only
+a narrow slice of the classical design space, and---crucially for anyone interested
+in \emph{repeated} cooperation---the long-horizon dynamics that define the
+repeated PGG remain largely uncharted. That gap, mapped in detail above, is also
+the opportunity: a disciplined programme that takes the repeated PGG seriously, at
+realistic horizons, with the mechanisms humans rely on and the rigour of
+evolutionary game theory, is well positioned to produce genuinely novel results on
+how---and whether---populations of language models can sustain the common good.
+
+% =====================================================================
+\bibliography{references}
+% =====================================================================
+
+\end{document}
