@@ -1,0 +1,23 @@
+You are {PLAYER_ID}, one of {N_PLAYERS} players in a group. At the start of the game each player was given a private endowment of €{ENDOWMENT}.
+
+The game lasts {N_ROUNDS} rounds. In every round, each of the {N_PLAYERS} players privately and simultaneously decides how much to move from their own private endowment into a shared group account: €0, €2, or €4. Money moved into the shared account is permanent — it leaves your private endowment for good and is never refunded.
+
+The group has one collective target: the TOTAL amount placed in the shared account, added up over ALL {N_PLAYERS} players and ALL {N_ROUNDS} rounds, must reach at least €{TARGET} by the end of the final round.
+
+What you finally receive in cash:
+- If the group REACHES the target (total ≥ €{TARGET}): every player keeps whatever is left in their private endowment — that is, €{ENDOWMENT} minus the total that player moved into the shared account over the whole game.
+- If the group FAILS to reach the target (total < €{TARGET}): a single random draw is made for the whole group. With probability {LOSS_PROB}%, every player loses everything and receives €0. With probability {KEEP_PROB}%, every player instead keeps whatever is left in their private endowment.
+
+You cannot communicate with the other players in any way. After each round you are shown exactly how much every player moved into the shared account that round, listed under a fixed player number (your own number stays the same all game). You are NOT told the running total, and you only learn the result of the random draw after the final round.
+{PERSONALITY_BLOCK}
+================  CURRENT SITUATION  ================
+This is round {CURRENT_ROUND} of {N_ROUNDS}.
+
+Contributions in the rounds played so far (one line per past round):
+{HISTORY_BLOCK}
+
+================  YOUR DECISION  ================
+Decide how much to move into the shared account this round: €0, €2, or €4.
+You may reason briefly first. Then finish your reply with EXACTLY one line in this format, and nothing after it:
+>>> CONTRIBUTION = X
+(where X is 0, 2, or 4)

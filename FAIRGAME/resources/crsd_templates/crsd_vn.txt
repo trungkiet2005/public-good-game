@@ -1,0 +1,23 @@
+Bạn là {PLAYER_ID}, một trong {N_PLAYERS} người chơi của một nhóm. Khi bắt đầu trò chơi, mỗi người chơi được cấp một khoản vốn riêng là €{ENDOWMENT}.
+
+Trò chơi kéo dài {N_ROUNDS} vòng. Ở mỗi vòng, từng người trong số {N_PLAYERS} người chơi sẽ bí mật và đồng thời quyết định chuyển bao nhiêu từ khoản vốn riêng của mình vào một tài khoản chung: €0, €2, hoặc €4. Tiền đã chuyển vào tài khoản chung là vĩnh viễn — nó rời khỏi khoản vốn riêng của bạn và không bao giờ được hoàn lại.
+
+Cả nhóm có một mục tiêu chung: TỔNG số tiền được bỏ vào tài khoản chung, cộng dồn qua TẤT CẢ {N_PLAYERS} người chơi và TẤT CẢ {N_ROUNDS} vòng, phải đạt ít nhất €{TARGET} vào cuối vòng cuối cùng.
+
+Số tiền cuối cùng bạn nhận được bằng tiền mặt:
+- Nếu cả nhóm ĐẠT mục tiêu (tổng ≥ €{TARGET}): mỗi người chơi giữ lại phần còn lại trong khoản vốn riêng của mình — tức là €{ENDOWMENT} trừ đi tổng số tiền người đó đã chuyển vào tài khoản chung trong cả ván.
+- Nếu cả nhóm KHÔNG đạt mục tiêu (tổng < €{TARGET}): một lần rút thăm ngẫu nhiên duy nhất được thực hiện cho cả nhóm. Với xác suất {LOSS_PROB}%, mọi người chơi mất sạch và nhận €0. Với xác suất {KEEP_PROB}%, mọi người chơi giữ lại phần còn lại trong khoản vốn riêng của mình.
+
+Bạn không thể giao tiếp với những người chơi khác dưới bất kỳ hình thức nào. Sau mỗi vòng, bạn được cho biết chính xác mỗi người chơi đã chuyển bao nhiêu vào tài khoản chung trong vòng đó, được liệt kê theo một số người chơi cố định (số của bạn giữ nguyên suốt ván). Bạn KHÔNG được cho biết tổng tích lũy, và bạn chỉ biết kết quả rút thăm ngẫu nhiên sau vòng cuối cùng.
+{PERSONALITY_BLOCK}
+================  TÌNH HÌNH HIỆN TẠI  ================
+Đây là vòng {CURRENT_ROUND} trong tổng số {N_ROUNDS} vòng.
+
+Đóng góp ở các vòng đã chơi cho đến nay (mỗi dòng là một vòng trước đó):
+{HISTORY_BLOCK}
+
+================  QUYẾT ĐỊNH CỦA BẠN  ================
+Hãy quyết định chuyển bao nhiêu vào tài khoản chung ở vòng này: €0, €2, hoặc €4.
+Bạn có thể suy luận ngắn gọn trước. Sau đó kết thúc câu trả lời bằng ĐÚNG một dòng theo định dạng sau, và không có gì sau nó:
+>>> CONTRIBUTION = X
+(trong đó X là 0, 2, hoặc 4)

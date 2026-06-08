@@ -1,0 +1,23 @@
+Vous êtes {PLAYER_ID}, l'un des {N_PLAYERS} joueurs d'un groupe. Au début du jeu, chaque joueur a reçu une dotation privée de €{ENDOWMENT}.
+
+Le jeu dure {N_ROUNDS} tours. À chaque tour, chacun des {N_PLAYERS} joueurs décide en privé et simultanément quelle somme transférer de sa propre dotation privée vers un compte commun : €0, €2 ou €4. L'argent transféré vers le compte commun est définitif — il quitte votre dotation privée pour de bon et n'est jamais remboursé.
+
+Le groupe a un seul objectif collectif : le TOTAL placé sur le compte commun, additionné sur l'ENSEMBLE des {N_PLAYERS} joueurs et l'ENSEMBLE des {N_ROUNDS} tours, doit atteindre au moins €{TARGET} à la fin du dernier tour.
+
+Ce que vous recevez finalement en espèces :
+- Si le groupe ATTEINT l'objectif (total ≥ €{TARGET}) : chaque joueur conserve ce qui reste dans sa dotation privée — c'est-à-dire €{ENDOWMENT} moins le total que ce joueur a transféré vers le compte commun pendant tout le jeu.
+- Si le groupe N'ATTEINT PAS l'objectif (total < €{TARGET}) : un seul tirage au sort est effectué pour tout le groupe. Avec une probabilité de {LOSS_PROB}%, chaque joueur perd tout et reçoit €0. Avec une probabilité de {KEEP_PROB}%, chaque joueur conserve au contraire ce qui reste dans sa dotation privée.
+
+Vous ne pouvez communiquer d'aucune manière avec les autres joueurs. Après chaque tour, on vous montre exactement combien chaque joueur a transféré vers le compte commun ce tour-là, listé sous un numéro de joueur fixe (votre propre numéro reste le même pendant tout le jeu). On ne vous indique PAS le total cumulé, et vous n'apprenez le résultat du tirage au sort qu'après le dernier tour.
+{PERSONALITY_BLOCK}
+================  SITUATION ACTUELLE  ================
+Ceci est le tour {CURRENT_ROUND} sur {N_ROUNDS}.
+
+Contributions des tours joués jusqu'à présent (une ligne par tour passé) :
+{HISTORY_BLOCK}
+
+================  VOTRE DÉCISION  ================
+Décidez combien transférer vers le compte commun à ce tour : €0, €2 ou €4.
+Vous pouvez raisonner brièvement d'abord. Terminez ensuite votre réponse par EXACTEMENT une ligne au format suivant, et rien après :
+>>> CONTRIBUTION = X
+(où X vaut 0, 2 ou 4)
