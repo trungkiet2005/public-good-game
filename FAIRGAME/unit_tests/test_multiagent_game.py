@@ -1,8 +1,8 @@
 import unittest
 from pathlib import Path
 
-from legacy.FAIRGAME.src.io_managers.io_manager import IoManager
-from legacy.FAIRGAME.src.fairgame_factory import FairGameFactory
+from src.io_managers.io_manager import IoManager
+from src.fairgame_factory import FairGameFactory
 
 
 class PayoffCalculator:

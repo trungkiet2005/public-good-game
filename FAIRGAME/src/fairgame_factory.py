@@ -1,9 +1,9 @@
 import itertools
 import pandas as pd
 
-from legacy.FAIRGAME.src.fairgame import FairGame
-from legacy.FAIRGAME.src.agent import Agent
-from legacy.FAIRGAME.src.io_managers.io_manager import IoManager
+from src.fairgame import FairGame
+from src.agent import Agent
+from src.io_managers.io_manager import IoManager
 
 
 class FairGameFactory:
@@ -341,7 +341,7 @@ class FairGameFactory:
             max_strategy_retries: retry rounds for invalid responses before
                 falling back to the first strategy.
         """
-        from legacy.FAIRGAME.src.batch_runner import run_games_batched as _run_batched
+        from src.batch_runner import run_games_batched as _run_batched
 
         print(f"RUNNING {len(self.games)} GAMES (batched)")
         _run_batched(

@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-from legacy.FAIRGAME.src.results_processing.results_processor import ResultsProcessor
+from src.results_processing.results_processor import ResultsProcessor
 
 
 class TestFairgameAPI(unittest.TestCase):

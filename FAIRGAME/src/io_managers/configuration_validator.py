@@ -1,5 +1,5 @@
 
-from legacy.FAIRGAME.src.io_managers.payoff_matrix_transformer import PayoffMatrixTransformer
+from src.io_managers.payoff_matrix_transformer import PayoffMatrixTransformer
 
 class ConfigValidator:
     """

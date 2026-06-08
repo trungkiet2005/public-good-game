@@ -1,9 +1,9 @@
 import os
 from pathlib import Path
 
-from legacy.FAIRGAME.src.io_managers.file_manager import FileManager
-from legacy.FAIRGAME.src.io_managers.configuration_validator import ConfigValidator
-from legacy.FAIRGAME.src.utils.utils import get_project_root
+from src.io_managers.file_manager import FileManager
+from src.io_managers.configuration_validator import ConfigValidator
+from src.utils.utils import get_project_root
 
 # Get the absolute path of the current script
 script_path = os.path.abspath(__file__)

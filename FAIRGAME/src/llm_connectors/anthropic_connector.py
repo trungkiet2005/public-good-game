@@ -1,7 +1,7 @@
 from anthropic import Anthropic
 import os
 
-from legacy.FAIRGAME.src.llm_connectors.abstract_connector import AbstractConnector
+from src.llm_connectors.abstract_connector import AbstractConnector
 
 class AnthropicConnector(AbstractConnector):
     """

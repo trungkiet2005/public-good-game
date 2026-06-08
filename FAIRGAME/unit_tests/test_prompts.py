@@ -4,9 +4,9 @@ import os
 from pathlib import Path
 from difflib import unified_diff
 
-from legacy.FAIRGAME.src.fairgame import FairGame, GameRound, PayoffMatrix
-from legacy.FAIRGAME.src.fairgame_factory import FairGameFactory
-from legacy.FAIRGAME.src.io_managers.io_manager import IoManager
+from src.fairgame import FairGame, GameRound, PayoffMatrix
+from src.fairgame_factory import FairGameFactory
+from src.io_managers.io_manager import IoManager
 
 # Constants used throughout the test suite
 LLM = 'Claude35Sonnet'

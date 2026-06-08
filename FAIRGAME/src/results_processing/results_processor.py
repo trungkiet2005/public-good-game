@@ -2,8 +2,8 @@ from typing import Dict, Any, List, Optional, Tuple
 import pandas as pd
 import logging
 
-from legacy.FAIRGAME.src.results_processing.game_data import GameData
-from legacy.FAIRGAME.src.results_processing.agent_info import AgentInfo
+from src.results_processing.game_data import GameData
+from src.results_processing.agent_info import AgentInfo
 
 logger = logging.getLogger(__name__)
 

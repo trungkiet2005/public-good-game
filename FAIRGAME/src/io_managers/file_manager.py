@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from legacy.FAIRGAME.src.utils.rtf_to_text import rtf_to_text
+from src.utils.rtf_to_text import rtf_to_text
 
 class FileManager:
     """

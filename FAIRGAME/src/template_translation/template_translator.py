@@ -1,7 +1,7 @@
 import re
 import langcodes
 from sentence_transformers import SentenceTransformer, util
-from legacy.FAIRGAME.src.llm_connectors.llm_factory_connector import execute_prompt
+from src.llm_connectors.llm_factory_connector import execute_prompt
 
 
 class TemplateTranslator:

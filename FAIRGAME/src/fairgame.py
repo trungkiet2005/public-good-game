@@ -1,7 +1,7 @@
 
-from legacy.FAIRGAME.src.payoff_matrix import PayoffMatrix
-from legacy.FAIRGAME.src.game_history import GameHistory
-from legacy.FAIRGAME.src.game_round import GameRound
+from src.payoff_matrix import PayoffMatrix
+from src.game_history import GameHistory
+from src.game_round import GameRound
 
 class FairGame:
     """

@@ -2,8 +2,8 @@ import os
 from datetime import datetime
 from flask import Flask, jsonify, request
 
-from legacy.FAIRGAME.src.fairgame_factory import FairGameFactory
-from legacy.FAIRGAME.src.results_processing.results_processor import ResultsProcessor
+from src.fairgame_factory import FairGameFactory
+from src.results_processing.results_processor import ResultsProcessor
 
 class S3Uploader:
     """Handles the logic for uploading files to an S3-compatible storage."""

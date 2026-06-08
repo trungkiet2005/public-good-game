@@ -2,7 +2,7 @@
 from mistralai import Mistral
 import os 
 
-from legacy.FAIRGAME.src.llm_connectors.abstract_connector import AbstractConnector
+from src.llm_connectors.abstract_connector import AbstractConnector
 
 class MistralConnector(AbstractConnector):
     """

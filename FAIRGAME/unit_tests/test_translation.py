@@ -1,8 +1,8 @@
 import unittest
 from pathlib import Path
 
-from legacy.FAIRGAME.src.io_managers.io_manager import IoManager
-from legacy.FAIRGAME.src.template_translation.template_translator import TemplateTranslator
+from src.io_managers.io_manager import IoManager
+from src.template_translation.template_translator import TemplateTranslator
 
 LLM = 'OpenAIGPT4o'
 CONFIG_PATH = Path('unit_tests/game_templates')

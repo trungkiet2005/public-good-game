@@ -4,7 +4,7 @@ import sys
 import requests
 from pathlib import Path
 
-from legacy.FAIRGAME.src.template_translation.template_translator import TemplateTranslator
+from src.template_translation.template_translator import TemplateTranslator
 
 class TemplateTranslatorManager:
     """

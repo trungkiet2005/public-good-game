@@ -1,6 +1,6 @@
 from typing import Dict, Any, List, Optional
 
-from legacy.FAIRGAME.src.results_processing.agent_info import AgentInfo
+from src.results_processing.agent_info import AgentInfo
 
 class GameData:
     """

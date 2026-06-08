@@ -2,9 +2,9 @@ import os
 import unittest
 from langdetect import detect
 
-from legacy.FAIRGAME.src.fairgame_factory import FairGameFactory
-from legacy.FAIRGAME.src.io_managers.io_manager import IoManager
-from legacy.FAIRGAME.src.results_processing.results_processor import ResultsProcessor
+from src.fairgame_factory import FairGameFactory
+from src.io_managers.io_manager import IoManager
+from src.results_processing.results_processor import ResultsProcessor
 
 
 class TestPrisonerDilemma(unittest.TestCase):

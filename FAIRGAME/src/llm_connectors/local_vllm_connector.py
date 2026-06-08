@@ -8,7 +8,7 @@ Usage:
     and pointing MODEL_PATH to /kaggle/input/<dataset-name>/<model-folder>.
 """
 
-from legacy.FAIRGAME.src.llm_connectors.abstract_connector import AbstractConnector
+from src.llm_connectors.abstract_connector import AbstractConnector
 
 # Global singleton to avoid loading the model multiple times
 _GLOBAL_LLM = None

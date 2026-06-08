@@ -2,7 +2,7 @@ import os
 import re
 import time
 
-from legacy.FAIRGAME.src.prompt_creator import PromptCreator
+from src.prompt_creator import PromptCreator
 
 _STRATEGY_RETRIES = 10
 _STRATEGY_RETRY_DELAY_SEC = 1.0

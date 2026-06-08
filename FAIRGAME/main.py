@@ -10,8 +10,8 @@ except ImportError:
     def load_dotenv(*_a, **_k):
         return False
 
-from legacy.FAIRGAME.src.io_managers.file_manager import FileManager
-from legacy.FAIRGAME.src.results_processing.results_processor import ResultsProcessor
+from src.io_managers.file_manager import FileManager
+from src.results_processing.results_processor import ResultsProcessor
 
 RESOURCES_PATH = Path("resources")
 TEMPLATES_PATH = RESOURCES_PATH / "game_templates"
@@ -63,7 +63,7 @@ class GamesRunner:
         """
         Execute the game locally using FairGameFactory.
         """
-        from legacy.FAIRGAME.src.fairgame_factory import FairGameFactory
+        from src.fairgame_factory import FairGameFactory
         game_factory = FairGameFactory()
         return game_factory.create_and_run_games(self.config)
 

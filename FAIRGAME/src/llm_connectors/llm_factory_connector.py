@@ -5,22 +5,22 @@ except ImportError:
     def load_dotenv(*_a, **_k):
         return False
 
-from legacy.FAIRGAME.src.llm_connectors.local_vllm_connector import LocalVLLMConnector
+from src.llm_connectors.local_vllm_connector import LocalVLLMConnector
 
 # Load environment variables from a .env file when python-dotenv is installed
 load_dotenv()
 
 # Lazy import helpers for API connectors (avoid ModuleNotFoundError on Kaggle)
 def _get_anthropic_connector():
-    from legacy.FAIRGAME.src.llm_connectors.anthropic_connector import AnthropicConnector
+    from src.llm_connectors.anthropic_connector import AnthropicConnector
     return AnthropicConnector
 
 def _get_mistral_connector():
-    from legacy.FAIRGAME.src.llm_connectors.mistral_connector import MistralConnector
+    from src.llm_connectors.mistral_connector import MistralConnector
     return MistralConnector
 
 def _get_openai_connector():
-    from legacy.FAIRGAME.src.llm_connectors.openai_connector import OpenAIConnector
+    from src.llm_connectors.openai_connector import OpenAIConnector
     return OpenAIConnector
 
 # Dictionary mapping our abstract model names to provider classes and their corresponding provider model identifiers.

@@ -12,7 +12,7 @@ stop conditions) — it only swaps the LLM call layer for a batched one.
 import os
 import re
 
-from legacy.FAIRGAME.src.game_round import GameRound
+from src.game_round import GameRound
 
 # Inlined to be robust against older offline_patch_assets/game_round.py
 # snapshots that don't expose these helpers.
@@ -69,7 +69,7 @@ def _fallback_strategy_key(strategies: dict):
 
 def _send_prompts_default(prompts):
     """Default send function — uses the local LLM connector singleton."""
-    from legacy.FAIRGAME.src.llm_connectors.local_vllm_connector import send_prompts_global
+    from src.llm_connectors.local_vllm_connector import send_prompts_global
     return send_prompts_global(prompts)
 
 
