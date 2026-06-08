@@ -25,7 +25,7 @@ crsd_metrics.json, per-treatment CSV) + crsd_results.zip ở Output tab.
 # =====================================================================
 
 # --- Model (đã add làm Kaggle input). Chạy "!ls /kaggle/input/" để xem path thực. ---
-MODEL_PATH = "/kaggle/input/qwen2.5-7b-instruct/transformers/default/1"
+MODEL_PATH = "/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1"
 MODEL_SHORT_NAME = "qwen25-7b-instruct"
 
 # --- Engine + tham số sinh ---
@@ -109,7 +109,7 @@ import shutil
 
 # Repo đã add làm Code input (read-only). Sửa nếu path khác.
 KAGGLE_CODE_INPUT = Path(
-    "/kaggle/input/notebooks/trungkiet/git-fairgame/fairgame-hackathon-research"
+    "/kaggle/input/notebooks/trungkiet/git-public-good-game/public-good-game/"
 )
 FAIRGAME_WORK = Path("/kaggle/working/FAIRGAME")
 
