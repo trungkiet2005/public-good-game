@@ -22,6 +22,13 @@ def _init_vllm_engine(model_path: str, max_model_len: int = 4096,
                       gpu_memory_utilization: float = 0.90,
                       tensor_parallel_size: int = 1):
     """Initialize vLLM engine (preferred for high throughput)."""
+    import os
+    # FlashInfer's JIT sampler ngã trên GPU mới (vd Blackwell sm_120) với lỗi
+    # "FlashInfer requires GPUs with sm75 or higher" khi arch-detection hỏng.
+    # Ép sampler PyTorch-native (không JIT, an toàn offline). setdefault để user
+    # vẫn override được nếu muốn bật lại FlashInfer.
+    os.environ.setdefault("VLLM_USE_FLASHINFER_SAMPLER", "0")
+
     from vllm import LLM, SamplingParams
 
     global _GLOBAL_LLM, _GLOBAL_SAMPLING_PARAMS, _GLOBAL_ENGINE_TYPE

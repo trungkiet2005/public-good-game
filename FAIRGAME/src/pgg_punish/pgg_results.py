@@ -104,15 +104,16 @@ def _pearson(xs: Sequence[float], ys: Sequence[float]) -> float:
 
 
 def spearman(xs: Sequence[float], ys: Sequence[float]) -> float:
-    """Spearman rho via scipy if available, else a manual rank-Pearson fallback."""
+    """Spearman rho via scipy if available, else a manual rank-Pearson fallback.
+
+    Returns nan for <2 points or a constant input (correlation is undefined and
+    scipy would otherwise emit a ConstantInputWarning)."""
+    if len(xs) < 2 or len(set(xs)) < 2 or len(set(ys)) < 2:
+        return float("nan")
     try:  # pragma: no cover - optional fast path
         from scipy.stats import spearmanr
-        if len(xs) < 2:
-            return float("nan")
         return float(spearmanr(xs, ys).correlation)
     except Exception:
-        if len(xs) < 2:
-            return float("nan")
         return _pearson(_rankdata(xs), _rankdata(ys))
 
 

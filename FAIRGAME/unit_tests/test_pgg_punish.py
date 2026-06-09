@@ -213,8 +213,10 @@ def test_run_lockstep_two_phase_scatter():
                 out.append(">>> CONTRIBUTION = 8")
         return out
 
+    # N game FIRST with max_punish=0 (as in pgg_N.json): regression guard that the
+    # runner derives punishment params from a P game, not games[0].
     gN = PGGGame("N0", "en", "neutral", ["none"] * 4, "none",
-                 _CONTRIB_EN, _PUNISH_EN, _params("N", relabel=False))
+                 _CONTRIB_EN, _PUNISH_EN, _params("N", relabel=False, max_punish=0))
     gP = PGGGame("P0", "en", "neutral", ["none"] * 4, "none",
                  _CONTRIB_EN, _PUNISH_EN, _params("P", relabel=False))
     gN.n_periods = gP.n_periods = 2

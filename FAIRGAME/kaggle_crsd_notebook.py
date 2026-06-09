@@ -38,19 +38,21 @@ crsd_all_models.csv gộp + run_manifest.json + crsd_results.zip ở Output tab.
 # engine:      "transformers" (ổn định, free GPU được) | "vllm".
 # (tuỳ chọn)   temperature / max_tokens / max_model_len: override cho riêng model đó.
 MODELS = [
+    # {
+    #     "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1",
+    #     "short_name": "qwen25-7b-instruct",
+    #     "engine": "vllm",
+    # },
     {
-        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1",
-        "short_name": "qwen25-7b-instruct",
-        "engine": "transformers",
+        "path": "/kaggle/input/models/google/gemma-2/transformers/gemma-2-9b-it/2",
+        "short_name": "gemma2-9b-it",
+        "engine": "vllm",
     },
     {
-        "path": "/kaggle/input/gemma-2/transformers/gemma-2-12b-it/1",
-        "short_name": "gemma2-12b-it",
-        "engine": "transformers",
+        "path": "/kaggle/input/datasets/foundnotkiet/llama-3-1-8b/model_weights",
+        "short_name": "llama-3-1-8b",
+        "engine": "vllm",
     },
-    # Thêm model khác ở đây, ví dụ:
-    # {"path": "/kaggle/input/.../llama-3.1-8b-instruct", "short_name": "llama31-8b-instruct",
-    #  "engine": "transformers"},
 ]
 
 # --- Tham số sinh MẶC ĐỊNH (model có thể override từng cái trong MODELS[]) --- #
@@ -139,12 +141,19 @@ print("Internet OFF: dùng thư viện có sẵn trên image Kaggle.")
 import importlib.util
 import subprocess
 
-VLLM_WHEELS_DIR = Path("/kaggle/input/vllm-offline-wheels")  # sửa cho đúng tên dataset
+VLLM_WHEELS_DIR = Path("/kaggle/input/datasets/trungkiet/vllm-wheels/vllm_offline_wheels")  # sửa cho đúng tên dataset
 VLLM_VERSION = ""   # "" = bản có trong wheels; hoặc ghim "0.6.x" để khớp lúc build
 
 _want_vllm = (DEFAULT_ENGINE == "vllm") or any(
     m.get("engine", DEFAULT_ENGINE) == "vllm" for m in MODELS)
 _have_vllm = importlib.util.find_spec("vllm") is not None
+
+if _want_vllm:
+    # Tắt sampler FlashInfer: trên GPU mới (Blackwell sm_120) nó JIT-compile và
+    # ngã "FlashInfer requires GPUs with sm75 or higher". Sampler PyTorch-native
+    # thay thế (không JIT). Set ở kernel → vLLM subprocess thừa hưởng env này.
+    os.environ["VLLM_USE_FLASHINFER_SAMPLER"] = "0"
+    print("🔧 VLLM_USE_FLASHINFER_SAMPLER=0 (dùng sampler PyTorch-native).")
 
 if not _want_vllm:
     print("ℹ️  Không model nào dùng vllm — bỏ qua cài đặt.")
@@ -162,9 +171,20 @@ else:
     print("📦 Cài vLLM offline:", " ".join(_cmd))
     subprocess.run(_cmd, check=True)
     importlib.invalidate_caches()
-    print("✅ vLLM đã cài từ wheels. Nếu lỗi 'undefined symbol' / torch không khớp → "
-          "wheels phải build CÙNG image Kaggle (Python + CUDA khớp). "
-          "Có thể cần Restart kernel rồi chạy lại từ Cell 1 nếu torch bị thay.")
+    # Sanity-check: torch vừa cài có init được GPU không (bắt lỗi CUDA/driver SỚM,
+    # tránh crash sâu lúc vLLM nạp model: "Failed to get device capability ...").
+    _probe = ("import torch;"
+              "print('torch', torch.__version__, '| cuda', torch.version.cuda,"
+              " '| is_available', torch.cuda.is_available());"
+              "torch.zeros(1).cuda(); print('GPU_OK')")
+    if subprocess.run([sys.executable, "-c", _probe]).returncode != 0:
+        raise RuntimeError(
+            "torch vừa cài KHÔNG init được GPU — gần như chắc do wheels build SAI "
+            "CUDA so với driver Kaggle (vd torch CUDA-13 trên driver cu128). "
+            "Hãy build lại wheels bằng kaggle_build_vllm_wheels.py với "
+            "PIN_TO_KAGGLE_TORCH=True (giữ torch cu128 của Kaggle), hoặc tạm đổi "
+            "engine='transformers'.")
+    print("✅ vLLM đã cài từ wheels và torch init GPU OK.")
 
 # =====================================================================
 # CELL 3: Setup FAIRGAME source (copy repo + patch game_round)

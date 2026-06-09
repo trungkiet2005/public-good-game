@@ -424,8 +424,11 @@ def run_games_lockstep(games: List[PGGGame], responder: Responder, *,
         # ---------- PHASE 2: punishment (P games only) ---------- #
         p_games = [(gi, g) for gi, g in enumerate(games) if g.treatment == "P"]
         if p_games:
-            n_targets = games[0].n_players - 1
-            max_points = games[0].max_punish
+            # derive punishment params from a P game (games[0] may be an N game,
+            # whose max_punish is 0 and would clamp every deduction to zero).
+            ref = p_games[0][1]
+            n_targets = ref.n_players - 1
+            max_points = ref.max_punish
             prompts, index = [], []
             for gi, g in p_games:
                 for pi, pr in enumerate(g.build_punish_prompts()):
