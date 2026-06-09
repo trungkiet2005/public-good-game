@@ -1,0 +1,31 @@
+{
+    "name": "Public Goods Game without Punishment (Herrmann, Thoeni & Gaechter 2008)",
+    "treatment": "N",
+    "matching": "partner",
+    "nPlayers": 4,
+    "nPeriods": 10,
+    "nPeriodsIsKnown": true,
+    "endowment": 20,
+    "mpcr": 0.4,
+    "contributionMin": 0,
+    "contributionMax": 20,
+    "contributionOptions": null,
+    "maxPunishPerTarget": 0,
+    "punishCostRatio": 1,
+    "punishImpactRatio": 3,
+    "relabelOthers": true,
+    "showReceivedPunishment": false,
+    "floorPeriodEarnings": true,
+    "agentsCommunicate": false,
+    "languages": ["en", "fr", "ar", "cn", "vn"],
+    "personalityConditions": {
+        "neutral":      ["none", "none", "none", "none"],
+        "cooperative":  ["cooperative", "cooperative", "cooperative", "cooperative"],
+        "selfish":      ["selfish", "selfish", "selfish", "selfish"],
+        "vengeful":     ["vengeful", "vengeful", "vengeful", "vengeful"]
+    },
+    "societies": ["Boston", "Melbourne", "Nottingham", "St.Gallen", "Zurich",
+        "Copenhagen", "Bonn", "Seoul", "Chengdu", "Minsk", "Samara",
+        "Dnipropetrovsk", "Istanbul", "Athens", "Riyadh", "Muscat"],
+    "groupsPerCondition": 10
+}

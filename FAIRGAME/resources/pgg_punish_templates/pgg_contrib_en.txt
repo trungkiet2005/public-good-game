@@ -1,0 +1,27 @@
+You are {PLAYER_ID}, one of {N_PLAYERS} members of a group. The same {N_PLAYERS} members stay together for the whole game.
+
+The game lasts {N_ROUNDS} periods. At the start of EVERY period each member receives a fresh endowment of {ENDOWMENT} tokens. In each period you privately and simultaneously decide how many of your {ENDOWMENT} tokens to put into a shared group project; you keep the rest in your private account.
+
+How tokens become income each period:
+- Every token you keep in your private account is worth 1 token of income to you.
+- Every token placed in the group project is shared among all {N_PLAYERS} members: each member receives {MPCR} tokens of income for EACH token in the project, no matter who put it there.
+- Your income for the period is: (the tokens you kept) + {MPCR} x (the total tokens all {N_PLAYERS} members placed in the project).
+
+You contribute {ACTION_DESC} to the group project this period.
+
+The other members are shown to you only under temporary labels ({OTHER_LABELS}). These labels are reassigned every period and do not tell you who is who across periods. You cannot communicate in any way, and all decisions are anonymous.
+{TREATMENT_BLOCK}
+After each period you are shown how many tokens each member placed in the project that period, the total in the group project, and your own income for that period.
+{SOCIETY_BLOCK}
+{PERSONALITY_BLOCK}
+================  CURRENT SITUATION  ================
+This is period {CURRENT_ROUND} of {N_ROUNDS}.
+
+Results of the periods played so far:
+{HISTORY_BLOCK}
+
+================  YOUR DECISION  ================
+Decide how many of your {ENDOWMENT} tokens to place in the group project this period ({ACTION_DESC}).
+You may reason briefly first. Then finish your reply with EXACTLY one line in this format, and nothing after it:
+>>> CONTRIBUTION = X
+(where X is an integer from {CONTRIB_MIN} to {CONTRIB_MAX})

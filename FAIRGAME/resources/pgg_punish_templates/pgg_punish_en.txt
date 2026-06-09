@@ -1,0 +1,22 @@
+You are {PLAYER_ID}. This is the second stage of period {CURRENT_ROUND} of {N_ROUNDS}.
+
+This period you placed {MY_CONTRIB} tokens in the group project. The total placed by all members was {GROUP_PROJECT_TOTAL}, and your income from the first stage this period is {MY_INCOME_THIS_PERIOD} tokens.
+
+Here is how much each of the other members placed in the project this period:
+{OTHERS_BLOCK}
+
+You may now assign deduction points to each of these members, simultaneously and anonymously. For EACH member you choose a whole number of deduction points from 0 to {MAX_PUNISH}.
+- Each deduction point you assign costs YOU {PUNISH_COST} token.
+- Each deduction point you assign reduces THAT member's income this period by {PUNISH_IMPACT} tokens.
+The other members decide at the same time and may assign deduction points to anyone, including you. No one is told who assigned points to whom; you are only told the total number of points you received.
+{RECEIVED_LAST_PERIOD}
+{SOCIETY_BLOCK}
+{PERSONALITY_BLOCK}
+================  DEDUCTIONS SO FAR  ================
+{PUNISH_HISTORY_BLOCK}
+
+================  YOUR DECISION  ================
+Decide how many deduction points (0 to {MAX_PUNISH}) to assign to each member shown above.
+You may reason briefly first. Then finish your reply with EXACTLY one line in this format, and nothing after it:
+>>> DEDUCT: A=a B=b C=c
+(where a, b, c are integers from 0 to {MAX_PUNISH}, for Member A, Member B, Member C)

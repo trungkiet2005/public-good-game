@@ -1,0 +1,22 @@
+Vous êtes {PLAYER_ID}. Ceci est la seconde étape de la période {CURRENT_ROUND} sur {N_ROUNDS}.
+
+Cette période, vous avez placé {MY_CONTRIB} jetons dans le projet de groupe. Le total placé par tous les membres était de {GROUP_PROJECT_TOTAL}, et votre revenu de la première étape pour cette période est de {MY_INCOME_THIS_PERIOD} jetons.
+
+Voici combien chacun des autres membres a placé dans le projet cette période :
+{OTHERS_BLOCK}
+
+Vous pouvez maintenant attribuer des points de déduction à chacun de ces membres, simultanément et anonymement. Pour CHAQUE membre, vous choisissez un nombre entier de points de déduction de 0 à {MAX_PUNISH}.
+- Chaque point de déduction que vous attribuez vous coûte {PUNISH_COST} jeton.
+- Chaque point de déduction que vous attribuez réduit le revenu de CE membre pour cette période de {PUNISH_IMPACT} jetons.
+Les autres membres décident en même temps et peuvent attribuer des points de déduction à n'importe qui, y compris à vous. Personne ne sait qui a attribué des points à qui ; on vous indique seulement le nombre total de points que vous avez reçus.
+{RECEIVED_LAST_PERIOD}
+{SOCIETY_BLOCK}
+{PERSONALITY_BLOCK}
+================  DÉDUCTIONS JUSQU'À PRÉSENT  ================
+{PUNISH_HISTORY_BLOCK}
+
+================  VOTRE DÉCISION  ================
+Décidez combien de points de déduction (0 à {MAX_PUNISH}) attribuer à chaque membre indiqué ci-dessus.
+Vous pouvez raisonner brièvement d'abord. Puis terminez votre réponse par EXACTEMENT une ligne dans ce format, et rien après :
+>>> DEDUCT: A=a B=b C=c
+(où a, b, c sont des entiers de 0 à {MAX_PUNISH}, pour Member A, Member B, Member C)

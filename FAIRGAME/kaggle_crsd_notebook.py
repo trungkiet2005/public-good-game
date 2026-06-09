@@ -129,6 +129,44 @@ def import_local_connector():
 print("Internet OFF: dùng thư viện có sẵn trên image Kaggle.")
 
 # =====================================================================
+# CELL 2.5: (TUỲ CHỌN) Cài vLLM OFFLINE từ wheels đã build sẵn
+# =====================================================================
+# Chỉ cần khi muốn engine="vllm" mà image Kaggle CHƯA có vllm. Yêu cầu:
+#   - 1 Dataset chứa toàn bộ .whl (build bằng kaggle_build_vllm_wheels.py,
+#     chạy trong notebook Internet ON CÙNG image GPU), đã + Add Input.
+#   - Đặt VLLM_WHEELS_DIR cho khớp tên dataset (xem bằng "!ls /kaggle/input/").
+# Nếu mọi model dùng engine="transformers" → cell này tự bỏ qua.
+import importlib.util
+import subprocess
+
+VLLM_WHEELS_DIR = Path("/kaggle/input/vllm-offline-wheels")  # sửa cho đúng tên dataset
+VLLM_VERSION = ""   # "" = bản có trong wheels; hoặc ghim "0.6.x" để khớp lúc build
+
+_want_vllm = (DEFAULT_ENGINE == "vllm") or any(
+    m.get("engine", DEFAULT_ENGINE) == "vllm" for m in MODELS)
+_have_vllm = importlib.util.find_spec("vllm") is not None
+
+if not _want_vllm:
+    print("ℹ️  Không model nào dùng vllm — bỏ qua cài đặt.")
+elif _have_vllm:
+    print("✅ vLLM đã có sẵn trên image — không cần cài.")
+elif not VLLM_WHEELS_DIR.is_dir():
+    raise FileNotFoundError(
+        f"Cần engine vllm nhưng không thấy wheels ở {VLLM_WHEELS_DIR}. "
+        "Hãy + Add Input dataset wheels (build bằng kaggle_build_vllm_wheels.py), "
+        "sửa VLLM_WHEELS_DIR, hoặc đổi engine='transformers'.")
+else:
+    _spec = "vllm" + (f"=={VLLM_VERSION}" if VLLM_VERSION else "")
+    _cmd = [sys.executable, "-m", "pip", "install", "--no-index",
+            f"--find-links={VLLM_WHEELS_DIR}", _spec]
+    print("📦 Cài vLLM offline:", " ".join(_cmd))
+    subprocess.run(_cmd, check=True)
+    importlib.invalidate_caches()
+    print("✅ vLLM đã cài từ wheels. Nếu lỗi 'undefined symbol' / torch không khớp → "
+          "wheels phải build CÙNG image Kaggle (Python + CUDA khớp). "
+          "Có thể cần Restart kernel rồi chạy lại từ Cell 1 nếu torch bị thay.")
+
+# =====================================================================
 # CELL 3: Setup FAIRGAME source (copy repo + patch game_round)
 # =====================================================================
 import shutil

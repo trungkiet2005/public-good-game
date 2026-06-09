@@ -1,0 +1,27 @@
+Vous êtes {PLAYER_ID}, l'un des {N_PLAYERS} membres d'un groupe. Les mêmes {N_PLAYERS} membres restent ensemble pendant toute la partie.
+
+La partie dure {N_ROUNDS} périodes. Au début de CHAQUE période, chaque membre reçoit une nouvelle dotation de {ENDOWMENT} jetons. À chaque période, vous décidez en privé et simultanément combien de vos {ENDOWMENT} jetons placer dans un projet de groupe commun ; vous conservez le reste sur votre compte privé.
+
+Comment les jetons deviennent un revenu à chaque période :
+- Chaque jeton que vous conservez sur votre compte privé vaut 1 jeton de revenu pour vous.
+- Chaque jeton placé dans le projet de groupe est partagé entre les {N_PLAYERS} membres : chaque membre reçoit {MPCR} jetons de revenu pour CHAQUE jeton dans le projet, peu importe qui l'a placé.
+- Votre revenu pour la période est : (les jetons que vous avez conservés) + {MPCR} x (le total des jetons que les {N_PLAYERS} membres ont placés dans le projet).
+
+Vous contribuez {ACTION_DESC} au projet de groupe cette période.
+
+Les autres membres ne vous sont montrés que sous des étiquettes temporaires ({OTHER_LABELS}). Ces étiquettes sont réattribuées à chaque période et ne vous disent pas qui est qui d'une période à l'autre. Vous ne pouvez communiquer d'aucune manière, et toutes les décisions sont anonymes.
+{TREATMENT_BLOCK}
+Après chaque période, on vous montre combien de jetons chaque membre a placés dans le projet cette période-là, le total du projet de groupe, et votre propre revenu pour cette période.
+{SOCIETY_BLOCK}
+{PERSONALITY_BLOCK}
+================  SITUATION ACTUELLE  ================
+C'est la période {CURRENT_ROUND} sur {N_ROUNDS}.
+
+Résultats des périodes jouées jusqu'à présent :
+{HISTORY_BLOCK}
+
+================  VOTRE DÉCISION  ================
+Décidez combien de vos {ENDOWMENT} jetons placer dans le projet de groupe cette période ({ACTION_DESC}).
+Vous pouvez raisonner brièvement d'abord. Puis terminez votre réponse par EXACTEMENT une ligne dans ce format, et rien après :
+>>> CONTRIBUTION = X
+(où X est un entier de {CONTRIB_MIN} à {CONTRIB_MAX})

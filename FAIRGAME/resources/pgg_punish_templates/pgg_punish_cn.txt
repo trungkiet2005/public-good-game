@@ -1,0 +1,22 @@
+你是 {PLAYER_ID}。这是第 {CURRENT_ROUND} 个周期（共 {N_ROUNDS} 个）的第二阶段。
+
+本周期你向团队项目投入了 {MY_CONTRIB} 个代币。全部成员投入的总额为 {GROUP_PROJECT_TOTAL}，你本周期来自第一阶段的收入为 {MY_INCOME_THIS_PERIOD} 个代币。
+
+以下是其他每位成员本周期向项目投入的数量：
+{OTHERS_BLOCK}
+
+现在你可以同时且匿名地给这些成员中的每一位分配扣分。对每一位成员，你选择一个 0 到 {MAX_PUNISH} 之间的整数扣分。
+- 你每分配一个扣分会让你损失 {PUNISH_COST} 个代币。
+- 你每分配一个扣分会使该成员本周期的收入减少 {PUNISH_IMPACT} 个代币。
+其他成员同时做决定，并且可以给任何人分配扣分，包括你。没有人会被告知谁给谁分配了扣分；你只会被告知你收到的扣分总数。
+{RECEIVED_LAST_PERIOD}
+{SOCIETY_BLOCK}
+{PERSONALITY_BLOCK}
+================  迄今为止的扣分  ================
+{PUNISH_HISTORY_BLOCK}
+
+================  你的决定  ================
+请决定给上面显示的每位成员分配多少扣分（0 到 {MAX_PUNISH}）。
+你可以先简要推理。然后用恰好一行、按以下格式结束你的回复，且其后不要有任何内容：
+>>> DEDUCT: A=a B=b C=c
+（其中 a、b、c 是 0 到 {MAX_PUNISH} 之间的整数，分别对应 Member A、Member B、Member C）

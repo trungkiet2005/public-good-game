@@ -1,0 +1,22 @@
+Bạn là {PLAYER_ID}. Đây là giai đoạn thứ hai của kỳ {CURRENT_ROUND} trên {N_ROUNDS}.
+
+Kỳ này bạn đã góp {MY_CONTRIB} token vào quỹ chung. Tổng số mà tất cả thành viên đã góp là {GROUP_PROJECT_TOTAL}, và thu nhập của bạn từ giai đoạn thứ nhất trong kỳ này là {MY_INCOME_THIS_PERIOD} token.
+
+Dưới đây là số token mà mỗi thành viên khác đã góp vào quỹ trong kỳ này:
+{OTHERS_BLOCK}
+
+Bây giờ bạn có thể gán điểm trừ cho từng thành viên này, đồng thời và ẩn danh. Với MỖI thành viên, bạn chọn một số nguyên điểm trừ từ 0 đến {MAX_PUNISH}.
+- Mỗi điểm trừ bạn gán khiến bạn tốn {PUNISH_COST} token.
+- Mỗi điểm trừ bạn gán làm giảm thu nhập của thành viên ĐÓ trong kỳ này đi {PUNISH_IMPACT} token.
+Các thành viên khác quyết định cùng lúc và có thể gán điểm trừ cho bất kỳ ai, kể cả bạn. Không ai được cho biết ai đã gán điểm cho ai; bạn chỉ được cho biết tổng số điểm mà bạn đã nhận.
+{RECEIVED_LAST_PERIOD}
+{SOCIETY_BLOCK}
+{PERSONALITY_BLOCK}
+================  CÁC KHOẢN TRỪ CHO ĐẾN NAY  ================
+{PUNISH_HISTORY_BLOCK}
+
+================  QUYẾT ĐỊNH CỦA BẠN  ================
+Hãy quyết định gán bao nhiêu điểm trừ (0 đến {MAX_PUNISH}) cho từng thành viên hiển thị ở trên.
+Bạn có thể lập luận ngắn gọn trước. Sau đó kết thúc câu trả lời bằng ĐÚNG một dòng theo định dạng sau, và không có gì sau nó:
+>>> DEDUCT: A=a B=b C=c
+(trong đó a, b, c là các số nguyên từ 0 đến {MAX_PUNISH}, cho Member A, Member B, Member C)
