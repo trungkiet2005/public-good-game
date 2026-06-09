@@ -36,6 +36,32 @@ HUMAN_BENCHMARK = {
     "antisocial_vs_contribution_spearman_rho": -0.90,
 }
 
+# --- Human Fig 1 anchor (deviation-binned mean punishment expenditure) -------- #
+# Herrmann's Fig 1 plots mean punishment expenditure per deviation bin for each
+# of the 16 pools; the per-pool bar values live in the figure / SOM tables S3-S4,
+# NOT in the main-text PDF. The ONLY explicit Fig-1 numbers in the text are the
+# Boston example, so that is the single faithful numeric anchor we encode. Use it
+# as a reference point (Boston is a LOW-antisocial pool) and rely on the
+# qualitative pattern + Table 1/2 coefficients for the rest.
+HUMAN_FIG1_BOSTON = {  # mean money units expended, Boston pool (text, p.1363)
+    "[-20,-11]": 2.74,
+    "[-10,-1]": 0.96,
+    # [0], [1,10], [11,20]: near-zero in Boston (little antisocial punishment).
+}
+
+# Table 1 (OLS): group avg contributions periods 2-10 regressed on period-1
+# contribution + group avg punishment of free riding + group avg antisocial
+# punishment. Model 1 (no pool dummies). These are clean, fully-in-text human
+# coefficients for the punishment -> cooperation link.
+HUMAN_TABLE1_OLS = {
+    "period1_contribution": 0.779,      # ***
+    "punishment_of_free_riding": 0.521,  # **  (prosocial punishment RAISES coop)
+    "antisocial_punishment": -2.247,     # *** (antisocial punishment LOWERS coop)
+    "constant": 5.057,
+    "adjusted_r2": 0.60,
+    "n_group_obs": 273,
+}
+
 # Deviation bins for Fig 1 (label -> inclusive (lo, hi)).
 DEVIATION_BINS: List[Tuple[str, Tuple[int, int]]] = [
     ("[-20,-11]", (-20, -11)),
@@ -115,6 +141,71 @@ def spearman(xs: Sequence[float], ys: Sequence[float]) -> float:
         return float(spearmanr(xs, ys).correlation)
     except Exception:
         return _pearson(_rankdata(xs), _rankdata(ys))
+
+
+def _normal_sf(z: float) -> float:
+    """Upper-tail P(Z > z) of the standard normal, via erfc (no scipy needed)."""
+    import math
+    return 0.5 * math.erfc(z / (2 ** 0.5))
+
+
+def mann_whitney_u(xs: Sequence[float], ys: Sequence[float]) -> Tuple[float, float]:
+    """Two-sided Mann-Whitney U (unpaired). scipy fast-path, else a tie- and
+    continuity-corrected normal approximation. Returns (U, p). Use to test whether
+    two independent samples (e.g. LLM contributions in N vs P) differ in level."""
+    from collections import Counter
+    n1, n2 = len(xs), len(ys)
+    if n1 < 1 or n2 < 1:
+        return float("nan"), float("nan")
+    try:  # pragma: no cover - optional exact small-n path
+        from scipy.stats import mannwhitneyu
+        res = mannwhitneyu(list(xs), list(ys), alternative="two-sided")
+        return float(res.statistic), float(res.pvalue)
+    except Exception:
+        pass
+    combined = list(xs) + list(ys)
+    ranks = _rankdata(combined)
+    R1 = sum(ranks[:n1])
+    U1 = R1 - n1 * (n1 + 1) / 2.0
+    U = min(U1, n1 * n2 - U1)
+    n = n1 + n2
+    mu = n1 * n2 / 2.0
+    tie_term = sum(t ** 3 - t for t in Counter(combined).values())
+    sigma2 = (n1 * n2 / 12.0) * ((n + 1) - tie_term / (n * (n - 1))) if n > 1 else 0.0
+    if sigma2 <= 0:
+        return U, float("nan")
+    z = (abs(U - mu) - 0.5) / sigma2 ** 0.5          # continuity correction
+    return U, min(1.0, 2 * _normal_sf(z))
+
+
+def wilcoxon_signed_rank(xs: Sequence[float], ys: Sequence[float]) -> Tuple[float, float]:
+    """Two-sided Wilcoxon signed-rank for PAIRED xs, ys (e.g. LLM vs human mean
+    contribution across the SAME 16 societies). scipy fast-path, else a tie- and
+    continuity-corrected normal approximation; zero differences are dropped.
+    Returns (W, p)."""
+    from collections import Counter
+    pairs = [(a, b) for a, b in zip(xs, ys) if a == a and b == b]   # drop nan
+    nz = [a - b for a, b in pairs if (a - b) != 0]
+    if len(nz) < 1:
+        return float("nan"), float("nan")
+    try:  # pragma: no cover - optional exact small-n path
+        from scipy.stats import wilcoxon
+        res = wilcoxon([a for a, _ in pairs], [b for _, b in pairs])
+        return float(res.statistic), float(res.pvalue)
+    except Exception:
+        pass
+    mags = [abs(d) for d in nz]
+    ranks = _rankdata(mags)
+    Wpos = sum(r for r, d in zip(ranks, nz) if d > 0)
+    W = min(Wpos, sum(ranks) - Wpos)
+    n = len(nz)
+    mu = n * (n + 1) / 4.0
+    tie_term = sum(t ** 3 - t for t in Counter(mags).values())
+    sigma2 = n * (n + 1) * (2 * n + 1) / 24.0 - tie_term / 48.0
+    if sigma2 <= 0:
+        return W, float("nan")
+    z = (abs(W - mu) - 0.5) / sigma2 ** 0.5          # continuity correction
+    return W, min(1.0, 2 * _normal_sf(z))
 
 
 def _ols_slope(xs: Sequence[float], ys: Sequence[float]) -> float:

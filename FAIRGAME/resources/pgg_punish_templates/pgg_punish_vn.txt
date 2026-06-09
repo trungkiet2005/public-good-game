@@ -12,11 +12,11 @@ Các thành viên khác quyết định cùng lúc và có thể gán điểm tr
 {RECEIVED_LAST_PERIOD}
 {SOCIETY_BLOCK}
 {PERSONALITY_BLOCK}
-================  CÁC KHOẢN TRỪ CHO ĐẾN NAY  ================
+CÁC KHOẢN TRỪ CHO ĐẾN NAY
 {PUNISH_HISTORY_BLOCK}
 
-================  QUYẾT ĐỊNH CỦA BẠN  ================
+QUYẾT ĐỊNH CỦA BẠN
 Hãy quyết định gán bao nhiêu điểm trừ (0 đến {MAX_PUNISH}) cho từng thành viên hiển thị ở trên.
 Bạn có thể lập luận ngắn gọn trước. Sau đó kết thúc câu trả lời bằng ĐÚNG một dòng theo định dạng sau, và không có gì sau nó:
->>> DEDUCT: A=a B=b C=c
+DEDUCT: A=a B=b C=c
 (trong đó a, b, c là các số nguyên từ 0 đến {MAX_PUNISH}, cho Member A, Member B, Member C)

@@ -14,14 +14,14 @@ The other members are shown to you only under temporary labels ({OTHER_LABELS}).
 After each period you are shown how many tokens each member placed in the project that period, the total in the group project, and your own income for that period.
 {SOCIETY_BLOCK}
 {PERSONALITY_BLOCK}
-================  CURRENT SITUATION  ================
+CURRENT SITUATION
 This is period {CURRENT_ROUND} of {N_ROUNDS}.
 
 Results of the periods played so far:
 {HISTORY_BLOCK}
 
-================  YOUR DECISION  ================
+YOUR DECISION
 Decide how many of your {ENDOWMENT} tokens to place in the group project this period ({ACTION_DESC}).
 You may reason briefly first. Then finish your reply with EXACTLY one line in this format, and nothing after it:
->>> CONTRIBUTION = X
+CONTRIBUTION = X
 (where X is an integer from {CONTRIB_MIN} to {CONTRIB_MAX})

@@ -41,6 +41,7 @@ def to_dataframe(results: List[Dict]):
             "treatment_loss_prob": res["treatment_loss_prob"],
             "language": res["language"],
             "personality_condition": res["personality_condition"],
+            "framing": res.get("framing", "neutral"),
             "n_players": res["n_players"],
             "n_rounds": res["n_rounds"],
             "endowment": res["endowment"],

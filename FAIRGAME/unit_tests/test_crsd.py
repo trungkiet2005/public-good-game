@@ -49,6 +49,14 @@ def test_parse_primary_token():
     assert parse_contribution("**>>> CONTRIBUTION = 2**") == (2, True)
 
 
+def test_parse_bare_token_no_prefix():
+    # Templates now emit a bare "CONTRIBUTION = X" (the ">>>" prefix was removed);
+    # it must still parse as the primary token, not fall back.
+    assert parse_contribution("I'll cooperate.\nCONTRIBUTION = 4") == (4, True)
+    assert parse_contribution("CONTRIBUTION = 2") == (2, True)
+    assert parse_contribution("**CONTRIBUTION = 0**") == (0, True)
+
+
 def test_parse_last_primary_wins():
     assert parse_contribution("I considered 4 then\n>>> CONTRIBUTION = 2") == (2, True)
     assert parse_contribution(">>> CONTRIBUTION = 4\n>>> CONTRIBUTION = 0") == (0, True)
@@ -91,6 +99,34 @@ def test_build_prompt_fills_all_placeholders():
     assert "{" not in p and "}" not in p  # no leftover placeholders
     assert "round 1 of 10" in p
     assert "probability 90%" in p and "probability 10%" in p  # loss/keep split
+
+
+def test_framing_recorded_and_defaults_neutral():
+    params = dict(n_players=6, n_rounds=2, endowment=40, target=120, loss_prob=90,
+                  contribution_options=(0, 2, 4))
+    gc = CRSDGame("gc", "en", "neutral", ["none"] * 6, _TEMPLATE_EN, params, framing="climate")
+    _ingest_constant(gc, [2] * 6, 2)
+    rc = gc.settle(FakeRng(0.5))
+    assert rc["framing"] == "climate"
+    # framing is optional and defaults to neutral (backward compatible with old callers)
+    gn = CRSDGame("gn", "en", "neutral", ["none"] * 6, _TEMPLATE_EN, params)
+    _ingest_constant(gn, [2] * 6, 2)
+    rn = gn.settle(FakeRng(0.5))
+    assert rn["framing"] == "neutral"
+    df = crsd_results.to_dataframe([rc, rn])
+    assert list(df["framing"]) == ["climate", "neutral"]
+
+
+def test_climate_template_renders_with_same_placeholders():
+    climate_en = (Path(__file__).resolve().parent.parent / "resources"
+                  / "crsd_templates" / "crsd_climate_en.txt").read_text(encoding="utf-8")
+    params = dict(n_players=6, n_rounds=10, endowment=40, target=120, loss_prob=90,
+                  contribution_options=(0, 2, 4))
+    g = CRSDGame("g", "en", "neutral", ["none"] * 6, climate_en, params, framing="climate")
+    p = g.build_round_prompts()[0]
+    assert "{" not in p and "}" not in p          # every placeholder resolved
+    assert "climate" in p.lower()                  # climate cover story present
+    assert "CONTRIBUTION = X" in p and ">>>" not in p
 
 
 # --------------------------------------------------------------------------- #

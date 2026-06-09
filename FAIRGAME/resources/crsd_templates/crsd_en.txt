@@ -10,14 +10,14 @@ What you finally receive in cash:
 
 You cannot communicate with the other players in any way. After each round you are shown exactly how much every player moved into the shared account that round, listed under a fixed player number (your own number stays the same all game). You are NOT told the running total, and you only learn the result of the random draw after the final round.
 {PERSONALITY_BLOCK}
-================  CURRENT SITUATION  ================
+CURRENT SITUATION
 This is round {CURRENT_ROUND} of {N_ROUNDS}.
 
 Contributions in the rounds played so far (one line per past round):
 {HISTORY_BLOCK}
 
-================  YOUR DECISION  ================
+YOUR DECISION
 Decide how much to move into the shared account this round: €0, €2, or €4.
 You may reason briefly first. Then finish your reply with EXACTLY one line in this format, and nothing after it:
->>> CONTRIBUTION = X
+CONTRIBUTION = X
 (where X is 0, 2, or 4)

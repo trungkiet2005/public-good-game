@@ -6,15 +6,57 @@
     "nRoundsIsKnown": true,
     "endowment": 40,
     "target": 120,
-    "contributionOptions": [0, 2, 4],
+    "contributionOptions": [
+        0,
+        2,
+        4
+    ],
     "showRunningTotal": false,
     "agentsCommunicate": false,
-    "languages": ["en", "fr", "ar", "cn", "vn"],
+    "languages": [
+        "en",
+        "fr",
+        "ar",
+        "cn",
+        "vn"
+    ],
+    "framings": [
+        "neutral",
+        "climate"
+    ],
     "personalityConditions": {
-        "neutral":     ["none", "none", "none", "none", "none", "none"],
-        "cooperative": ["cooperative", "cooperative", "cooperative", "cooperative", "cooperative", "cooperative"],
-        "selfish":     ["selfish", "selfish", "selfish", "selfish", "selfish", "selfish"],
-        "risk_averse": ["risk-averse", "risk-averse", "risk-averse", "risk-averse", "risk-averse", "risk-averse"]
+        "neutral": [
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none"
+        ],
+        "cooperative": [
+            "cooperative",
+            "cooperative",
+            "cooperative",
+            "cooperative",
+            "cooperative",
+            "cooperative"
+        ],
+        "selfish": [
+            "selfish",
+            "selfish",
+            "selfish",
+            "selfish",
+            "selfish",
+            "selfish"
+        ],
+        "risk_averse": [
+            "risk-averse",
+            "risk-averse",
+            "risk-averse",
+            "risk-averse",
+            "risk-averse",
+            "risk-averse"
+        ]
     },
     "groupsPerCondition": 10
 }

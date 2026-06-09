@@ -14,14 +14,14 @@ Les autres membres ne vous sont montrés que sous des étiquettes temporaires ({
 Après chaque période, on vous montre combien de jetons chaque membre a placés dans le projet cette période-là, le total du projet de groupe, et votre propre revenu pour cette période.
 {SOCIETY_BLOCK}
 {PERSONALITY_BLOCK}
-================  SITUATION ACTUELLE  ================
+SITUATION ACTUELLE
 C'est la période {CURRENT_ROUND} sur {N_ROUNDS}.
 
 Résultats des périodes jouées jusqu'à présent :
 {HISTORY_BLOCK}
 
-================  VOTRE DÉCISION  ================
+VOTRE DÉCISION
 Décidez combien de vos {ENDOWMENT} jetons placer dans le projet de groupe cette période ({ACTION_DESC}).
 Vous pouvez raisonner brièvement d'abord. Puis terminez votre réponse par EXACTEMENT une ligne dans ce format, et rien après :
->>> CONTRIBUTION = X
+CONTRIBUTION = X
 (où X est un entier de {CONTRIB_MIN} à {CONTRIB_MAX})

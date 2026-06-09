@@ -91,12 +91,35 @@ def load_results(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def print_human_comparison(results):
-    baseline = [r for r in results
-                if r["language"] == "en" and r["personality_condition"] == "neutral"]
+def _framing_of(r):
+    return r.get("framing", "neutral")
+
+
+def framings_present(results):
+    return sorted({_framing_of(r) for r in results})
+
+
+def primary_framing(results):
+    """The framing to use for the human comparison: Milinski is the CLIMATE framing,
+    so prefer it; else neutral; else whatever exists."""
+    fr = framings_present(results)
+    if "climate" in fr:
+        return "climate"
+    if "neutral" in fr:
+        return "neutral"
+    return fr[0] if fr else "neutral"
+
+
+def print_human_comparison(results, framing=None):
+    if framing is None:
+        framing = primary_framing(results)
+    baseline = [r for r in results if r["language"] == "en"
+                and r["personality_condition"] == "neutral" and _framing_of(r) == framing]
     summary = crsd_results.summarize(baseline)
+    faithful = " — FAITHFUL replication" if framing == "climate" else " (abstract control)"
     print("\n" + "=" * 78)
-    print("BASELINE (English, neutral agents)  vs  HUMAN (Milinski et al. 2008)")
+    print(f"BASELINE (English, neutral agents, framing='{framing}'{faithful})")
+    print("  vs  HUMAN (Milinski et al. 2008, climate framing)")
     print("=" * 78)
     print(f"{'p%':>4} | {'success LLM / HUM':>20} | {'mean total LLM / HUM':>24} | "
           f"{'fair-sharers LLM / HUM':>24} | {'parse_fb':>8}")
@@ -141,6 +164,42 @@ def print_human_comparison(results):
         print("    model non-compliance/miscounting (faithful visibility on a small model).")
 
 
+def print_framing_effect(results):
+    """Compare cover stories head-to-head (English, neutral disposition): does the CLIMATE
+    framing change the LLM's behaviour vs the abstract NEUTRAL one? Milinski's humans are the
+    climate condition, so 'climate − neutral' is the framing effect on the model."""
+    fr_present = framings_present(results)
+    if len(fr_present) < 2:
+        return
+    print("\n" + "=" * 78)
+    print("FRAMING EFFECT (English, neutral agents) — climate cover story vs neutral control")
+    print("=" * 78)
+    print(f"{'framing':>9} {'p%':>4} | {'success':>8} | {'mean total':>13} | {'fair-sh':>7}")
+    print("-" * 78)
+    sums = {}
+    for f in fr_present:
+        base = [r for r in results if r["language"] == "en"
+                and r["personality_condition"] == "neutral" and _framing_of(r) == f]
+        sums[f] = crsd_results.summarize(base)
+        for p in (90, 50, 10):
+            s = sums[f].get(p)
+            if not s:
+                continue
+            print(f"{f:>9} {p:>4} | {s['success_rate'] * 100:6.0f}% | "
+                  f"{s['final_total']['mean']:8.1f}±{s['final_total']['sem']:.1f} | "
+                  f"{s['fair_sharers_per_group']:6.2f}")
+    if "climate" in sums and "neutral" in sums:
+        print("-" * 78)
+        print("climate − neutral  (the framing effect on THIS model):")
+        for p in (90, 50, 10):
+            sc, sn = sums["climate"].get(p), sums["neutral"].get(p)
+            if sc and sn:
+                dm = sc["final_total"]["mean"] - sn["final_total"]["mean"]
+                ds = (sc["success_rate"] - sn["success_rate"]) * 100
+                print(f"   p{p}: Δmean = {dm:+.1f}€,  Δsuccess = {ds:+.0f} pts")
+        print("   (+ = the climate framing raises cooperation, the effect Milinski's framing was meant to evoke.)")
+
+
 def _per_group(acts_dict, n_games):
     """Scale summed €0/€2/€4 act counts to a per-group basis (paper Fig 3 unit)."""
     if not n_games:
@@ -162,13 +221,15 @@ def print_breakdown(results, title, key):
               f"{s['fair_sharers_per_group']:6.2f} | {s['parse_fallback_rate']:.1%}")
 
 
-def plot_fig2_cumulative(results, outdir: Path):
+def plot_fig2_cumulative(results, outdir: Path, framing="neutral"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
-    baseline = [r for r in results
-                if r["language"] == "en" and r["personality_condition"] == "neutral"]
+    baseline = [r for r in results if r["language"] == "en"
+                and r["personality_condition"] == "neutral" and _framing_of(r) == framing]
+    if not baseline:
+        return
     summary = crsd_results.summarize(baseline)
     fig, ax = plt.subplots(figsize=(7, 5))
     # Paper Fig 2 colours: 90% blue, 50% green, 10% red.
@@ -189,21 +250,24 @@ def plot_fig2_cumulative(results, outdir: Path):
     ax.axhline(target, color="grey", lw=1.0, ls="--")
     ax.set_xlabel("Round")
     ax.set_ylabel("Cumulative group contribution (€)")
-    ax.set_title("Fig 2 (replication): cumulative contribution per round\nLLM, English, neutral")
+    ax.set_title(f"Fig 2 (replication): cumulative contribution per round\n"
+                 f"LLM, English, neutral — framing='{framing}'")
     ax.set_xticks(range(1, n_rounds + 1))
     ax.legend()
     fig.tight_layout()
-    fig.savefig(outdir / "crsd_fig2_cumulative.png", dpi=150)
+    fig.savefig(outdir / f"crsd_fig2_cumulative_{framing}.png", dpi=150)
     plt.close(fig)
 
 
-def plot_fig3_acts(results, outdir: Path):
+def plot_fig3_acts(results, outdir: Path, framing="neutral"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
-    baseline = [r for r in results
-                if r["language"] == "en" and r["personality_condition"] == "neutral"]
+    baseline = [r for r in results if r["language"] == "en"
+                and r["personality_condition"] == "neutral" and _framing_of(r) == framing]
+    if not baseline:
+        return
     summary = crsd_results.summarize(baseline)
     # Paper Fig 3 coding: €0 = unfilled (white), €2 = light grey, €4 = dark grey;
     # per group of 6, first half (rounds 1-5) vs second half (6-10).
@@ -234,9 +298,10 @@ def plot_fig3_acts(results, outdir: Path):
     axes[0].legend(handles=[Patch(facecolor="white", edgecolor="black", hatch="//", label="rounds 1-5"),
                             Patch(facecolor="white", edgecolor="black", label="rounds 6-10")],
                    loc="upper right")
-    fig.suptitle("Fig 3 (replication): selfish/fair/altruist acts by game half — LLM, English, neutral")
+    fig.suptitle(f"Fig 3 (replication): selfish/fair/altruist acts by game half — "
+                 f"LLM, English, neutral, framing='{framing}'")
     fig.tight_layout()
-    fig.savefig(outdir / "crsd_fig3_acts.png", dpi=150)
+    fig.savefig(outdir / f"crsd_fig3_acts_{framing}.png", dpi=150)
     plt.close(fig)
 
 
@@ -262,17 +327,27 @@ def main():
     if _scipy_stats is None:
         print("(scipy not available — Welch / Fisher / ANOVA p-values omitted; install scipy for them.)")
 
-    print_human_comparison(results)
-    print_breakdown([r for r in results if r["personality_condition"] == "neutral"],
-                    "LANGUAGE BIAS (neutral agents) — group = p<loss>_<lang>",
-                    key=lambda r: f"p{r['treatment_loss_prob']}_{r['language']}")
-    print_breakdown([r for r in results if r["language"] == "en"],
-                    "PERSONALITY BIAS (English) — group = p<loss>_<personality>",
-                    key=lambda r: f"p{r['treatment_loss_prob']}_{r['personality_condition']}")
+    fr_present = framings_present(results)
+    primary = primary_framing(results)
+    if len(fr_present) > 1:
+        print(f"Framings in this file: {fr_present}  → human comparison uses '{primary}' "
+              "(Milinski's climate framing).")
 
-    plot_fig2_cumulative(results, outdir)
-    plot_fig3_acts(results, outdir)
-    print(f"\n📊 Figures saved to {outdir}/crsd_fig2_cumulative.png and crsd_fig3_acts.png")
+    print_human_comparison(results, primary)
+    print_framing_effect(results)
+    print_breakdown([r for r in results if r["personality_condition"] == "neutral"],
+                    "LANGUAGE BIAS (neutral agents) — group = <framing>_p<loss>_<lang>",
+                    key=lambda r: f"{_framing_of(r)}_p{r['treatment_loss_prob']}_{r['language']}")
+    print_breakdown([r for r in results if r["language"] == "en"],
+                    "PERSONALITY BIAS (English) — group = <framing>_p<loss>_<personality>",
+                    key=lambda r: f"{_framing_of(r)}_p{r['treatment_loss_prob']}_{r['personality_condition']}")
+
+    saved = []
+    for framing in fr_present:
+        plot_fig2_cumulative(results, outdir, framing)
+        plot_fig3_acts(results, outdir, framing)
+        saved += [f"crsd_fig2_cumulative_{framing}.png", f"crsd_fig3_acts_{framing}.png"]
+    print(f"\n📊 Figures saved to {outdir}/: {', '.join(saved)}")
 
 
 if __name__ == "__main__":

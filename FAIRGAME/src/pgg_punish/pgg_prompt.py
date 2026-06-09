@@ -11,10 +11,12 @@ Design notes (mirrors crsd_prompt.py, generalised for a TWO-STAGE period)
   set for small models). Because the range is wide, the action description is
   INJECTED as {ACTION_DESC} (not baked in) and the parser is range-validated.
 * Each model reply must end with a LANGUAGE-AGNOSTIC, ASCII machine token:
-      >>> CONTRIBUTION = X          (X an integer in [CONTRIB_MIN, CONTRIB_MAX])
-      >>> DEDUCT: A=a B=b C=c        (a,b,c integers in [0, MAX_PUNISH])
+      CONTRIBUTION = X              (X an integer in [CONTRIB_MIN, CONTRIB_MAX])
+      DEDUCT: A=a B=b C=c            (a,b,c integers in [0, MAX_PUNISH])
   Keeping the tokens in English/ASCII makes parsing identical across all 5
   languages and robust (e.g. "20 tokens" mid-reasoning will not be mis-grabbed).
+  A legacy ">>>" prefix is still accepted but no longer required (templates no
+  longer emit it).
 * Anti-reputation: the three other members are shown under per-period, per-reader
   temporary labels (Member A/B/C). The history is rendered with those temporary
   labels too, so a fixed opponent can never be tracked across periods (this is
@@ -220,13 +222,14 @@ def received_last_period_block(language: str, n) -> str:
 
 
 # ----------------------------------------------------------------------------- #
-# Machine tokens. Tolerant of spacing, a leading bold markdown, optional "Member".
+# Machine tokens. Tolerant of spacing, leading bold markdown, optional "Member",
+# and an OPTIONAL legacy ">>>" prefix (templates now emit bare tokens).
 # ----------------------------------------------------------------------------- #
 _CONTRIB_PRIMARY = re.compile(
-    r">>>\s*\**\s*CONTRIBUTION\s*\**\s*=\s*\**\s*€?\s*(\d{1,2})\b", re.IGNORECASE)
+    r"(?:>>>\s*)?\**\s*CONTRIBUTION\s*\**\s*=\s*\**\s*€?\s*(\d{1,2})\b", re.IGNORECASE)
 
 _DEDUCT_PRIMARY = re.compile(
-    r">>>\s*\**\s*DEDUCT\s*\**\s*:?\s*"
+    r"(?:>>>\s*)?\**\s*DEDUCT\s*\**\s*:?\s*"
     r"(?:Member\s*)?A\s*=\s*(\d{1,2})\b[\s,]*"
     r"(?:Member\s*)?B\s*=\s*(\d{1,2})\b[\s,]*"
     r"(?:Member\s*)?C\s*=\s*(\d{1,2})\b", re.IGNORECASE)
@@ -259,7 +262,7 @@ def society_block(language: str, society: str) -> str:
 
 # --------------------------------------------------------------------------- #
 # Parsing. Both parsers follow CRSD's contract: return (value, primary_ok);
-# primary_ok is True only when the explicit >>> token is present AND valid, and
+# primary_ok is True only when the explicit CONTRIBUTION/DEDUCT token is present AND valid, and
 # the caller treats `not primary_ok` as "needs a retry". A best-effort fallback
 # still yields a usable value if retries are exhausted.
 # --------------------------------------------------------------------------- #
@@ -268,7 +271,7 @@ def parse_contribution(text: str, options: Sequence[int] = tuple(range(0, 21)),
     """Extract the chosen contribution from a model reply.
 
     Returns (value, primary_ok). primary_ok is True only when the explicit
-    `>>> CONTRIBUTION = X` token is found AND X is a legal option. Fallback is the
+    `CONTRIBUTION = X` token is found AND X is a legal option. Fallback is the
     last standalone integer that is a legal option (primary_ok=False). The
     `\\d{1,2}` cap stops a 3+ digit number masquerading as the answer.
     """

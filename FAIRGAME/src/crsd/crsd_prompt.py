@@ -6,9 +6,11 @@ Design notes
   is baked into each localized template rather than injected, which avoids having
   to translate the word "or".
 * Each model reply must end with a LANGUAGE-AGNOSTIC machine token:
-      >>> CONTRIBUTION = X        (X in {0, 2, 4})
-  This makes parsing identical across all 5 languages and far more robust than
-  FAIRGAME's default substring match (where "€20" would spuriously match "2"/"0").
+      CONTRIBUTION = X            (X in {0, 2, 4})
+  Anchoring on the literal "CONTRIBUTION =" keyword (not a bare number) keeps
+  parsing identical across all 5 languages and avoids FAIRGAME's default
+  substring match (where "€20" would spuriously match "2"/"0"). A legacy ">>>"
+  prefix is still accepted but no longer required (templates no longer emit it).
 * "Faithful" visibility (Milinski): each player sees every player's per-round
   contribution and that round's total, but NEVER the cumulative-to-target sum
   (humans tracked that on paper). So `format_history` reports per-round totals
@@ -75,8 +77,9 @@ PERSONALITY_BLOCKS: Dict[str, Dict[str, str]] = {
     },
 }
 
-# Primary machine token. Tolerant of spacing, a leading €, and bold markdown.
-_PRIMARY = re.compile(r">>>\s*\**\s*CONTRIBUTION\s*\**\s*=\s*\**\s*€?\s*(0|2|4)\b", re.IGNORECASE)
+# Primary machine token. Tolerant of spacing, a leading €, bold markdown, and an
+# OPTIONAL legacy ">>>" prefix (templates now emit a bare "CONTRIBUTION = X").
+_PRIMARY = re.compile(r"(?:>>>\s*)?\**\s*CONTRIBUTION\s*\**\s*=\s*\**\s*€?\s*(0|2|4)\b", re.IGNORECASE)
 
 
 def personality_block(language: str, personality: str) -> str:
@@ -89,7 +92,7 @@ def parse_contribution(text: str, options: Sequence[int] = (0, 2, 4),
     """Extract the chosen contribution from a model reply.
 
     Returns (value, primary_ok). `primary_ok` is True only when the explicit
-    `>>> CONTRIBUTION = X` token was found; the caller treats `not primary_ok`
+    `CONTRIBUTION = X` token was found; the caller treats `not primary_ok`
     as "needs a retry". When the token is absent we still try a best-effort
     fallback (last standalone allowed integer) so a usable value survives even
     if retries are exhausted.

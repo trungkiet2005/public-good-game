@@ -35,6 +35,8 @@ RUN_LANGUAGE_BLOCK = True       # Block A+B: 5 langs × neutral
 RUN_PERSONALITY_BLOCK = True    # Block C: en × {coop, selfish, risk_averse}
 PERSONALITY_LANG = "en"         # ngôn ngữ cho Block C
 PERSONALITY_CONDITIONS = ["cooperative", "selfish", "risk_averse"]
+FRAMINGS = ["neutral", "climate"]   # cover story: "climate" = framing Milinski (so với paper),
+#                                     "neutral" = control trừu tượng → đo hiệu ứng framing.
 OUTPUT_DIR = Path("/kaggle/working/crsd_results")
 
 # =====================================================================
@@ -73,7 +75,7 @@ TEMPLATE_DIR = FAIRGAME_ROOT / "resources" / "crsd_templates"
 CONFIG_DIR = FAIRGAME_ROOT / "resources" / "crsd_config"
 
 # =====================================================================
-# CELL CRSD-3: Smoke test — model có tuân thủ token >>> CONTRIBUTION = X không?
+# CELL CRSD-3: Smoke test — model có tuân thủ token CONTRIBUTION = X không?
 # =====================================================================
 _probe = (TEMPLATE_DIR / "crsd_en.txt").read_text(encoding="utf-8")
 _g = CRSDGame("probe", "en", "neutral", ["none"] * 6, _probe,
@@ -99,8 +101,12 @@ def params_from_config(cfg):
     )
 
 
-templates = {p.stem.replace("crsd_", ""): p.read_text(encoding="utf-8")
-             for p in TEMPLATE_DIR.glob("crsd_*.txt")}
+# framing -> lang.  crsd_<lang>.txt = "neutral"; crsd_<framing>_<lang>.txt e.g. crsd_climate_en.txt.
+templates = {}
+for _p in TEMPLATE_DIR.glob("crsd_*.txt"):
+    _rest = _p.stem[len("crsd_"):]
+    _framing, _lang = _rest.split("_", 1) if "_" in _rest else ("neutral", _rest)
+    templates.setdefault(_framing, {})[_lang] = _p.read_text(encoding="utf-8")
 
 games = []
 for loss_prob in (90, 50, 10):
@@ -108,22 +114,28 @@ for loss_prob in (90, 50, 10):
     params = params_from_config(cfg)
     n_groups = cfg["groupsPerCondition"]
     conds = cfg["personalityConditions"]
+    framings = [f for f in (FRAMINGS or cfg.get("framings", ["neutral"])) if f in templates]
 
-    if RUN_LANGUAGE_BLOCK:                       # Block A+B: langs × neutral
-        for lang in cfg["languages"]:
-            for k in range(n_groups):
-                games.append(CRSDGame(
-                    f"p{loss_prob}_{lang}_neutral_{k}", lang, "neutral",
-                    conds["neutral"], templates[lang], params))
+    for framing in framings:
+        tpl = templates[framing]
+        if RUN_LANGUAGE_BLOCK:                   # Block A+B: framing × langs × neutral
+            for lang in cfg["languages"]:
+                if lang not in tpl:
+                    continue
+                for k in range(n_groups):
+                    games.append(CRSDGame(
+                        f"p{loss_prob}_{framing}_{lang}_neutral_{k}", lang, "neutral",
+                        conds["neutral"], tpl[lang], params, framing=framing))
 
-    if RUN_PERSONALITY_BLOCK:                    # Block C: en × dispositions
-        for cond in PERSONALITY_CONDITIONS:
-            for k in range(n_groups):
-                games.append(CRSDGame(
-                    f"p{loss_prob}_{PERSONALITY_LANG}_{cond}_{k}", PERSONALITY_LANG, cond,
-                    conds[cond], templates[PERSONALITY_LANG], params))
+        if RUN_PERSONALITY_BLOCK and PERSONALITY_LANG in tpl:   # Block C: framing × en × dispositions
+            for cond in PERSONALITY_CONDITIONS:
+                for k in range(n_groups):
+                    games.append(CRSDGame(
+                        f"p{loss_prob}_{framing}_{PERSONALITY_LANG}_{cond}_{k}", PERSONALITY_LANG, cond,
+                        conds[cond], tpl[PERSONALITY_LANG], params, framing=framing))
 
-print(f"🎮 Tổng số games: {len(games)}  (= {len(games) * 6 * 10} generations)")
+print(f"🎮 Tổng số games: {len(games)}  (framings={[f for f in (FRAMINGS or ['neutral']) if f in templates]}; "
+      f"= {len(games) * 6 * 10} generations)")
 
 # =====================================================================
 # CELL CRSD-5: Chạy lockstep (1 batch lớn mỗi vòng cho toàn bộ games)
@@ -153,38 +165,48 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 df = crsd_results.to_dataframe(results)
 df.to_csv(OUTPUT_DIR / "crsd_all_games.csv", index=False)
-for (p, lang), sub in df.groupby(["treatment_loss_prob", "language"]):
-    sub.to_csv(OUTPUT_DIR / f"crsd_p{p}_{lang}.csv", index=False)
+for (framing, p, lang), sub in df.groupby(["framing", "treatment_loss_prob", "language"]):
+    sub.to_csv(OUTPUT_DIR / f"crsd_{framing}_p{p}_{lang}.csv", index=False)
 
-# Metrics: theo treatment (baseline en-neutral), theo (treatment,language), theo (treatment,personality)
+# Metrics: baseline en-neutral split by framing × treatment, + language/personality breakdowns.
 def _ser(summary):
     return {str(k): v for k, v in summary.items()}
 
-baseline = [r for r in results if r["language"] == "en" and r["personality_condition"] == "neutral"]
+def _fr(r):
+    return r.get("framing", "neutral")
+
 metrics = {
-    "baseline_en_neutral_by_treatment": _ser(crsd_results.summarize(baseline)),
-    "by_treatment_language": _ser(crsd_results.summarize(
-        results, key=lambda r: f"p{r['treatment_loss_prob']}_{r['language']}")),
-    "by_treatment_personality": _ser(crsd_results.summarize(
+    "baseline_en_neutral_by_framing_treatment": _ser(crsd_results.summarize(
+        [r for r in results if r["language"] == "en" and r["personality_condition"] == "neutral"],
+        key=lambda r: f"{_fr(r)}_p{r['treatment_loss_prob']}")),
+    "by_framing_treatment_language": _ser(crsd_results.summarize(
+        results, key=lambda r: f"{_fr(r)}_p{r['treatment_loss_prob']}_{r['language']}")),
+    "by_framing_treatment_personality": _ser(crsd_results.summarize(
         [r for r in results if r["language"] == PERSONALITY_LANG],
-        key=lambda r: f"p{r['treatment_loss_prob']}_{r['personality_condition']}")),
+        key=lambda r: f"{_fr(r)}_p{r['treatment_loss_prob']}_{r['personality_condition']}")),
     "human_benchmark": crsd_results.HUMAN_BENCHMARK,
 }
 (OUTPUT_DIR / "crsd_metrics.json").write_text(
     json.dumps(metrics, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
 
-# In nhanh bảng so với human (baseline en-neutral)
-print("\n=== LLM (en, neutral) vs HUMAN (Milinski 2008) ===")
-print(f"{'p':>4} | {'success LLM/HUM':>16} | {'mean total LLM/HUM':>20} | {'fairshare LLM/HUM':>18} | parse_fb")
-for p in (90, 50, 10):
-    s = crsd_results.summarize(baseline).get(p)
-    if not s:
-        continue
-    h = crsd_results.HUMAN_BENCHMARK[p]
-    print(f"{p:>4} | {s['success_rate']:.2f} / {h['success_rate']:.2f}      | "
-          f"{s['final_total']['mean']:6.1f} / {h['mean_final_total']:6.1f}       | "
-          f"{s['fair_sharers_per_group']:.2f} / {h['fair_sharers_per_group']:.2f}        | "
-          f"{s['parse_fallback_rate']:.1%}")
+# In nhanh bảng so với human (en, neutral) — theo framing (climate = so với paper, neutral = control)
+print("\n=== LLM (en, neutral) vs HUMAN (Milinski 2008) — by framing ===")
+print(f"{'framing':>8} {'p':>4} | {'success LLM/HUM':>16} | {'mean total LLM/HUM':>20} | "
+      f"{'fairshare LLM/HUM':>18} | parse_fb")
+for framing in sorted({_fr(r) for r in results
+                       if r["language"] == "en" and r["personality_condition"] == "neutral"}):
+    base_f = [r for r in results if r["language"] == "en"
+              and r["personality_condition"] == "neutral" and _fr(r) == framing]
+    bsum = crsd_results.summarize(base_f)
+    for p in (90, 50, 10):
+        s = bsum.get(p)
+        if not s:
+            continue
+        h = crsd_results.HUMAN_BENCHMARK[p]
+        print(f"{framing:>8} {p:>4} | {s['success_rate']:.2f} / {h['success_rate']:.2f}      | "
+              f"{s['final_total']['mean']:6.1f} / {h['mean_final_total']:6.1f}       | "
+              f"{s['fair_sharers_per_group']:.2f} / {h['fair_sharers_per_group']:.2f}        | "
+              f"{s['parse_fallback_rate']:.1%}")
 
 print(f"\n📦 Output → {OUTPUT_DIR}")
 

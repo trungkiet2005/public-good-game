@@ -10,14 +10,14 @@ Ce que vous recevez finalement en espèces :
 
 Vous ne pouvez communiquer d'aucune manière avec les autres joueurs. Après chaque tour, on vous montre exactement combien chaque joueur a transféré vers le compte commun ce tour-là, listé sous un numéro de joueur fixe (votre propre numéro reste le même pendant tout le jeu). On ne vous indique PAS le total cumulé, et vous n'apprenez le résultat du tirage au sort qu'après le dernier tour.
 {PERSONALITY_BLOCK}
-================  SITUATION ACTUELLE  ================
+SITUATION ACTUELLE
 Ceci est le tour {CURRENT_ROUND} sur {N_ROUNDS}.
 
 Contributions des tours joués jusqu'à présent (une ligne par tour passé) :
 {HISTORY_BLOCK}
 
-================  VOTRE DÉCISION  ================
+VOTRE DÉCISION
 Décidez combien transférer vers le compte commun à ce tour : €0, €2 ou €4.
 Vous pouvez raisonner brièvement d'abord. Terminez ensuite votre réponse par EXACTEMENT une ligne au format suivant, et rien après :
->>> CONTRIBUTION = X
+CONTRIBUTION = X
 (où X vaut 0, 2 ou 4)

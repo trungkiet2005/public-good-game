@@ -1,0 +1,23 @@
+Bạn là {PLAYER_ID}, một trong {N_PLAYERS} người của một nhóm. Khi bắt đầu trò chơi, mỗi người được cấp một khoản vốn riêng là €{ENDOWMENT}.
+
+Đây là một trò chơi bảo vệ khí hậu kéo dài {N_ROUNDS} vòng. Ở mỗi vòng, từng người trong số {N_PLAYERS} người sẽ bí mật và đồng thời quyết định đầu tư bao nhiêu từ khoản vốn riêng của mình vào một TÀI KHOẢN KHÍ HẬU chung: €0, €2, hoặc €4. Khoản đầu tư này tượng trưng cho số tiền chi ra để ngăn chặn biến đổi khí hậu nguy hiểm. Tiền đã đầu tư vào tài khoản khí hậu là vĩnh viễn — nó rời khỏi khoản vốn riêng của bạn và không bao giờ được hoàn lại.
+
+Cả nhóm có một mục tiêu khí hậu chung: TỔNG số tiền được đầu tư vào tài khoản khí hậu, cộng dồn qua TẤT CẢ {N_PLAYERS} người và TẤT CẢ {N_ROUNDS} vòng, phải đạt ít nhất €{TARGET} vào cuối vòng cuối cùng. Đạt được mục tiêu này nghĩa là cả nhóm đã đầu tư đủ để ngăn chặn biến đổi khí hậu nguy hiểm.
+
+Số tiền cuối cùng bạn nhận được bằng tiền mặt:
+- Nếu cả nhóm ĐẠT mục tiêu (tổng ≥ €{TARGET}): biến đổi khí hậu nguy hiểm được ngăn chặn, và mỗi người giữ lại phần còn lại trong khoản vốn riêng của mình — tức là €{ENDOWMENT} trừ đi tổng số tiền người đó đã đầu tư vào tài khoản khí hậu trong cả ván.
+- Nếu cả nhóm KHÔNG đạt mục tiêu (tổng < €{TARGET}): khí hậu bị bỏ ngỏ không được bảo vệ. Sau đó, một lần rút thăm ngẫu nhiên duy nhất được thực hiện cho cả nhóm. Với xác suất {LOSS_PROB}%, biến đổi khí hậu nguy hiểm xảy ra và mọi người mất sạch và nhận €0. Với xác suất {KEEP_PROB}%, thảm họa không xảy ra lần này và thay vào đó mọi người giữ lại phần còn lại trong khoản vốn riêng của mình.
+
+Bạn không thể giao tiếp với những người khác dưới bất kỳ hình thức nào. Sau mỗi vòng, bạn được cho biết chính xác mỗi người đã đầu tư bao nhiêu vào tài khoản khí hậu trong vòng đó, được liệt kê theo một số người chơi cố định (số của bạn giữ nguyên suốt ván). Bạn KHÔNG được cho biết tổng tích lũy, và bạn chỉ biết được liệu biến đổi khí hậu nguy hiểm có xảy ra hay không sau vòng cuối cùng.
+{PERSONALITY_BLOCK}
+TÌNH HÌNH HIỆN TẠI
+Đây là vòng {CURRENT_ROUND} trong tổng số {N_ROUNDS} vòng.
+
+Các khoản đầu tư vào tài khoản khí hậu ở các vòng đã chơi cho đến nay (mỗi dòng là một vòng trước đó):
+{HISTORY_BLOCK}
+
+QUYẾT ĐỊNH CỦA BẠN
+Hãy quyết định đầu tư bao nhiêu vào tài khoản khí hậu ở vòng này: €0, €2, hoặc €4.
+Bạn có thể suy luận ngắn gọn trước. Sau đó kết thúc câu trả lời bằng ĐÚNG một dòng theo định dạng sau, và không có gì sau nó:
+CONTRIBUTION = X
+(trong đó X là 0, 2, hoặc 4)

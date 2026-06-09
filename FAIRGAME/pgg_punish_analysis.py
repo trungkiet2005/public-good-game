@@ -69,6 +69,13 @@ def print_human_comparison(results):
         print("-" * 100)
         print(f"Punishment effect on cooperation: LLM P-N = {dP - dN:+.2f}  "
               f"(HUMAN grand-mean P-N = {hum_mean['P'] - hum_mean['N']:+.2f})")
+        # Formal test: are the per-group contributions in P significantly above N?
+        n_groups = [pgg_results.mean_contribution(g) for g in base if g["treatment"] == "N"]
+        p_groups = [pgg_results.mean_contribution(g) for g in base if g["treatment"] == "P"]
+        U, pval = pgg_results.mann_whitney_u(n_groups, p_groups)
+        if pval == pval:  # not nan
+            print(f"   Mann-Whitney U (P vs N group contributions): U={U:.1f}, p={pval:.4f}  "
+                  f"(n_N={len(n_groups)}, n_P={len(p_groups)})")
         print("   Herrmann: punishment raised cooperation in most pools, but the size varied "
               "hugely with antisocial punishment.")
     if any(summary[t]["parse_fallback_rate"]["contrib"] > 0.05 for t in summary):
@@ -87,17 +94,29 @@ def print_deviation_decomposition(results):
     print("PUNISHMENT BY DEVIATION  (Fig 1 / Table 2) — English, neutral, treatment P")
     print("deviation = target's contribution - punisher's contribution")
     print("=" * 80)
-    print(f"{'bin':>10} | {'type':>22} | {'mean expenditure':>16} | {'n pairs':>8}")
-    print("-" * 64)
+    boston = pgg_results.HUMAN_FIG1_BOSTON
+    print(f"{'bin':>10} | {'type':>22} | {'LLM mean exp':>13} | {'HUM (Boston)':>12} | {'n pairs':>8}")
+    print("-" * 76)
     for label, _ in pgg_results.DEVIATION_BINS:
         b = bins[label]
         kind = "ANTISOCIAL" if b["is_antisocial"] else "punishment of free riding"
-        print(f"{label:>10} | {kind:>22} | {b['mean_expenditure']:16.3f} | {b['n_pairs']:>8}")
+        hum = boston.get(label)
+        hum_str = f"{hum:12.2f}" if hum is not None else f"{'~0 / n.a.':>12}"
+        print(f"{label:>10} | {kind:>22} | {b['mean_expenditure']:13.3f} | {hum_str} | "
+              f"{b['n_pairs']:>8}")
     split = pgg_results.antisocial_prosocial_split(pgames)
-    print("-" * 64)
+    print("-" * 76)
     print(f"Antisocial share of all punishment: {split['antisocial_share']:.1%}  "
           f"(prosocial total {split['prosocial_total']:.0f} vs antisocial total "
           f"{split['antisocial_total']:.0f})")
+    # Monotonicity check: humans punish free riding HARDER the deeper it is
+    # (Boston: [-20,-11]=2.74 > [-10,-1]=0.96). Does the LLM reproduce that slope?
+    deep, shallow = bins["[-20,-11]"]["mean_expenditure"], bins["[-10,-1]"]["mean_expenditure"]
+    verdict = "yes" if deep > shallow else "NO"
+    print(f"Free-riding punishment rises with deviation depth?  LLM {deep:.2f} vs {shallow:.2f} "
+          f"-> {verdict}   (human Boston: 2.74 > 0.96 = yes)")
+    print("Note: full per-pool Fig-1 bars are in Herrmann's SOM tables S3-S4; only the Boston "
+          "anchor is in the main text, so HUM column is Boston-only (a low-antisocial pool).")
 
 
 def print_breakdown(results, title, key):
@@ -145,10 +164,19 @@ def print_cross_societal(results):
     valid = [(a, b) for a, b in zip(llm_c, hum_c) if b == b]
     rho_vs_human = (pgg_results.spearman([a for a, _ in valid], [b for _, b in valid])
                     if len(valid) >= 2 else float("nan"))
+    # Paired level test: do LLM and human contributions differ pool-by-pool?
+    W, pval = pgg_results.wilcoxon_signed_rank([a for a, _ in valid], [b for _, b in valid])
+    mean_gap = (sum(a - b for a, b in valid) / len(valid)) if valid else float("nan")
     print("-" * 64)
-    print(f"Spearman(antisocial, contribution)  LLM = {rho_llm:+.2f}   (HUMAN ~ -0.90)")
+    print(f"Spearman(antisocial, contribution)  LLM = {rho_llm:+.2f}   (HUMAN ~ -0.90, Table 1 "
+          f"antisocial coef = {pgg_results.HUMAN_TABLE1_OLS['antisocial_punishment']})")
     print(f"Spearman(LLM contribution, HUMAN contribution) across societies = {rho_vs_human:+.2f}")
-    print("   (positive = the model reproduces Herrmann's cross-societal ranking of cooperation.)")
+    print("   (positive = the model reproduces Herrmann's cross-societal RANKING of cooperation.)")
+    if pval == pval:  # not nan
+        print(f"Wilcoxon signed-rank (LLM vs HUMAN contribution, n={len(valid)} pools): "
+              f"W={W:.1f}, p={pval:.4f}; mean LLM-HUM gap = {mean_gap:+.2f}")
+        print("   (significant + nonzero gap = right ranking but wrong LEVEL — the model is "
+              "systematically more/less cooperative than humans across the board.)")
 
 
 # --------------------------------------------------------------------------- #
@@ -195,11 +223,19 @@ def plot_deviation_bins(results, outdir: Path):
     means = [bins[lab]["mean_expenditure"] for lab in labels]
     colors = ["tab:green" if not bins[lab]["is_antisocial"] else "tab:red" for lab in labels]
     fig, ax = plt.subplots(figsize=(7, 5))
-    ax.bar(labels, means, color=colors, edgecolor="black")
+    ax.bar(labels, means, color=colors, edgecolor="black", label="LLM")
+    # Overlay the human Boston anchor (the only per-bin Fig-1 values in the text).
+    boston = pgg_results.HUMAN_FIG1_BOSTON
+    hx = [i for i, lab in enumerate(labels) if lab in boston]
+    hy = [boston[labels[i]] for i in hx]
+    if hx:
+        ax.scatter(hx, hy, color="black", marker="D", zorder=5,
+                   label="human (Boston, text)")
     ax.set_xlabel("Deviation (target contribution - punisher contribution)")
     ax.set_ylabel("Mean punishment expenditure")
     ax.set_title("Fig 1 (replication): punishment of free riding (green) vs\n"
                  "antisocial punishment (red) — LLM, English, neutral")
+    ax.legend()
     fig.tight_layout()
     fig.savefig(outdir / "pgg_fig1_deviation.png", dpi=150)
     plt.close(fig)

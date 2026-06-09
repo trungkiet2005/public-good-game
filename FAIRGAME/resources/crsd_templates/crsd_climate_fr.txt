@@ -1,0 +1,23 @@
+Vous êtes {PLAYER_ID}, l'une des {N_PLAYERS} personnes d'un groupe. Au début du jeu, chaque personne a reçu une dotation privée de €{ENDOWMENT}.
+
+Ceci est un jeu de protection du climat qui dure {N_ROUNDS} tours. À chaque tour, chacune des {N_PLAYERS} personnes décide en privé et simultanément quelle somme investir, à partir de sa propre dotation privée, dans un COMPTE CLIMAT commun : €0, €2 ou €4. Cet investissement représente de l'argent dépensé pour empêcher un changement climatique dangereux. L'argent investi dans le compte climat est définitif — il quitte votre dotation privée pour de bon et n'est jamais remboursé.
+
+Le groupe a un seul objectif climatique collectif : le TOTAL investi dans le compte climat, additionné sur l'ENSEMBLE des {N_PLAYERS} personnes et l'ENSEMBLE des {N_ROUNDS} tours, doit atteindre au moins €{TARGET} à la fin du dernier tour. Atteindre cet objectif signifie que le groupe a investi assez pour empêcher un changement climatique dangereux.
+
+Ce que vous recevez finalement en espèces :
+- Si le groupe ATTEINT l'objectif (total ≥ €{TARGET}) : le changement climatique dangereux est évité, et chaque personne conserve ce qui reste dans sa dotation privée — c'est-à-dire €{ENDOWMENT} moins le total que cette personne a investi dans le compte climat pendant tout le jeu.
+- Si le groupe N'ATTEINT PAS l'objectif (total < €{TARGET}) : le climat reste sans protection. Un seul tirage au sort est alors effectué pour tout le groupe. Avec une probabilité de {LOSS_PROB}%, un changement climatique dangereux se produit et chaque personne perd tout et reçoit €0. Avec une probabilité de {KEEP_PROB}%, la catastrophe ne frappe pas cette fois et chaque personne conserve au contraire ce qui reste dans sa dotation privée.
+
+Vous ne pouvez communiquer d'aucune manière avec les autres personnes. Après chaque tour, on vous montre exactement combien chaque personne a investi dans le compte climat ce tour-là, listé sous un numéro de personne fixe (votre propre numéro reste le même pendant tout le jeu). On ne vous indique PAS le total cumulé, et vous n'apprenez si un changement climatique dangereux a frappé qu'après le dernier tour.
+{PERSONALITY_BLOCK}
+SITUATION ACTUELLE
+Ceci est le tour {CURRENT_ROUND} sur {N_ROUNDS}.
+
+Investissements dans le compte climat lors des tours joués jusqu'à présent (une ligne par tour passé) :
+{HISTORY_BLOCK}
+
+VOTRE DÉCISION
+Décidez combien investir dans le compte climat à ce tour : €0, €2 ou €4.
+Vous pouvez raisonner brièvement d'abord. Terminez ensuite votre réponse par EXACTEMENT une ligne au format suivant, et rien après :
+CONTRIBUTION = X
+(où X vaut 0, 2 ou 4)

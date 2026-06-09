@@ -14,14 +14,14 @@ Các thành viên khác chỉ được hiển thị cho bạn dưới những nh
 Sau mỗi kỳ, bạn được cho biết mỗi thành viên đã góp bao nhiêu token vào quỹ trong kỳ đó, tổng quỹ chung, và thu nhập của chính bạn trong kỳ đó.
 {SOCIETY_BLOCK}
 {PERSONALITY_BLOCK}
-================  TÌNH HUỐNG HIỆN TẠI  ================
+TÌNH HUỐNG HIỆN TẠI
 Đây là kỳ {CURRENT_ROUND} trên {N_ROUNDS}.
 
 Kết quả các kỳ đã chơi cho đến nay:
 {HISTORY_BLOCK}
 
-================  QUYẾT ĐỊNH CỦA BẠN  ================
+QUYẾT ĐỊNH CỦA BẠN
 Hãy quyết định góp bao nhiêu trong số {ENDOWMENT} token của bạn vào quỹ chung trong kỳ này ({ACTION_DESC}).
 Bạn có thể lập luận ngắn gọn trước. Sau đó kết thúc câu trả lời bằng ĐÚNG một dòng theo định dạng sau, và không có gì sau nó:
->>> CONTRIBUTION = X
+CONTRIBUTION = X
 (trong đó X là một số nguyên từ {CONTRIB_MIN} đến {CONTRIB_MAX})

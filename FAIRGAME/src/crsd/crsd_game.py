@@ -30,10 +30,12 @@ class CRSDGame:
     """A single 6-player, 10-round collective-risk game instance."""
 
     def __init__(self, game_id: str, language: str, personality_condition: str,
-                 personalities: Sequence[str], template: str, params: Dict) -> None:
+                 personalities: Sequence[str], template: str, params: Dict,
+                 framing: str = "neutral") -> None:
         self.game_id = game_id
         self.language = language
         self.personality_condition = personality_condition
+        self.framing = framing                # cover story: "neutral" | "climate"
         self.params = params
         self.template = template
 
@@ -110,6 +112,7 @@ class CRSDGame:
             "treatment_loss_prob": self.loss_prob,
             "language": self.language,
             "personality_condition": self.personality_condition,
+            "framing": self.framing,
             "n_players": self.n_players,
             "n_rounds": self.n_rounds,
             "endowment": self.endowment,

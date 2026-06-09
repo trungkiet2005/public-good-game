@@ -22,7 +22,7 @@ class CRSDPlayer:
         self.personality: str = personality
         self.contributions: List[int] = []   # one entry per round, each in {0, 2, 4}
         self.reasonings: List[str] = []       # raw model text per round (audit)
-        self.parse_ok: List[bool] = []        # True if the >>> CONTRIBUTION token was found cleanly
+        self.parse_ok: List[bool] = []        # True if the CONTRIBUTION token was found cleanly
 
     def record(self, contribution: int, reasoning: str, parse_ok: bool) -> None:
         self.contributions.append(int(contribution))

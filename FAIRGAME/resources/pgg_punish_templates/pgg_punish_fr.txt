@@ -12,11 +12,11 @@ Les autres membres décident en même temps et peuvent attribuer des points de d
 {RECEIVED_LAST_PERIOD}
 {SOCIETY_BLOCK}
 {PERSONALITY_BLOCK}
-================  DÉDUCTIONS JUSQU'À PRÉSENT  ================
+DÉDUCTIONS JUSQU'À PRÉSENT
 {PUNISH_HISTORY_BLOCK}
 
-================  VOTRE DÉCISION  ================
+VOTRE DÉCISION
 Décidez combien de points de déduction (0 à {MAX_PUNISH}) attribuer à chaque membre indiqué ci-dessus.
 Vous pouvez raisonner brièvement d'abord. Puis terminez votre réponse par EXACTEMENT une ligne dans ce format, et rien après :
->>> DEDUCT: A=a B=b C=c
+DEDUCT: A=a B=b C=c
 (où a, b, c sont des entiers de 0 à {MAX_PUNISH}, pour Member A, Member B, Member C)

@@ -14,14 +14,14 @@
 每个周期结束后，你会被告知该周期每位成员向项目投入了多少代币、团队项目的总额，以及你本人该周期的收入。
 {SOCIETY_BLOCK}
 {PERSONALITY_BLOCK}
-================  当前情况  ================
+当前情况
 现在是第 {CURRENT_ROUND} 个周期，共 {N_ROUNDS} 个。
 
 到目前为止已进行各周期的结果：
 {HISTORY_BLOCK}
 
-================  你的决定  ================
+你的决定
 请决定本周期把你 {ENDOWMENT} 个代币中的多少投入团队项目（{ACTION_DESC}）。
 你可以先简要推理。然后用恰好一行、按以下格式结束你的回复，且其后不要有任何内容：
->>> CONTRIBUTION = X
+CONTRIBUTION = X
 （其中 X 是 {CONTRIB_MIN} 到 {CONTRIB_MAX} 之间的整数）

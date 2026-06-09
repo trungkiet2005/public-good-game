@@ -64,6 +64,14 @@ def test_parse_punishment_token():
     assert parse_punishment(">>> DEDUCT: A=1, B=2, C=3") == ([1, 2, 3], True)
 
 
+def test_parse_bare_token_no_prefix():
+    # Templates now emit bare tokens (the ">>>" prefix was removed); both stages
+    # must still parse as the primary token, not fall back.
+    assert parse_contribution("reasoning...\nCONTRIBUTION = 14") == (14, True)
+    assert parse_punishment("plan\nDEDUCT: A=2 B=0 C=1") == ([2, 0, 1], True)
+    assert parse_punishment("DEDUCT: Member A=1 Member B=2 Member C=3") == ([1, 2, 3], True)
+
+
 def test_parse_punishment_fallback_clamp_default():
     # missing >>> token, but A=/B=/C= present -> fallback
     assert parse_punishment("Member A=5 Member B=0 Member C=0") == ([5, 0, 0], False)
@@ -85,7 +93,8 @@ def test_contrib_prompt_fills_placeholders_and_treatment_block():
     assert "{" not in p0 and "}" not in p0
     assert "Member A, Member B, Member C" in p0
     assert "period 1 of 10" in p0
-    assert ">>> CONTRIBUTION = X" in p0
+    assert "CONTRIBUTION = X" in p0          # bare machine token (no ">>>" prefix)
+    assert ">>>" not in p0                    # decoration/prefix removed from template
     assert "deduction points" in p0          # treatment notice present in P
 
     gn = _make_game("N")
@@ -101,7 +110,8 @@ def test_punish_prompt_built_after_contributions():
     gp.ingest_contributions([4, 8, 12, 16], [""] * 4, [True] * 4)
     pp = gp.build_punish_prompts()[0]
     assert "{" not in pp and "}" not in pp
-    assert ">>> DEDUCT: A=a B=b C=c" in pp
+    assert "DEDUCT: A=a B=b C=c" in pp        # bare machine token (no ">>>" prefix)
+    assert ">>>" not in pp
     assert "Member A" in pp
 
 
@@ -303,6 +313,35 @@ def test_antisocial_vs_cooperation_corr_negative():
                                            [0, 0, 0, 0], [0, 0, 0, 0]]]}
     corr = pgg_results.antisocial_vs_cooperation_corr([hi, lo])
     assert corr < 0
+
+
+def test_mann_whitney_u_separates_and_handles_edges():
+    # Clearly separated samples -> small two-sided p.
+    lo = [1, 2, 3, 4, 5]
+    hi = [10, 11, 12, 13, 14]
+    U, p = pgg_results.mann_whitney_u(lo, hi)
+    assert p < 0.05
+    # Identical samples -> not significant.
+    _, p_same = pgg_results.mann_whitney_u([5, 5, 5], [5, 5, 5])
+    assert p_same != p_same or p_same > 0.5      # nan (no variance) or large p
+    # Degenerate input -> nan, no crash.
+    u2, p2 = pgg_results.mann_whitney_u([], [1, 2])
+    assert u2 != u2 and p2 != p2
+
+
+def test_wilcoxon_signed_rank_paired():
+    # LLM consistently below human by a fixed offset -> all diffs same sign.
+    hum = [18, 16, 14, 12, 10, 8, 6, 5, 4, 3]
+    llm = [h - 3 for h in hum]
+    W, p = pgg_results.wilcoxon_signed_rank(llm, hum)
+    assert p < 0.05                              # systematic level difference
+    assert W == 0.0                              # no positive-sign ranks
+    # No differences -> nan (test undefined), no crash.
+    w2, p2 = pgg_results.wilcoxon_signed_rank([1, 2, 3], [1, 2, 3])
+    assert w2 != w2 and p2 != p2
+    # nan pairs are dropped, not propagated.
+    w3, p3 = pgg_results.wilcoxon_signed_rank([1, float("nan"), 3], [0, 9, 1])
+    assert p3 == p3                              # finite p from the 2 valid pairs
 
 
 # --------------------------------------------------------------------------- #

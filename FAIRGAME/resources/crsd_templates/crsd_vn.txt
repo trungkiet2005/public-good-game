@@ -10,14 +10,14 @@ Số tiền cuối cùng bạn nhận được bằng tiền mặt:
 
 Bạn không thể giao tiếp với những người chơi khác dưới bất kỳ hình thức nào. Sau mỗi vòng, bạn được cho biết chính xác mỗi người chơi đã chuyển bao nhiêu vào tài khoản chung trong vòng đó, được liệt kê theo một số người chơi cố định (số của bạn giữ nguyên suốt ván). Bạn KHÔNG được cho biết tổng tích lũy, và bạn chỉ biết kết quả rút thăm ngẫu nhiên sau vòng cuối cùng.
 {PERSONALITY_BLOCK}
-================  TÌNH HÌNH HIỆN TẠI  ================
+TÌNH HÌNH HIỆN TẠI
 Đây là vòng {CURRENT_ROUND} trong tổng số {N_ROUNDS} vòng.
 
 Đóng góp ở các vòng đã chơi cho đến nay (mỗi dòng là một vòng trước đó):
 {HISTORY_BLOCK}
 
-================  QUYẾT ĐỊNH CỦA BẠN  ================
+QUYẾT ĐỊNH CỦA BẠN
 Hãy quyết định chuyển bao nhiêu vào tài khoản chung ở vòng này: €0, €2, hoặc €4.
 Bạn có thể suy luận ngắn gọn trước. Sau đó kết thúc câu trả lời bằng ĐÚNG một dòng theo định dạng sau, và không có gì sau nó:
->>> CONTRIBUTION = X
+CONTRIBUTION = X
 (trong đó X là 0, 2, hoặc 4)

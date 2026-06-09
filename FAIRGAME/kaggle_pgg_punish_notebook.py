@@ -67,7 +67,7 @@ MODELS = [
 DEFAULT_ENGINE = "transformers"   # "transformers" (ổn định offline) | "vllm"
 MAX_MODEL_LEN = 4096
 TEMPERATURE = 0.8         # 0.7–1.0: cần >0 để 4 agent khác nhau
-MAX_TOKENS = 512          # đủ reasoning ngắn + dòng ">>> CONTRIBUTION/DEDUCT"
+MAX_TOKENS = 512          # đủ reasoning ngắn + dòng "CONTRIBUTION = X" / "DEDUCT: ..."
 GPU_UTIL = 0.90           # chỉ dùng cho vllm
 TP_SIZE = 1               # tensor parallel (vllm); single GPU = 1
 FAIRGAME_VERBOSE_LOGS = "0"
@@ -462,6 +462,7 @@ def print_human_table(short, results):
             [r for r in society_games if r["treatment"] == "P"],
             key=lambda r: r["society"])
         anti_vals, coop_vals = [], []
+        llm_c, hum_c = [], []                          # paired LLM vs human per society
         print(f"\n=== [{short}] Cross-societal (treatment P): mean contribution per society ===")
         for soc in sorted(soc_sum, key=lambda s: -soc_sum[s]["mean_contribution"]):
             s = soc_sum[soc]
@@ -469,10 +470,21 @@ def print_human_table(short, results):
             h = hum["P_mean_contribution"].get(soc, float("nan"))
             anti_vals.append(anti)
             coop_vals.append(s["mean_contribution"])
+            if h == h:                                 # human value exists
+                llm_c.append(s["mean_contribution"])
+                hum_c.append(h)
             print(f"   {soc:>16}: LLM {s['mean_contribution']:5.2f} | HUM {h:4.1f} | "
                   f"antisocial_pts {anti:6.0f}")
         rho = pgg_results.spearman(anti_vals, coop_vals)
+        rho_vs_hum = pgg_results.spearman(llm_c, hum_c)
+        W, pval = pgg_results.wilcoxon_signed_rank(llm_c, hum_c)
         print(f"\n   Spearman(antisocial, contribution) LLM = {rho:+.2f}  (HUMAN ~ -0.90)")
+        print(f"   Spearman(LLM, HUMAN contribution) across societies = {rho_vs_hum:+.2f}  "
+              "(ranking match)")
+        if pval == pval:
+            gap = sum(a - b for a, b in zip(llm_c, hum_c)) / len(llm_c)
+            print(f"   Wilcoxon LLM vs HUMAN (n={len(llm_c)}): W={W:.1f}, p={pval:.4f}, "
+                  f"mean gap {gap:+.2f}  (level match)")
 
 
 def run_one_model(model_cfg):

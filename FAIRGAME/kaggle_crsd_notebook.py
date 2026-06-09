@@ -59,7 +59,7 @@ MODELS = [
 DEFAULT_ENGINE = "transformers"   # "transformers" (ổn định offline) | "vllm"
 MAX_MODEL_LEN = 4096
 TEMPERATURE = 0.8         # 0.7–1.0: cần >0 để 6 agent khác nhau
-MAX_TOKENS = 512          # đủ cho reasoning ngắn + dòng ">>> CONTRIBUTION = X"
+MAX_TOKENS = 512          # đủ cho reasoning ngắn + dòng "CONTRIBUTION = X"
 GPU_UTIL = 0.90           # chỉ dùng cho vllm
 TP_SIZE = 1               # tensor parallel (vllm); single GPU = 1
 FAIRGAME_VERBOSE_LOGS = "0"
@@ -76,6 +76,11 @@ RUN_PERSONALITY_BLOCK = True   # Block C: en × {coop, selfish, risk_averse} × 
 PERSONALITY_LANG = "en"
 PERSONALITY_CONDITIONS = ["cooperative", "selfish", "risk_averse"]
 TREATMENTS = [90, 50, 10]      # loss probabilities (%)
+# Cover stories ("framings"). "climate" = Milinski's exact climate-protection narrative
+# (faithful to the paper, for the human comparison); "neutral" = abstract shared-account
+# control. Running both lets you measure the FRAMING EFFECT on the same LLM.
+# Set to ["climate"] to replicate the paper only, or ["neutral"] for the abstract control.
+FRAMINGS = ["neutral", "climate"]
 OUTPUT_DIR = Path("/kaggle/working/crsd_results")
 SMOKE_TEST = True              # in 1 reply mẫu + parse khi nạp mỗi model
 
@@ -245,6 +250,7 @@ MARKER_ROOT.write_text(str(FAIRGAME_ROOT), encoding="utf-8")
 # Kiểm tra các file CRSD có mặt trong repo đã upload chưa
 _need = [FAIRGAME_ROOT / "src" / "crsd" / "crsd_game.py",
          FAIRGAME_ROOT / "resources" / "crsd_templates" / "crsd_en.txt",
+         FAIRGAME_ROOT / "resources" / "crsd_templates" / "crsd_climate_en.txt",
          FAIRGAME_ROOT / "resources" / "crsd_config" / "crsd_p90.json"]
 _missing = [str(p) for p in _need if not p.exists()]
 print(f"✅ Code ready — project root: {FAIRGAME_ROOT}")
@@ -276,9 +282,16 @@ from crsd_prompt import parse_contribution                     # noqa: E402
 
 TEMPLATE_DIR = FAIRGAME_BASE / "resources" / "crsd_templates"
 CONFIG_DIR = FAIRGAME_BASE / "resources" / "crsd_config"
-templates = {p.stem.replace("crsd_", ""): p.read_text(encoding="utf-8")
-             for p in TEMPLATE_DIR.glob("crsd_*.txt")}
-print(f"✅ crsd imported. templates={sorted(templates)} | configs dir={CONFIG_DIR}")
+# Templates are keyed framing -> language. Filename convention:
+#   crsd_<lang>.txt           -> framing "neutral" (default, backward-compatible)
+#   crsd_<framing>_<lang>.txt  -> e.g. crsd_climate_en.txt -> framing "climate"
+templates = {}
+for p in TEMPLATE_DIR.glob("crsd_*.txt"):
+    rest = p.stem[len("crsd_"):]                  # "en"  or  "climate_en"
+    framing, lang = rest.split("_", 1) if "_" in rest else ("neutral", rest)
+    templates.setdefault(framing, {})[lang] = p.read_text(encoding="utf-8")
+print(f"✅ crsd imported. framings={sorted(templates)} | "
+      f"langs(neutral)={sorted(templates.get('neutral', {}))} | configs dir={CONFIG_DIR}")
 
 
 def load_config(loss_prob):
@@ -299,24 +312,33 @@ def build_games():
         params = params_from_config(cfg)
         n_groups = cfg["groupsPerCondition"]
         conds = cfg["personalityConditions"]
+        # framings to run = FRAMINGS ∩ config ∩ available templates (keeps it robust)
+        cfg_framings = FRAMINGS or cfg.get("framings", ["neutral"])
+        framings = [f for f in cfg_framings if f in templates]
 
-        if RUN_LANGUAGE_BLOCK:                       # Block A+B: langs × neutral
-            for lang in cfg["languages"]:
-                for k in range(n_groups):
-                    games.append(CRSDGame(f"p{loss_prob}_{lang}_neutral_{k}", lang, "neutral",
-                                          conds["neutral"], templates[lang], params))
-        if RUN_PERSONALITY_BLOCK:                    # Block C: en × dispositions
-            for cond in PERSONALITY_CONDITIONS:
-                for k in range(n_groups):
-                    games.append(CRSDGame(f"p{loss_prob}_{PERSONALITY_LANG}_{cond}_{k}",
-                                          PERSONALITY_LANG, cond, conds[cond],
-                                          templates[PERSONALITY_LANG], params))
+        for framing in framings:
+            tpl = templates[framing]
+            if RUN_LANGUAGE_BLOCK:                   # Block A+B: framing × langs × neutral
+                for lang in cfg["languages"]:
+                    if lang not in tpl:
+                        continue
+                    for k in range(n_groups):
+                        games.append(CRSDGame(f"p{loss_prob}_{framing}_{lang}_neutral_{k}", lang,
+                                              "neutral", conds["neutral"], tpl[lang], params,
+                                              framing=framing))
+            if RUN_PERSONALITY_BLOCK and PERSONALITY_LANG in tpl:   # Block C: framing × en × dispositions
+                for cond in PERSONALITY_CONDITIONS:
+                    for k in range(n_groups):
+                        games.append(CRSDGame(f"p{loss_prob}_{framing}_{PERSONALITY_LANG}_{cond}_{k}",
+                                              PERSONALITY_LANG, cond, conds[cond],
+                                              tpl[PERSONALITY_LANG], params, framing=framing))
     return games
 
 
 _n_games = len(build_games())
-print(f"🎮 Mỗi model chạy {_n_games} games (= {_n_games * 6 * 10} generations). "
-      f"Tổng {len(MODELS)} model → {_n_games * len(MODELS)} games.")
+_active_framings = [f for f in (FRAMINGS or ["neutral"]) if f in templates]
+print(f"🎮 Mỗi model chạy {_n_games} games (framings={_active_framings}; = {_n_games * 6 * 10} "
+      f"generations). Tổng {len(MODELS)} model → {_n_games * len(MODELS)} games.")
 
 # =====================================================================
 # CELL 5: Helpers — load model, chạy 1 model, lưu RIÊNG theo model
@@ -340,12 +362,14 @@ def load_model(model_cfg):
 
 
 def smoke_test(model_cfg):
-    probe = CRSDGame("probe", "en", "neutral", ["none"] * 6, templates["en"],
+    pf = next((f for f in ("climate", "neutral") if f in templates), sorted(templates)[0])
+    probe_tpl = templates[pf].get("en") or next(iter(templates[pf].values()))
+    probe = CRSDGame("probe", "en", "neutral", ["none"] * 6, probe_tpl,
                      dict(n_players=6, n_rounds=10, endowment=40, target=120,
-                          loss_prob=90, contribution_options=(0, 2, 4)))
+                          loss_prob=90, contribution_options=(0, 2, 4)), framing=pf)
     resp = send_prompts_global(probe.build_round_prompts()[:1], batch_size=0)
     val, ok = parse_contribution(resp[0])
-    print(f"🧪 [{model_cfg['short_name']}] sample reply (P1, r1) — 400 ký tự cuối:\n", resp[0][-400:])
+    print(f"🧪 [{model_cfg['short_name']}] sample reply (P1, r1, framing={pf}) — 400 ký tự cuối:\n", resp[0][-400:])
     print(f"🧪 Parsed = {val}  (primary_ok={ok}; True = model tuân thủ token)")
 
 
@@ -366,23 +390,28 @@ def save_model_results(model_cfg, results):
     df = crsd_results.to_dataframe(results)
     df.insert(0, "model", short)                       # cột model đứng đầu
     df.to_csv(model_dir / "crsd_all_games.csv", index=False)
-    for (p, lang), sub in df.groupby(["treatment_loss_prob", "language"]):
-        sub.to_csv(model_dir / f"crsd_p{p}_{lang}.csv", index=False)
+    for (framing, p, lang), sub in df.groupby(["framing", "treatment_loss_prob", "language"]):
+        sub.to_csv(model_dir / f"crsd_{framing}_p{p}_{lang}.csv", index=False)
 
     def _ser(summary):
         return {str(k): v for k, v in summary.items()}
 
-    baseline = [r for r in results
-                if r["language"] == "en" and r["personality_condition"] == "neutral"]
+    def _fr(r):                                        # backward-compat for older result dicts
+        return r.get("framing", "neutral")
+
     metrics = {
         "model": short,
-        "baseline_en_neutral_by_treatment": _ser(crsd_results.summarize(baseline)),
-        "by_treatment_language": _ser(crsd_results.summarize(
+        # baseline = English, neutral disposition, split by framing × treatment.
+        # The "climate_*" rows are the faithful comparison to Milinski; "neutral_*" is the control.
+        "baseline_en_neutral_by_framing_treatment": _ser(crsd_results.summarize(
+            [r for r in results if r["language"] == "en" and r["personality_condition"] == "neutral"],
+            key=lambda r: f"{_fr(r)}_p{r['treatment_loss_prob']}")),
+        "by_framing_treatment_language": _ser(crsd_results.summarize(
             [r for r in results if r["personality_condition"] == "neutral"],
-            key=lambda r: f"p{r['treatment_loss_prob']}_{r['language']}")),
-        "by_treatment_personality": _ser(crsd_results.summarize(
+            key=lambda r: f"{_fr(r)}_p{r['treatment_loss_prob']}_{r['language']}")),
+        "by_framing_treatment_personality": _ser(crsd_results.summarize(
             [r for r in results if r["language"] == PERSONALITY_LANG],
-            key=lambda r: f"p{r['treatment_loss_prob']}_{r['personality_condition']}")),
+            key=lambda r: f"{_fr(r)}_p{r['treatment_loss_prob']}_{r['personality_condition']}")),
         "human_benchmark": crsd_results.HUMAN_BENCHMARK,
     }
     (model_dir / "crsd_metrics.json").write_text(
@@ -391,21 +420,26 @@ def save_model_results(model_cfg, results):
 
 
 def print_human_table(short, results):
-    baseline = [r for r in results
-                if r["language"] == "en" and r["personality_condition"] == "neutral"]
-    bsum = crsd_results.summarize(baseline)
-    print(f"\n=== [{short}] LLM (en, neutral) vs HUMAN (Milinski 2008) ===")
-    print(f"{'p':>4} | {'success LLM/HUM':>16} | {'mean total LLM/HUM':>22} | "
+    print(f"\n=== [{short}] LLM (en, neutral) vs HUMAN (Milinski 2008) — by framing ===")
+    print(f"{'framing':>8} {'p':>4} | {'success LLM/HUM':>16} | {'mean total LLM/HUM':>22} | "
           f"{'fairshare LLM/HUM':>18} | parse_fb")
-    for p in TREATMENTS:
-        s = bsum.get(p)
-        if not s:
-            continue
-        h = crsd_results.HUMAN_BENCHMARK[p]
-        print(f"{p:>4} | {s['success_rate']:.2f} / {h['success_rate']:.2f}        | "
-              f"{s['final_total']['mean']:6.1f} / {h['mean_final_total']:6.1f}          | "
-              f"{s['fair_sharers_per_group']:.2f} / {h['fair_sharers_per_group']:.2f}          | "
-              f"{s['parse_fallback_rate']:.1%}")
+    framings = sorted({r.get("framing", "neutral") for r in results
+                       if r["language"] == "en" and r["personality_condition"] == "neutral"})
+    for framing in framings:
+        base = [r for r in results if r["language"] == "en"
+                and r["personality_condition"] == "neutral" and r.get("framing", "neutral") == framing]
+        bsum = crsd_results.summarize(base)
+        for p in TREATMENTS:
+            s = bsum.get(p)
+            if not s:
+                continue
+            h = crsd_results.HUMAN_BENCHMARK[p]
+            print(f"{framing:>8} {p:>4} | {s['success_rate']:.2f} / {h['success_rate']:.2f}        | "
+                  f"{s['final_total']['mean']:6.1f} / {h['mean_final_total']:6.1f}          | "
+                  f"{s['fair_sharers_per_group']:.2f} / {h['fair_sharers_per_group']:.2f}          | "
+                  f"{s['parse_fallback_rate']:.1%}")
+    print("   (HUMAN = Milinski's climate framing → the 'climate' rows are the faithful comparison; "
+          "'neutral' rows = abstract control, so climate−neutral = the framing effect on this LLM.)")
 
 
 def run_one_model(model_cfg):
@@ -439,8 +473,8 @@ def run_one_model(model_cfg):
 # =====================================================================
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 all_dfs = []
-manifest = {"seed": SEED, "treatments": TREATMENTS, "n_games_per_model": _n_games,
-            "run_language_block": RUN_LANGUAGE_BLOCK,
+manifest = {"seed": SEED, "treatments": TREATMENTS, "framings": _active_framings,
+            "n_games_per_model": _n_games, "run_language_block": RUN_LANGUAGE_BLOCK,
             "run_personality_block": RUN_PERSONALITY_BLOCK, "models": []}
 
 for _cfg in MODELS:
@@ -473,9 +507,9 @@ if all_dfs:
     # bảng success-rate theo model × treatment (cell en/neutral)
     base = combined[(combined.language == "en") &
                     (combined.personality_condition == "neutral")]
-    piv = base.pivot_table(index="model", columns="treatment_loss_prob",
+    piv = base.pivot_table(index=["model", "framing"], columns="treatment_loss_prob",
                            values="reached_target", aggfunc="mean")
-    print("\n=== Success rate (en, neutral) theo model × treatment ===")
+    print("\n=== Success rate (en, neutral) theo model × framing × treatment ===")
     print(piv.to_string(float_format=lambda x: f"{x:.2f}"))
 else:
     print("⚠️  Không có model nào chạy thành công — kiểm tra path trong MODELS[].")
