@@ -54,6 +54,39 @@ def _welch(mean1, sd1, n1, mean2, sd2, n2):
     return t, p
 
 
+def _fisher_success(llm_succ, llm_n, hum_succ, hum_n):
+    """Two-sided Fisher exact p for LLM vs human success counts (paper uses a
+    binomial test; Fisher exact is the right 2x2 analogue for two groups)."""
+    if _scipy_stats is None:
+        return float("nan")
+    table = [[llm_succ, llm_n - llm_succ], [hum_succ, hum_n - hum_succ]]
+    try:
+        _, p = _scipy_stats.fisher_exact(table, alternative="two-sided")
+        return p
+    except Exception:  # noqa: BLE001
+        return float("nan")
+
+
+def _treatment_anova(baseline):
+    """One-way ANOVA of group_total across the three treatments (mirrors the
+    paper's cross-treatment F-test, where humans differed strongly:
+    F=13.784, P<0.0001). Returns (F, p) or (nan, nan)."""
+    if _scipy_stats is None:
+        return float("nan"), float("nan")
+    groups = []
+    for p in (90, 50, 10):
+        vals = [g["group_total"] for g in baseline if g["treatment_loss_prob"] == p]
+        if len(vals) >= 2:
+            groups.append(vals)
+    if len(groups) < 2:
+        return float("nan"), float("nan")
+    try:
+        F, pval = _scipy_stats.f_oneway(*groups)
+        return F, pval
+    except Exception:  # noqa: BLE001
+        return float("nan"), float("nan")
+
+
 def load_results(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -76,17 +109,43 @@ def print_human_comparison(results):
         ft = s["final_total"]
         sd_h = h["se"] * math.sqrt(h["n_groups"])
         t, pval = _welch(ft["mean"], ft["std"], ft["n"], h["mean"], sd_h, h["n_groups"])
-        pstr = f"(Welch t={t:.2f}, p={pval:.3f})" if not math.isnan(pval) else f"(Welch t={t:.2f})"
+        # Fisher exact on success counts (LLM vs human), paper's binomial analogue.
+        llm_n = ft["n"]
+        llm_succ = int(round(s["success_rate"] * llm_n))
+        fish_p = _fisher_success(llm_succ, llm_n, h["success"], h["n_groups"])
+        pstr = f"(mean: Welch t={t:.2f}, p={pval:.3f}" if not math.isnan(pval) else f"(mean: Welch t={t:.2f}"
+        pstr += f"; success: Fisher p={fish_p:.3f})" if not math.isnan(fish_p) else ")"
         print(f"{p:>4} | {s['success_rate']*100:5.0f}% / {h['success']*10:5.0f}%        | "
               f"{ft['mean']:6.1f}±{ft['sem']:4.1f} / {h['mean']:5.1f}±{h['se']:.1f}   | "
               f"{s['fair_sharers_per_group']:5.2f} / {h['fair']:.2f}              | "
               f"{s['parse_fallback_rate']:6.1%}")
         print(f"       round1 dist (0/2/4): {s['round1_distribution']}   "
-              f"acts 1st half {s['acts_by_half']['first']}  2nd half {s['acts_by_half']['second']}   {pstr}")
-    if any(crsd_results.summarize(baseline)[p]["parse_fallback_rate"] > 0.05
-           for p in summary):
+              f"acts/group 1st {_per_group(s['acts_by_half']['first'], llm_n)}  "
+              f"2nd {_per_group(s['acts_by_half']['second'], llm_n)}")
+        print(f"       {pstr}")
+
+    # Treatment sensitivity: does the LLM differ across 90/50/10 like humans did?
+    F, ap = _treatment_anova(baseline)
+    print("-" * 100)
+    if not math.isnan(F):
+        print(f"Treatment effect on group_total (one-way ANOVA across 90/50/10): "
+              f"F={F:.2f}, p={ap:.4f}")
+        print("   Human reference (Milinski 2008): F=13.78, P<0.0001 — humans dropped "
+              "118→92→73 as risk fell.")
+        print("   A small/non-significant F here = the LLM is INSENSITIVE to the risk "
+              "manipulation (key CRSD comparative static).")
+    print("\nNote: 'fair-sharer' = total contribution >= 2*n_rounds (avg >= EUR2/round), "
+          "matching the paper's 'fair share of EUR2 per round'.")
+    if any(summary[p]["parse_fallback_rate"] > 0.05 for p in summary):
         print("\n⚠️  parse_fallback_rate > 5% in some cell: low contributions may partly reflect")
-        print("    model non-compliance/miscounting (faithful visibility on a 7B model).")
+        print("    model non-compliance/miscounting (faithful visibility on a small model).")
+
+
+def _per_group(acts_dict, n_games):
+    """Scale summed €0/€2/€4 act counts to a per-group basis (paper Fig 3 unit)."""
+    if not n_games:
+        return {k: 0.0 for k in acts_dict}
+    return {k: round(v / n_games, 1) for k, v in acts_dict.items()}
 
 
 def print_breakdown(results, title, key):
@@ -112,15 +171,22 @@ def plot_fig2_cumulative(results, outdir: Path):
                 if r["language"] == "en" and r["personality_condition"] == "neutral"]
     summary = crsd_results.summarize(baseline)
     fig, ax = plt.subplots(figsize=(7, 5))
+    # Paper Fig 2 colours: 90% blue, 50% green, 10% red.
     colors = {90: "tab:blue", 50: "tab:green", 10: "tab:red"}
+    markers = {90: "D", 50: "^", 10: "s"}
+    n_rounds = len(summary[next(iter(summary))]["cumulative_trajectory"])
+    target = 120
+    # Fair-share reference line: €2/player/round × 6 players = €12/round, hits €120 at round 10.
+    fair = [target / n_rounds * r for r in range(1, n_rounds + 1)]
+    ax.plot(range(1, n_rounds + 1), fair, color="black", lw=1.4,
+            label="fair-share path → target €120")
     for p in (90, 50, 10):
         if p not in summary:
             continue
         traj = summary[p]["cumulative_trajectory"]
         rounds = list(range(1, len(traj) + 1))
-        ax.plot(rounds, traj, marker="o", color=colors[p], label=f"{p}% loss risk")
-    n_rounds = len(summary[next(iter(summary))]["cumulative_trajectory"])
-    ax.axhline(120, color="black", lw=1.2, ls="--", label="target €120")
+        ax.plot(rounds, traj, marker=markers[p], color=colors[p], label=f"{p}% loss risk")
+    ax.axhline(target, color="grey", lw=1.0, ls="--")
     ax.set_xlabel("Round")
     ax.set_ylabel("Cumulative group contribution (€)")
     ax.set_title("Fig 2 (replication): cumulative contribution per round\nLLM, English, neutral")
@@ -139,23 +205,35 @@ def plot_fig3_acts(results, outdir: Path):
     baseline = [r for r in results
                 if r["language"] == "en" and r["personality_condition"] == "neutral"]
     summary = crsd_results.summarize(baseline)
-    fig, axes = plt.subplots(1, 3, figsize=(13, 4.2), sharey=True)
+    # Paper Fig 3 coding: €0 = unfilled (white), €2 = light grey, €4 = dark grey;
+    # per group of 6, first half (rounds 1-5) vs second half (6-10).
+    facecolor = {0: "white", 2: "0.75", 4: "0.35"}
+    panel_tag = {90: "a", 50: "b", 10: "c"}
+    fig, axes = plt.subplots(1, 3, figsize=(13, 4.4), sharey=True)
+    labels = ["€0", "€2", "€4"]
     for ax, p in zip(axes, (90, 50, 10)):
         if p not in summary:
             continue
-        acts = summary[p]["acts_by_half"]
-        labels = ["€0", "€2", "€4"]
-        first = [acts["first"][k] for k in (0, 2, 4)]
-        second = [acts["second"][k] for k in (0, 2, 4)]
+        s = summary[p]
+        n = s["final_total"]["n"] or 1                 # groups in this cell → per-group scale
+        first = [s["acts_by_half"]["first"][k] / n for k in (0, 2, 4)]
+        second = [s["acts_by_half"]["second"][k] / n for k in (0, 2, 4)]
         x = range(len(labels))
-        ax.bar([i - 0.2 for i in x], first, width=0.4, label="rounds 1-5")
-        ax.bar([i + 0.2 for i in x], second, width=0.4, label="rounds 6-10")
+        for i, k in enumerate((0, 2, 4)):
+            ax.bar(i - 0.2, first[i], width=0.4, facecolor=facecolor[k],
+                   edgecolor="black", hatch="//")
+            ax.bar(i + 0.2, second[i], width=0.4, facecolor=facecolor[k],
+                   edgecolor="black")
         ax.set_xticks(list(x))
         ax.set_xticklabels(labels)
-        ax.set_title(f"{p}% loss risk")
+        ax.set_title(f"{panel_tag[p]})  {p}% loss risk")
         ax.set_xlabel("contribution")
-    axes[0].set_ylabel("number of acts")
-    axes[0].legend()
+    axes[0].set_ylabel("acts per group of 6")
+    # legend: hatched = rounds 1-5, solid = rounds 6-10
+    from matplotlib.patches import Patch
+    axes[0].legend(handles=[Patch(facecolor="white", edgecolor="black", hatch="//", label="rounds 1-5"),
+                            Patch(facecolor="white", edgecolor="black", label="rounds 6-10")],
+                   loc="upper right")
     fig.suptitle("Fig 3 (replication): selfish/fair/altruist acts by game half — LLM, English, neutral")
     fig.tight_layout()
     fig.savefig(outdir / "crsd_fig3_acts.png", dpi=150)
@@ -175,9 +253,14 @@ def main():
     outdir.mkdir(parents=True, exist_ok=True)
 
     results = load_results(path)
+    models = sorted({r.get("model", "?") for r in results})
     print(f"Loaded {len(results)} games from {path}")
+    print(f"Model(s) in this file: {', '.join(models)}")
+    if len(models) > 1:
+        print("⚠️  Multiple models in one file — this report pools them. Run per-model "
+              "files (crsd_results/<model>/crsd_results.json) for a clean comparison.")
     if _scipy_stats is None:
-        print("(scipy not available — Welch p-values omitted; install scipy for them.)")
+        print("(scipy not available — Welch / Fisher / ANOVA p-values omitted; install scipy for them.)")
 
     print_human_comparison(results)
     print_breakdown([r for r in results if r["personality_condition"] == "neutral"],

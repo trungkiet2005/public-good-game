@@ -93,19 +93,23 @@ def _init_transformers_engine(model_path: str, temperature: float = 1.0,
     print(f"[LocalVLLM] Loaded model from {model_path} with Transformers engine")
 
 
-def init_local_llm(model_path: str, engine: str = "vllm", **kwargs):
+def init_local_llm(model_path: str, engine: str = "vllm", force: bool = False, **kwargs):
     """
-    Initialize the local LLM engine. Call this ONCE at startup.
+    Initialize the local LLM engine. Call this ONCE per model.
 
     Args:
         model_path: Path to the local model directory.
         engine: "vllm" (recommended) or "transformers" (fallback).
+        force: If True, free any currently loaded model first and reload.
+            Needed for multi-model runs in a single process.
         **kwargs: Additional arguments passed to the engine init function.
     """
     global _GLOBAL_LLM
     if _GLOBAL_LLM is not None:
-        print("[LocalVLLM] Engine already initialized, skipping.")
-        return
+        if not force:
+            print("[LocalVLLM] Engine already initialized, skipping (use force=True to reload).")
+            return
+        free_local_llm()
 
     if engine == "vllm":
         _init_vllm_engine(model_path, **kwargs)
@@ -113,6 +117,47 @@ def init_local_llm(model_path: str, engine: str = "vllm", **kwargs):
         _init_transformers_engine(model_path, **kwargs)
     else:
         raise ValueError(f"Unknown engine type: {engine}. Use 'vllm' or 'transformers'.")
+
+
+def free_local_llm():
+    """Release the loaded model and free GPU memory so a different model can be
+    loaded in the same process (multi-model runs).
+
+    Transformers teardown is reliable; vLLM teardown is best-effort (vLLM holds
+    GPU memory via worker state and may need a kernel restart to free fully).
+    """
+    global _GLOBAL_LLM, _GLOBAL_TOKENIZER, _GLOBAL_SAMPLING_PARAMS, _GLOBAL_ENGINE_TYPE
+    import gc
+
+    engine = _GLOBAL_ENGINE_TYPE
+    llm = _GLOBAL_LLM
+    _GLOBAL_LLM = None
+    _GLOBAL_TOKENIZER = None
+    _GLOBAL_SAMPLING_PARAMS = None
+    _GLOBAL_ENGINE_TYPE = None
+
+    if llm is None:
+        return
+
+    if engine == "vllm":
+        try:  # best-effort: tear down vLLM's distributed/model-parallel state
+            from vllm.distributed.parallel_state import (
+                destroy_distributed_environment, destroy_model_parallel)
+            destroy_model_parallel()
+            destroy_distributed_environment()
+        except Exception:  # noqa: BLE001
+            pass
+
+    del llm
+    gc.collect()
+    try:
+        import torch
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            torch.cuda.synchronize()
+    except Exception:  # noqa: BLE001
+        pass
+    print("[LocalVLLM] Freed model and emptied GPU cache.")
 
 
 def _generate_vllm(prompt: str) -> str:

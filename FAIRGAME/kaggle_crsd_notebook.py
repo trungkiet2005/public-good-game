@@ -1,22 +1,30 @@
 """
 =====================================================================
-FAIRGAME × CRSD — Kaggle OFFLINE notebook (Internet OFF, GPU ON)  ── ALL-IN-ONE
+FAIRGAME × CRSD — Kaggle OFFLINE notebook (Internet OFF, GPU ON)  ── MULTI-MODEL
 =====================================================================
 Replicate Milinski et al. (2008) "collective-risk social dilemma" với LLM agents,
-chạy local trên GPU Kaggle (RTX PRO 6000, 96GB). Một file duy nhất: nạp model
-(Cell 1–5) rồi chạy CRSD + lưu kết quả (Cell 6–11).
+chạy local trên GPU Kaggle. Nạp LẦN LƯỢT nhiều model (vd Qwen2.5-7B, Gemma-2-12B),
+chạy CRSD cho từng model, và lưu kết quả RIÊNG theo từng model.
 
 CÁCH CHẠY:
   1. Tạo notebook Kaggle mới — GPU: ON, Internet: OFF.
   2. + Add Input:
        a) Code: repo public-good-game (read-only), CHỨA src/crsd/ + resources/crsd_*.
-       b) Model: Qwen2.5-7B-Instruct (mount ở /kaggle/input/<...>).
+       b) Model(s): add MỖI model làm một input (Qwen2.5-7B, Gemma-2-12B, ...).
   3. Copy file này vào notebook, chia cell theo "# CELL N".
-  4. Sửa MODEL_PATH + KAGGLE_CODE_INPUT ở Cell 1/3 cho đúng path của bạn.
-  5. Run lần lượt Cell 1 → 11.
+  4. Sửa MODELS[] + KAGGLE_CODE_INPUT ở Cell 1/3 cho đúng path của bạn.
+       Chạy "!ls /kaggle/input/" để xem path thực của từng model.
+  5. Run lần lượt Cell 1 → 8.
 
-Output: /kaggle/working/crsd_results/  (crsd_results.json, crsd_all_games.csv,
-crsd_metrics.json, per-treatment CSV) + crsd_results.zip ở Output tab.
+ĐA MODEL:
+  * ENGINE="transformers" được KHUYẾN NGHỊ khi chạy nhiều model trong một lần
+    (free_local_llm() giải phóng GPU sạch giữa các model). vLLM giữ VRAM qua
+    worker state nên có thể cần restart kernel giữa các model.
+  * Mỗi model có thể override engine/temperature/max_tokens riêng trong MODELS[].
+
+Output: /kaggle/working/crsd_results/<model_short_name>/  (crsd_results.json,
+crsd_all_games.csv, crsd_metrics.json, per-treatment CSV) + một
+crsd_all_models.csv gộp + run_manifest.json + crsd_results.zip ở Output tab.
 =====================================================================
 """
 
@@ -24,12 +32,29 @@ crsd_metrics.json, per-treatment CSV) + crsd_results.zip ở Output tab.
 # CELL 1: CẤU HÌNH — SỬA Ở ĐÂY
 # =====================================================================
 
-# --- Model (đã add làm Kaggle input). Chạy "!ls /kaggle/input/" để xem path thực. ---
-MODEL_PATH = "/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1"
-MODEL_SHORT_NAME = "qwen25-7b-instruct"
+# --- Danh sách model. Mỗi model đã add làm Kaggle input. -------------------- #
+# path:        thư mục model trong /kaggle/input/...  (xem bằng "!ls /kaggle/input/")
+# short_name:  tên thư mục output + cột "model" trong CSV (phải DUY NHẤT).
+# engine:      "transformers" (ổn định, free GPU được) | "vllm".
+# (tuỳ chọn)   temperature / max_tokens / max_model_len: override cho riêng model đó.
+MODELS = [
+    {
+        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1",
+        "short_name": "qwen25-7b-instruct",
+        "engine": "transformers",
+    },
+    {
+        "path": "/kaggle/input/gemma-2/transformers/gemma-2-12b-it/1",
+        "short_name": "gemma2-12b-it",
+        "engine": "transformers",
+    },
+    # Thêm model khác ở đây, ví dụ:
+    # {"path": "/kaggle/input/.../llama-3.1-8b-instruct", "short_name": "llama31-8b-instruct",
+    #  "engine": "transformers"},
+]
 
-# --- Engine + tham số sinh ---
-ENGINE = "transformers"   # "transformers" (ổn định offline) | "vllm" (nếu image có sẵn)
+# --- Tham số sinh MẶC ĐỊNH (model có thể override từng cái trong MODELS[]) --- #
+DEFAULT_ENGINE = "transformers"   # "transformers" (ổn định offline) | "vllm"
 MAX_MODEL_LEN = 4096
 TEMPERATURE = 0.8         # 0.7–1.0: cần >0 để 6 agent khác nhau
 MAX_TOKENS = 512          # đủ cho reasoning ngắn + dòng ">>> CONTRIBUTION = X"
@@ -41,7 +66,7 @@ FAIRGAME_VERBOSE_LOGS = "0"
 import random  # noqa: E402
 from pathlib import Path  # noqa: E402
 
-SEED = 20080219                # reproducibility (ngày publish paper)
+SEED = 20080219                # reproducibility (ngày publish paper); CHUNG cho mọi model
 BATCH_SIZE = 256               # prompts/forward; 0 = cả vòng 1 batch. 7B+96GB: 256 an toàn.
 MAX_PARSE_RETRIES = 2          # re-hỏi riêng reply không parse được
 RUN_LANGUAGE_BLOCK = True      # Block A+B: 5 langs × neutral × 10
@@ -50,6 +75,7 @@ PERSONALITY_LANG = "en"
 PERSONALITY_CONDITIONS = ["cooperative", "selfish", "risk_averse"]
 TREATMENTS = [90, 50, 10]      # loss probabilities (%)
 OUTPUT_DIR = Path("/kaggle/working/crsd_results")
+SMOKE_TEST = True              # in 1 reply mẫu + parse khi nạp mỗi model
 
 # =====================================================================
 # CELL 2: Chuẩn bị path + helpers (Internet OFF — không pip)
@@ -164,7 +190,9 @@ _need = [FAIRGAME_ROOT / "src" / "crsd" / "crsd_game.py",
          FAIRGAME_ROOT / "resources" / "crsd_config" / "crsd_p90.json"]
 _missing = [str(p) for p in _need if not p.exists()]
 print(f"✅ Code ready — project root: {FAIRGAME_ROOT}")
-print(f"📁 Model path: {MODEL_PATH} | exists={Path(MODEL_PATH).exists()}")
+print("📁 Models khai báo:")
+for m in MODELS:
+    print(f"   - {m['short_name']:<22} exists={Path(m['path']).exists()}  ({m['path']})")
 if _missing:
     print("❌ THIẾU file CRSD trong repo (push & re-add Code input):")
     for m in _missing:
@@ -173,31 +201,7 @@ else:
     print("✅ CRSD files present (src/crsd + resources/crsd_*).")
 
 # =====================================================================
-# CELL 4: Load model vào GPU
-# =====================================================================
-conn = import_local_connector()
-print(f"🚀 Loading model ({ENGINE})...")
-if ENGINE == "vllm":
-    conn.init_local_llm(
-        MODEL_PATH, engine="vllm", max_model_len=MAX_MODEL_LEN,
-        temperature=TEMPERATURE, max_tokens=MAX_TOKENS,
-        gpu_memory_utilization=GPU_UTIL, tensor_parallel_size=TP_SIZE,
-    )
-else:
-    conn.init_local_llm(
-        MODEL_PATH, engine="transformers", temperature=TEMPERATURE, max_tokens=MAX_TOKENS,
-    )
-print("✅ Model loaded!")
-
-# =====================================================================
-# CELL 5: Test nhanh (model đã sống chưa)
-# =====================================================================
-conn = import_local_connector()
-_test = conn.LocalVLLMConnector(provider_model="test")
-print("🧪 2+2 =", _test.send_prompt("What is 2+2? Answer with just the number."))
-
-# =====================================================================
-# CELL 6: Import crsd modules (anchor theo __file__ của connector)
+# CELL 4: Import crsd modules + load templates/configs + build-plan
 # =====================================================================
 import json
 
@@ -205,12 +209,12 @@ conn = import_local_connector()
 send_prompts_global = conn.send_prompts_global
 
 SRC_DIR = Path(conn.__file__).resolve().parent.parent          # .../src
-FAIRGAME_BASE = SRC_DIR.parent                                  # repo root chứa src/ + resources/
+FAIRGAME_BASE = SRC_DIR.parent                                 # repo root chứa src/ + resources/
 sys.path.insert(0, str(SRC_DIR / "crsd"))
 
 import crsd_results                                             # noqa: E402
-from crsd_game import CRSDGame, run_games_lockstep              # noqa: E402
-from crsd_prompt import parse_contribution                      # noqa: E402
+from crsd_game import CRSDGame, run_games_lockstep             # noqa: E402
+from crsd_prompt import parse_contribution                     # noqa: E402
 
 TEMPLATE_DIR = FAIRGAME_BASE / "resources" / "crsd_templates"
 CONFIG_DIR = FAIRGAME_BASE / "resources" / "crsd_config"
@@ -218,20 +222,7 @@ templates = {p.stem.replace("crsd_", ""): p.read_text(encoding="utf-8")
              for p in TEMPLATE_DIR.glob("crsd_*.txt")}
 print(f"✅ crsd imported. templates={sorted(templates)} | configs dir={CONFIG_DIR}")
 
-# =====================================================================
-# CELL 7: Smoke test — model có tuân thủ token ">>> CONTRIBUTION = X"?
-# =====================================================================
-_probe = CRSDGame("probe", "en", "neutral", ["none"] * 6, templates["en"],
-                  dict(n_players=6, n_rounds=10, endowment=40, target=120,
-                       loss_prob=90, contribution_options=(0, 2, 4)))
-_resp = send_prompts_global(_probe.build_round_prompts()[:1], batch_size=0)
-print("🧪 Sample reply (Player 1, round 1) — 600 ký tự cuối:\n", _resp[0][-600:])
-print("🧪 Parsed:", parse_contribution(_resp[0]),
-      "(primary_ok=True nghĩa là model tuân thủ token)")
 
-# =====================================================================
-# CELL 8: Build games theo run plan
-# =====================================================================
 def load_config(loss_prob):
     return json.loads((CONFIG_DIR / f"crsd_p{loss_prob}.json").read_text(encoding="utf-8"))
 
@@ -242,92 +233,197 @@ def params_from_config(cfg):
                 contribution_options=tuple(cfg["contributionOptions"]))
 
 
-games = []
-for loss_prob in TREATMENTS:
-    cfg = load_config(loss_prob)
-    params = params_from_config(cfg)
-    n_groups = cfg["groupsPerCondition"]
-    conds = cfg["personalityConditions"]
+def build_games():
+    """Tạo MỚI toàn bộ game cho một lần chạy (game giữ state nên phải build lại mỗi model)."""
+    games = []
+    for loss_prob in TREATMENTS:
+        cfg = load_config(loss_prob)
+        params = params_from_config(cfg)
+        n_groups = cfg["groupsPerCondition"]
+        conds = cfg["personalityConditions"]
 
-    if RUN_LANGUAGE_BLOCK:                       # Block A+B: langs × neutral
-        for lang in cfg["languages"]:
-            for k in range(n_groups):
-                games.append(CRSDGame(f"p{loss_prob}_{lang}_neutral_{k}", lang, "neutral",
-                                      conds["neutral"], templates[lang], params))
-    if RUN_PERSONALITY_BLOCK:                    # Block C: en × dispositions
-        for cond in PERSONALITY_CONDITIONS:
-            for k in range(n_groups):
-                games.append(CRSDGame(f"p{loss_prob}_{PERSONALITY_LANG}_{cond}_{k}",
-                                      PERSONALITY_LANG, cond, conds[cond],
-                                      templates[PERSONALITY_LANG], params))
-
-print(f"🎮 Tổng số games: {len(games)}  (= {len(games) * 6 * 10} generations)")
-
-# =====================================================================
-# CELL 9: Chạy lockstep (1 batch lớn mỗi vòng cho TẤT CẢ games)
-# =====================================================================
-def responder(prompts):
-    return send_prompts_global(prompts, batch_size=BATCH_SIZE)
+        if RUN_LANGUAGE_BLOCK:                       # Block A+B: langs × neutral
+            for lang in cfg["languages"]:
+                for k in range(n_groups):
+                    games.append(CRSDGame(f"p{loss_prob}_{lang}_neutral_{k}", lang, "neutral",
+                                          conds["neutral"], templates[lang], params))
+        if RUN_PERSONALITY_BLOCK:                    # Block C: en × dispositions
+            for cond in PERSONALITY_CONDITIONS:
+                for k in range(n_groups):
+                    games.append(CRSDGame(f"p{loss_prob}_{PERSONALITY_LANG}_{cond}_{k}",
+                                          PERSONALITY_LANG, cond, conds[cond],
+                                          templates[PERSONALITY_LANG], params))
+    return games
 
 
-def _progress(done, total):
-    print(f"   round {done}/{total} xong  ({len(games)} games × 6 prompts/round)")
-
-
-print("🚀 Bắt đầu chạy CRSD...")
-results = run_games_lockstep(games, responder, rng=random.Random(SEED),
-                             max_parse_retries=MAX_PARSE_RETRIES, progress=_progress)
-print("✅ Hoàn tất tất cả games.")
+_n_games = len(build_games())
+print(f"🎮 Mỗi model chạy {_n_games} games (= {_n_games * 6 * 10} generations). "
+      f"Tổng {len(MODELS)} model → {_n_games * len(MODELS)} games.")
 
 # =====================================================================
-# CELL 10: Lưu kết quả + bảng so với human
+# CELL 5: Helpers — load model, chạy 1 model, lưu RIÊNG theo model
+# =====================================================================
+def load_model(model_cfg):
+    """Nạp một model vào GPU (free model trước nếu có)."""
+    engine = model_cfg.get("engine", DEFAULT_ENGINE)
+    temperature = model_cfg.get("temperature", TEMPERATURE)
+    max_tokens = model_cfg.get("max_tokens", MAX_TOKENS)
+    max_model_len = model_cfg.get("max_model_len", MAX_MODEL_LEN)
+    print(f"🚀 Loading {model_cfg['short_name']} ({engine}) ← {model_cfg['path']}")
+    if engine == "vllm":
+        conn.init_local_llm(model_cfg["path"], engine="vllm", force=True,
+                            max_model_len=max_model_len, temperature=temperature,
+                            max_tokens=max_tokens, gpu_memory_utilization=GPU_UTIL,
+                            tensor_parallel_size=TP_SIZE)
+    else:
+        conn.init_local_llm(model_cfg["path"], engine="transformers", force=True,
+                            temperature=temperature, max_tokens=max_tokens)
+    print(f"✅ {model_cfg['short_name']} loaded.")
+
+
+def smoke_test(model_cfg):
+    probe = CRSDGame("probe", "en", "neutral", ["none"] * 6, templates["en"],
+                     dict(n_players=6, n_rounds=10, endowment=40, target=120,
+                          loss_prob=90, contribution_options=(0, 2, 4)))
+    resp = send_prompts_global(probe.build_round_prompts()[:1], batch_size=0)
+    val, ok = parse_contribution(resp[0])
+    print(f"🧪 [{model_cfg['short_name']}] sample reply (P1, r1) — 400 ký tự cuối:\n", resp[0][-400:])
+    print(f"🧪 Parsed = {val}  (primary_ok={ok}; True = model tuân thủ token)")
+
+
+def save_model_results(model_cfg, results):
+    """Lưu kết quả của MỘT model vào OUTPUT_DIR/<short_name>/, trả về (df, metrics)."""
+    short = model_cfg["short_name"]
+    model_dir = OUTPUT_DIR / short
+    model_dir.mkdir(parents=True, exist_ok=True)
+
+    # gắn metadata model vào từng game (để gộp + truy vết)
+    for r in results:
+        r["model"] = short
+        r["model_path"] = model_cfg["path"]
+
+    (model_dir / "crsd_results.json").write_text(
+        json.dumps(results, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+
+    df = crsd_results.to_dataframe(results)
+    df.insert(0, "model", short)                       # cột model đứng đầu
+    df.to_csv(model_dir / "crsd_all_games.csv", index=False)
+    for (p, lang), sub in df.groupby(["treatment_loss_prob", "language"]):
+        sub.to_csv(model_dir / f"crsd_p{p}_{lang}.csv", index=False)
+
+    def _ser(summary):
+        return {str(k): v for k, v in summary.items()}
+
+    baseline = [r for r in results
+                if r["language"] == "en" and r["personality_condition"] == "neutral"]
+    metrics = {
+        "model": short,
+        "baseline_en_neutral_by_treatment": _ser(crsd_results.summarize(baseline)),
+        "by_treatment_language": _ser(crsd_results.summarize(
+            [r for r in results if r["personality_condition"] == "neutral"],
+            key=lambda r: f"p{r['treatment_loss_prob']}_{r['language']}")),
+        "by_treatment_personality": _ser(crsd_results.summarize(
+            [r for r in results if r["language"] == PERSONALITY_LANG],
+            key=lambda r: f"p{r['treatment_loss_prob']}_{r['personality_condition']}")),
+        "human_benchmark": crsd_results.HUMAN_BENCHMARK,
+    }
+    (model_dir / "crsd_metrics.json").write_text(
+        json.dumps(metrics, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+    return df, metrics
+
+
+def print_human_table(short, results):
+    baseline = [r for r in results
+                if r["language"] == "en" and r["personality_condition"] == "neutral"]
+    bsum = crsd_results.summarize(baseline)
+    print(f"\n=== [{short}] LLM (en, neutral) vs HUMAN (Milinski 2008) ===")
+    print(f"{'p':>4} | {'success LLM/HUM':>16} | {'mean total LLM/HUM':>22} | "
+          f"{'fairshare LLM/HUM':>18} | parse_fb")
+    for p in TREATMENTS:
+        s = bsum.get(p)
+        if not s:
+            continue
+        h = crsd_results.HUMAN_BENCHMARK[p]
+        print(f"{p:>4} | {s['success_rate']:.2f} / {h['success_rate']:.2f}        | "
+              f"{s['final_total']['mean']:6.1f} / {h['mean_final_total']:6.1f}          | "
+              f"{s['fair_sharers_per_group']:.2f} / {h['fair_sharers_per_group']:.2f}          | "
+              f"{s['parse_fallback_rate']:.1%}")
+
+
+def run_one_model(model_cfg):
+    """Nạp → smoke test → build games MỚI → chạy lockstep → lưu RIÊNG → free GPU."""
+    short = model_cfg["short_name"]
+    if not Path(model_cfg["path"]).exists():
+        print(f"⏭️  BỎ QUA {short}: path không tồn tại ({model_cfg['path']}).")
+        return None
+    load_model(model_cfg)
+    if SMOKE_TEST:
+        smoke_test(model_cfg)
+
+    games = build_games()                              # state-free start cho model này
+
+    def responder(prompts):
+        return send_prompts_global(prompts, batch_size=BATCH_SIZE)
+
+    def _progress(done, total):
+        print(f"   [{short}] round {done}/{total} xong  ({len(games)} games × 6 prompts/round)")
+
+    print(f"🚀 [{short}] Bắt đầu chạy CRSD...")
+    results = run_games_lockstep(games, responder, rng=random.Random(SEED),
+                                 max_parse_retries=MAX_PARSE_RETRIES, progress=_progress)
+    df, _ = save_model_results(model_cfg, results)
+    print_human_table(short, results)
+    conn.free_local_llm()                              # giải phóng GPU cho model kế tiếp
+    return df
+
+# =====================================================================
+# CELL 6: Chạy LẦN LƯỢT tất cả model
 # =====================================================================
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+all_dfs = []
+manifest = {"seed": SEED, "treatments": TREATMENTS, "n_games_per_model": _n_games,
+            "run_language_block": RUN_LANGUAGE_BLOCK,
+            "run_personality_block": RUN_PERSONALITY_BLOCK, "models": []}
 
-(OUTPUT_DIR / "crsd_results.json").write_text(
-    json.dumps(results, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
-
-df = crsd_results.to_dataframe(results)
-df.to_csv(OUTPUT_DIR / "crsd_all_games.csv", index=False)
-for (p, lang), sub in df.groupby(["treatment_loss_prob", "language"]):
-    sub.to_csv(OUTPUT_DIR / f"crsd_p{p}_{lang}.csv", index=False)
-
-
-def _ser(summary):
-    return {str(k): v for k, v in summary.items()}
-
-
-baseline = [r for r in results if r["language"] == "en" and r["personality_condition"] == "neutral"]
-metrics = {
-    "baseline_en_neutral_by_treatment": _ser(crsd_results.summarize(baseline)),
-    "by_treatment_language": _ser(crsd_results.summarize(
-        [r for r in results if r["personality_condition"] == "neutral"],
-        key=lambda r: f"p{r['treatment_loss_prob']}_{r['language']}")),
-    "by_treatment_personality": _ser(crsd_results.summarize(
-        [r for r in results if r["language"] == PERSONALITY_LANG],
-        key=lambda r: f"p{r['treatment_loss_prob']}_{r['personality_condition']}")),
-    "human_benchmark": crsd_results.HUMAN_BENCHMARK,
-}
-(OUTPUT_DIR / "crsd_metrics.json").write_text(
-    json.dumps(metrics, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
-
-bsum = crsd_results.summarize(baseline)
-print("\n=== LLM (en, neutral) vs HUMAN (Milinski 2008) ===")
-print(f"{'p':>4} | {'success LLM/HUM':>16} | {'mean total LLM/HUM':>22} | {'fairshare LLM/HUM':>18} | parse_fb")
-for p in TREATMENTS:
-    s = bsum.get(p)
-    if not s:
+for _cfg in MODELS:
+    _df = run_one_model(_cfg)
+    if _df is None:
+        manifest["models"].append({"short_name": _cfg["short_name"], "status": "skipped"})
         continue
-    h = crsd_results.HUMAN_BENCHMARK[p]
-    print(f"{p:>4} | {s['success_rate']:.2f} / {h['success_rate']:.2f}        | "
-          f"{s['final_total']['mean']:6.1f} / {h['mean_final_total']:6.1f}          | "
-          f"{s['fair_sharers_per_group']:.2f} / {h['fair_sharers_per_group']:.2f}          | "
-          f"{s['parse_fallback_rate']:.1%}")
-print(f"\n📦 Output → {OUTPUT_DIR}")
-print("ℹ️  Nếu parse_fb cao (>5%): contribution thấp có thể do model cộng sai/không tuân thủ (faithful+7B).")
+    all_dfs.append(_df)
+    manifest["models"].append({
+        "short_name": _cfg["short_name"], "path": _cfg["path"],
+        "engine": _cfg.get("engine", DEFAULT_ENGINE),
+        "temperature": _cfg.get("temperature", TEMPERATURE),
+        "n_games": int(len(_df)), "status": "done",
+        "output_dir": str(OUTPUT_DIR / _cfg["short_name"]),
+    })
+
+(OUTPUT_DIR / "run_manifest.json").write_text(
+    json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+print(f"\n✅ Hoàn tất {sum(1 for m in manifest['models'] if m['status'] == 'done')}/{len(MODELS)} model.")
 
 # =====================================================================
-# CELL 11: Zip để download
+# CELL 7: Gộp CSV mọi model (tiện so sánh chéo model)
+# =====================================================================
+if all_dfs:
+    import pandas as pd
+    combined = pd.concat(all_dfs, ignore_index=True)
+    combined.to_csv(OUTPUT_DIR / "crsd_all_models.csv", index=False)
+    print(f"📊 Gộp {len(all_dfs)} model → {OUTPUT_DIR / 'crsd_all_models.csv'} "
+          f"({len(combined)} games).")
+    # bảng success-rate theo model × treatment (cell en/neutral)
+    base = combined[(combined.language == "en") &
+                    (combined.personality_condition == "neutral")]
+    piv = base.pivot_table(index="model", columns="treatment_loss_prob",
+                           values="reached_target", aggfunc="mean")
+    print("\n=== Success rate (en, neutral) theo model × treatment ===")
+    print(piv.to_string(float_format=lambda x: f"{x:.2f}"))
+else:
+    print("⚠️  Không có model nào chạy thành công — kiểm tra path trong MODELS[].")
+
+# =====================================================================
+# CELL 8: Zip để download
 # =====================================================================
 import zipfile
 
@@ -337,4 +433,7 @@ with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         if fp.is_file():
             z.write(fp, fp.relative_to(OUTPUT_DIR.parent))
 print(f"✅ {zip_path} ({zip_path.stat().st_size / 1024 / 1024:.2f} MB) — tải ở Output tab.")
-print("➡️  Sau khi tải về: python crsd_analysis.py crsd_results/crsd_results.json  (bảng so-human + Fig 2/3)")
+print("➡️  Phân tích từng model (bảng so-human + Fig 2/3):")
+for m in manifest["models"]:
+    if m.get("status") == "done":
+        print(f"    python crsd_analysis.py crsd_results/{m['short_name']}/crsd_results.json")
