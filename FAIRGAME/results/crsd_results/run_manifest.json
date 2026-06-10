@@ -1,0 +1,43 @@
+{
+  "seed": 20080219,
+  "treatments": [
+    90,
+    50,
+    10
+  ],
+  "framings": [
+    "climate"
+  ],
+  "n_games_per_model": 240,
+  "run_language_block": true,
+  "run_personality_block": true,
+  "models": [
+    {
+      "short_name": "qwen25-7b-instruct",
+      "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1",
+      "engine": "vllm",
+      "temperature": 0.8,
+      "n_games": 240,
+      "status": "done",
+      "output_dir": "/kaggle/working/crsd_results/qwen25-7b-instruct"
+    },
+    {
+      "short_name": "gemma2-9b-it",
+      "path": "/kaggle/input/models/google/gemma-2/transformers/gemma-2-9b-it/2",
+      "engine": "vllm",
+      "temperature": 0.8,
+      "n_games": 240,
+      "status": "done",
+      "output_dir": "/kaggle/working/crsd_results/gemma2-9b-it"
+    },
+    {
+      "short_name": "llama-3-1-8b",
+      "path": "/kaggle/input/datasets/foundnotkiet/llama-3-1-8b/model_weights",
+      "engine": "vllm",
+      "temperature": 0.8,
+      "n_games": 240,
+      "status": "done",
+      "output_dir": "/kaggle/working/crsd_results/llama-3-1-8b"
+    }
+  ]
+}

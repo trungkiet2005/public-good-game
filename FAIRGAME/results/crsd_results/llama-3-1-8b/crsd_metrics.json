@@ -1,0 +1,1316 @@
+{
+  "model": "llama-3-1-8b",
+  "baseline_en_neutral_by_framing_treatment": {
+    "climate_p90": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 177.4,
+        "std": 9.240009620004612,
+        "n": 10,
+        "sem": 2.9219476001081497
+      },
+      "fair_sharers_per_group": 5.8,
+      "free_riders_per_group": 0.2,
+      "extreme_free_rider_contribution": 2.2600000000000002,
+      "acts_by_half": {
+        "first": {
+          "0": 38,
+          "2": 104,
+          "4": 158
+        },
+        "second": {
+          "0": 32,
+          "2": 69,
+          "4": 199
+        }
+      },
+      "round1_distribution": {
+        "0": 8,
+        "2": 25,
+        "4": 27
+      },
+      "cumulative_trajectory": [
+        15.8,
+        32.4,
+        50.0,
+        67.0,
+        84.0,
+        103.6,
+        121.8,
+        139.8,
+        159.4,
+        177.4
+      ],
+      "parse_fallback_rate": 0.0016666666666666668
+    },
+    "climate_p50": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 165.2,
+        "std": 11.399805066559496,
+        "n": 10,
+        "sem": 3.60493488922554
+      },
+      "fair_sharers_per_group": 5.6,
+      "free_riders_per_group": 0.4,
+      "extreme_free_rider_contribution": 2.04,
+      "acts_by_half": {
+        "first": {
+          "0": 37,
+          "2": 125,
+          "4": 138
+        },
+        "second": {
+          "0": 46,
+          "2": 83,
+          "4": 171
+        }
+      },
+      "round1_distribution": {
+        "0": 9,
+        "2": 24,
+        "4": 27
+      },
+      "cumulative_trajectory": [
+        15.6,
+        32.0,
+        47.6,
+        62.8,
+        80.2,
+        96.0,
+        114.2,
+        132.0,
+        149.6,
+        165.2
+      ],
+      "parse_fallback_rate": 0.0
+    },
+    "climate_p10": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 170.0,
+        "std": 9.797958971132712,
+        "n": 10,
+        "sem": 3.098386676965933
+      },
+      "fair_sharers_per_group": 5.7,
+      "free_riders_per_group": 0.3,
+      "extreme_free_rider_contribution": 2.1399999999999997,
+      "acts_by_half": {
+        "first": {
+          "0": 44,
+          "2": 103,
+          "4": 153
+        },
+        "second": {
+          "0": 38,
+          "2": 83,
+          "4": 179
+        }
+      },
+      "round1_distribution": {
+        "0": 15,
+        "2": 20,
+        "4": 25
+      },
+      "cumulative_trajectory": [
+        14.0,
+        31.2,
+        48.4,
+        65.2,
+        81.8,
+        99.4,
+        116.6,
+        134.2,
+        152.6,
+        170.0
+      ],
+      "parse_fallback_rate": 0.0
+    }
+  },
+  "by_framing_treatment_language": {
+    "climate_p90_en": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 177.4,
+        "std": 9.240009620004612,
+        "n": 10,
+        "sem": 2.9219476001081497
+      },
+      "fair_sharers_per_group": 5.8,
+      "free_riders_per_group": 0.2,
+      "extreme_free_rider_contribution": 2.2600000000000002,
+      "acts_by_half": {
+        "first": {
+          "0": 38,
+          "2": 104,
+          "4": 158
+        },
+        "second": {
+          "0": 32,
+          "2": 69,
+          "4": 199
+        }
+      },
+      "round1_distribution": {
+        "0": 8,
+        "2": 25,
+        "4": 27
+      },
+      "cumulative_trajectory": [
+        15.8,
+        32.4,
+        50.0,
+        67.0,
+        84.0,
+        103.6,
+        121.8,
+        139.8,
+        159.4,
+        177.4
+      ],
+      "parse_fallback_rate": 0.0016666666666666668
+    },
+    "climate_p90_fr": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 169.6,
+        "std": 11.384199576606166,
+        "n": 10,
+        "sem": 3.6
+      },
+      "fair_sharers_per_group": 5.9,
+      "free_riders_per_group": 0.1,
+      "extreme_free_rider_contribution": 2.3,
+      "acts_by_half": {
+        "first": {
+          "0": 32,
+          "2": 115,
+          "4": 153
+        },
+        "second": {
+          "0": 38,
+          "2": 97,
+          "4": 165
+        }
+      },
+      "round1_distribution": {
+        "0": 11,
+        "2": 22,
+        "4": 27
+      },
+      "cumulative_trajectory": [
+        15.2,
+        32.0,
+        48.8,
+        66.0,
+        84.2,
+        100.4,
+        117.4,
+        133.8,
+        152.2,
+        169.6
+      ],
+      "parse_fallback_rate": 0.0016666666666666668
+    },
+    "climate_p90_ar": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 159.8,
+        "std": 12.272824541327974,
+        "n": 10,
+        "sem": 3.8810078874207687
+      },
+      "fair_sharers_per_group": 5.5,
+      "free_riders_per_group": 0.5,
+      "extreme_free_rider_contribution": 2.02,
+      "acts_by_half": {
+        "first": {
+          "0": 38,
+          "2": 139,
+          "4": 123
+        },
+        "second": {
+          "0": 40,
+          "2": 106,
+          "4": 154
+        }
+      },
+      "round1_distribution": {
+        "0": 11,
+        "2": 26,
+        "4": 23
+      },
+      "cumulative_trajectory": [
+        14.4,
+        29.2,
+        44.0,
+        60.4,
+        77.0,
+        92.8,
+        108.2,
+        123.2,
+        141.0,
+        159.8
+      ],
+      "parse_fallback_rate": 0.005
+    },
+    "climate_p90_cn": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 142.4,
+        "std": 12.606876430477667,
+        "n": 10,
+        "sem": 3.9866443700602807
+      },
+      "fair_sharers_per_group": 4.8,
+      "free_riders_per_group": 1.2,
+      "extreme_free_rider_contribution": 1.72,
+      "acts_by_half": {
+        "first": {
+          "0": 56,
+          "2": 145,
+          "4": 99
+        },
+        "second": {
+          "0": 50,
+          "2": 131,
+          "4": 119
+        }
+      },
+      "round1_distribution": {
+        "0": 8,
+        "2": 35,
+        "4": 17
+      },
+      "cumulative_trajectory": [
+        13.8,
+        27.6,
+        40.6,
+        54.0,
+        68.6,
+        83.4,
+        96.8,
+        113.4,
+        128.6,
+        142.4
+      ],
+      "parse_fallback_rate": 0.0016666666666666668
+    },
+    "climate_p90_vn": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 162.4,
+        "std": 11.384199576606166,
+        "n": 10,
+        "sem": 3.6
+      },
+      "fair_sharers_per_group": 5.9,
+      "free_riders_per_group": 0.1,
+      "extreme_free_rider_contribution": 2.1,
+      "acts_by_half": {
+        "first": {
+          "0": 49,
+          "2": 108,
+          "4": 143
+        },
+        "second": {
+          "0": 47,
+          "2": 88,
+          "4": 165
+        }
+      },
+      "round1_distribution": {
+        "0": 15,
+        "2": 19,
+        "4": 26
+      },
+      "cumulative_trajectory": [
+        14.2,
+        29.2,
+        46.2,
+        61.4,
+        78.8,
+        95.8,
+        113.0,
+        129.2,
+        146.0,
+        162.4
+      ],
+      "parse_fallback_rate": 0.13333333333333333
+    },
+    "climate_p50_en": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 165.2,
+        "std": 11.399805066559496,
+        "n": 10,
+        "sem": 3.60493488922554
+      },
+      "fair_sharers_per_group": 5.6,
+      "free_riders_per_group": 0.4,
+      "extreme_free_rider_contribution": 2.04,
+      "acts_by_half": {
+        "first": {
+          "0": 37,
+          "2": 125,
+          "4": 138
+        },
+        "second": {
+          "0": 46,
+          "2": 83,
+          "4": 171
+        }
+      },
+      "round1_distribution": {
+        "0": 9,
+        "2": 24,
+        "4": 27
+      },
+      "cumulative_trajectory": [
+        15.6,
+        32.0,
+        47.6,
+        62.8,
+        80.2,
+        96.0,
+        114.2,
+        132.0,
+        149.6,
+        165.2
+      ],
+      "parse_fallback_rate": 0.0
+    },
+    "climate_p50_fr": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 166.4,
+        "std": 6.44980619863884,
+        "n": 10,
+        "sem": 2.039607805437114
+      },
+      "fair_sharers_per_group": 5.8,
+      "free_riders_per_group": 0.2,
+      "extreme_free_rider_contribution": 2.18,
+      "acts_by_half": {
+        "first": {
+          "0": 34,
+          "2": 127,
+          "4": 139
+        },
+        "second": {
+          "0": 31,
+          "2": 111,
+          "4": 158
+        }
+      },
+      "round1_distribution": {
+        "0": 15,
+        "2": 23,
+        "4": 22
+      },
+      "cumulative_trajectory": [
+        13.4,
+        29.8,
+        46.8,
+        64.0,
+        81.0,
+        98.2,
+        116.0,
+        134.2,
+        149.8,
+        166.4
+      ],
+      "parse_fallback_rate": 0.006666666666666667
+    },
+    "climate_p50_ar": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 167.4,
+        "std": 8.329332372872257,
+        "n": 10,
+        "sem": 2.6339661686851215
+      },
+      "fair_sharers_per_group": 5.7,
+      "free_riders_per_group": 0.3,
+      "extreme_free_rider_contribution": 2.12,
+      "acts_by_half": {
+        "first": {
+          "0": 42,
+          "2": 105,
+          "4": 153
+        },
+        "second": {
+          "0": 31,
+          "2": 112,
+          "4": 157
+        }
+      },
+      "round1_distribution": {
+        "0": 14,
+        "2": 16,
+        "4": 30
+      },
+      "cumulative_trajectory": [
+        15.2,
+        31.8,
+        48.4,
+        66.0,
+        82.2,
+        98.6,
+        115.0,
+        132.4,
+        150.0,
+        167.4
+      ],
+      "parse_fallback_rate": 0.0016666666666666668
+    },
+    "climate_p50_cn": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 141.8,
+        "std": 9.354737361952559,
+        "n": 10,
+        "sem": 2.958227697644505
+      },
+      "fair_sharers_per_group": 5.5,
+      "free_riders_per_group": 0.5,
+      "extreme_free_rider_contribution": 1.94,
+      "acts_by_half": {
+        "first": {
+          "0": 67,
+          "2": 133,
+          "4": 100
+        },
+        "second": {
+          "0": 50,
+          "2": 124,
+          "4": 126
+        }
+      },
+      "round1_distribution": {
+        "0": 19,
+        "2": 18,
+        "4": 23
+      },
+      "cumulative_trajectory": [
+        12.8,
+        23.6,
+        37.4,
+        50.6,
+        66.6,
+        80.8,
+        96.2,
+        111.2,
+        126.6,
+        141.8
+      ],
+      "parse_fallback_rate": 0.0033333333333333335
+    },
+    "climate_p50_vn": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 164.6,
+        "std": 14.112248423109465,
+        "n": 10,
+        "sem": 4.462684792314549
+      },
+      "fair_sharers_per_group": 5.8,
+      "free_riders_per_group": 0.2,
+      "extreme_free_rider_contribution": 2.2,
+      "acts_by_half": {
+        "first": {
+          "0": 51,
+          "2": 97,
+          "4": 152
+        },
+        "second": {
+          "0": 48,
+          "2": 82,
+          "4": 170
+        }
+      },
+      "round1_distribution": {
+        "0": 16,
+        "2": 11,
+        "4": 33
+      },
+      "cumulative_trajectory": [
+        15.4,
+        31.4,
+        47.6,
+        62.8,
+        80.2,
+        97.6,
+        116.4,
+        132.4,
+        148.8,
+        164.6
+      ],
+      "parse_fallback_rate": 0.16333333333333333
+    },
+    "climate_p10_en": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 170.0,
+        "std": 9.797958971132712,
+        "n": 10,
+        "sem": 3.098386676965933
+      },
+      "fair_sharers_per_group": 5.7,
+      "free_riders_per_group": 0.3,
+      "extreme_free_rider_contribution": 2.1399999999999997,
+      "acts_by_half": {
+        "first": {
+          "0": 44,
+          "2": 103,
+          "4": 153
+        },
+        "second": {
+          "0": 38,
+          "2": 83,
+          "4": 179
+        }
+      },
+      "round1_distribution": {
+        "0": 15,
+        "2": 20,
+        "4": 25
+      },
+      "cumulative_trajectory": [
+        14.0,
+        31.2,
+        48.4,
+        65.2,
+        81.8,
+        99.4,
+        116.6,
+        134.2,
+        152.6,
+        170.0
+      ],
+      "parse_fallback_rate": 0.0
+    },
+    "climate_p10_fr": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 167.6,
+        "std": 9.512564790259717,
+        "n": 10,
+        "sem": 3.0081371127142607
+      },
+      "fair_sharers_per_group": 5.8,
+      "free_riders_per_group": 0.2,
+      "extreme_free_rider_contribution": 2.08,
+      "acts_by_half": {
+        "first": {
+          "0": 38,
+          "2": 124,
+          "4": 138
+        },
+        "second": {
+          "0": 28,
+          "2": 106,
+          "4": 166
+        }
+      },
+      "round1_distribution": {
+        "0": 9,
+        "2": 25,
+        "4": 26
+      },
+      "cumulative_trajectory": [
+        15.4,
+        31.0,
+        46.8,
+        64.0,
+        80.0,
+        96.8,
+        114.4,
+        131.8,
+        151.4,
+        167.6
+      ],
+      "parse_fallback_rate": 0.008333333333333333
+    },
+    "climate_p10_ar": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 161.8,
+        "std": 9.542885657214313,
+        "n": 10,
+        "sem": 3.017725412735006
+      },
+      "fair_sharers_per_group": 5.9,
+      "free_riders_per_group": 0.1,
+      "extreme_free_rider_contribution": 2.16,
+      "acts_by_half": {
+        "first": {
+          "0": 43,
+          "2": 113,
+          "4": 144
+        },
+        "second": {
+          "0": 47,
+          "2": 98,
+          "4": 155
+        }
+      },
+      "round1_distribution": {
+        "0": 11,
+        "2": 24,
+        "4": 25
+      },
+      "cumulative_trajectory": [
+        14.8,
+        30.0,
+        46.8,
+        63.6,
+        80.2,
+        96.8,
+        113.2,
+        129.8,
+        146.4,
+        161.8
+      ],
+      "parse_fallback_rate": 0.0016666666666666668
+    },
+    "climate_p10_cn": {
+      "n_games": 10,
+      "success_rate": 0.9,
+      "final_total": {
+        "mean": 137.8,
+        "std": 12.200182148002726,
+        "n": 10,
+        "sem": 3.858036345661409
+      },
+      "fair_sharers_per_group": 4.8,
+      "free_riders_per_group": 1.2,
+      "extreme_free_rider_contribution": 1.7600000000000002,
+      "acts_by_half": {
+        "first": {
+          "0": 76,
+          "2": 124,
+          "4": 100
+        },
+        "second": {
+          "0": 53,
+          "2": 129,
+          "4": 118
+        }
+      },
+      "round1_distribution": {
+        "0": 12,
+        "2": 21,
+        "4": 27
+      },
+      "cumulative_trajectory": [
+        15.0,
+        26.8,
+        40.0,
+        52.2,
+        64.8,
+        77.8,
+        93.4,
+        109.0,
+        122.4,
+        137.8
+      ],
+      "parse_fallback_rate": 0.0033333333333333335
+    },
+    "climate_p10_vn": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 161.2,
+        "std": 17.28711787558714,
+        "n": 10,
+        "sem": 5.466666666666666
+      },
+      "fair_sharers_per_group": 5.6,
+      "free_riders_per_group": 0.4,
+      "extreme_free_rider_contribution": 2.02,
+      "acts_by_half": {
+        "first": {
+          "0": 46,
+          "2": 104,
+          "4": 150
+        },
+        "second": {
+          "0": 55,
+          "2": 88,
+          "4": 157
+        }
+      },
+      "round1_distribution": {
+        "0": 13,
+        "2": 22,
+        "4": 25
+      },
+      "cumulative_trajectory": [
+        14.4,
+        31.2,
+        47.8,
+        64.6,
+        80.8,
+        97.2,
+        112.0,
+        129.2,
+        145.2,
+        161.2
+      ],
+      "parse_fallback_rate": 0.14833333333333334
+    }
+  },
+  "by_framing_treatment_personality": {
+    "climate_p90_neutral": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 177.4,
+        "std": 9.240009620004612,
+        "n": 10,
+        "sem": 2.9219476001081497
+      },
+      "fair_sharers_per_group": 5.8,
+      "free_riders_per_group": 0.2,
+      "extreme_free_rider_contribution": 2.2600000000000002,
+      "acts_by_half": {
+        "first": {
+          "0": 38,
+          "2": 104,
+          "4": 158
+        },
+        "second": {
+          "0": 32,
+          "2": 69,
+          "4": 199
+        }
+      },
+      "round1_distribution": {
+        "0": 8,
+        "2": 25,
+        "4": 27
+      },
+      "cumulative_trajectory": [
+        15.8,
+        32.4,
+        50.0,
+        67.0,
+        84.0,
+        103.6,
+        121.8,
+        139.8,
+        159.4,
+        177.4
+      ],
+      "parse_fallback_rate": 0.0016666666666666668
+    },
+    "climate_p90_cooperative": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 179.2,
+        "std": 12.263767773404714,
+        "n": 10,
+        "sem": 3.878143885933063
+      },
+      "fair_sharers_per_group": 6.0,
+      "free_riders_per_group": 0.0,
+      "extreme_free_rider_contribution": 2.44,
+      "acts_by_half": {
+        "first": {
+          "0": 31,
+          "2": 92,
+          "4": 177
+        },
+        "second": {
+          "0": 34,
+          "2": 82,
+          "4": 184
+        }
+      },
+      "round1_distribution": {
+        "0": 6,
+        "2": 22,
+        "4": 32
+      },
+      "cumulative_trajectory": [
+        17.2,
+        32.8,
+        52.0,
+        70.4,
+        89.2,
+        107.4,
+        125.4,
+        143.2,
+        161.6,
+        179.2
+      ],
+      "parse_fallback_rate": 0.0016666666666666668
+    },
+    "climate_p90_selfish": {
+      "n_games": 10,
+      "success_rate": 0.3,
+      "final_total": {
+        "mean": 116.0,
+        "std": 6.599663291074443,
+        "n": 10,
+        "sem": 2.0869967789998034
+      },
+      "fair_sharers_per_group": 3.0,
+      "free_riders_per_group": 3.0,
+      "extreme_free_rider_contribution": 1.3,
+      "acts_by_half": {
+        "first": {
+          "0": 108,
+          "2": 110,
+          "4": 82
+        },
+        "second": {
+          "0": 99,
+          "2": 96,
+          "4": 105
+        }
+      },
+      "round1_distribution": {
+        "0": 29,
+        "2": 18,
+        "4": 13
+      },
+      "cumulative_trajectory": [
+        8.8,
+        18.4,
+        30.8,
+        42.6,
+        54.8,
+        67.8,
+        78.8,
+        92.4,
+        104.8,
+        116.0
+      ],
+      "parse_fallback_rate": 0.0
+    },
+    "climate_p90_risk_averse": {
+      "n_games": 10,
+      "success_rate": 0.7,
+      "final_total": {
+        "mean": 122.0,
+        "std": 12.328828005937952,
+        "n": 10,
+        "sem": 3.898717737923585
+      },
+      "fair_sharers_per_group": 3.5,
+      "free_riders_per_group": 2.5,
+      "extreme_free_rider_contribution": 1.42,
+      "acts_by_half": {
+        "first": {
+          "0": 97,
+          "2": 131,
+          "4": 72
+        },
+        "second": {
+          "0": 83,
+          "2": 99,
+          "4": 118
+        }
+      },
+      "round1_distribution": {
+        "0": 27,
+        "2": 20,
+        "4": 13
+      },
+      "cumulative_trajectory": [
+        9.2,
+        20.4,
+        32.4,
+        44.0,
+        55.0,
+        66.8,
+        81.2,
+        94.6,
+        111.2,
+        122.0
+      ],
+      "parse_fallback_rate": 0.0016666666666666668
+    },
+    "climate_p50_neutral": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 165.2,
+        "std": 11.399805066559496,
+        "n": 10,
+        "sem": 3.60493488922554
+      },
+      "fair_sharers_per_group": 5.6,
+      "free_riders_per_group": 0.4,
+      "extreme_free_rider_contribution": 2.04,
+      "acts_by_half": {
+        "first": {
+          "0": 37,
+          "2": 125,
+          "4": 138
+        },
+        "second": {
+          "0": 46,
+          "2": 83,
+          "4": 171
+        }
+      },
+      "round1_distribution": {
+        "0": 9,
+        "2": 24,
+        "4": 27
+      },
+      "cumulative_trajectory": [
+        15.6,
+        32.0,
+        47.6,
+        62.8,
+        80.2,
+        96.0,
+        114.2,
+        132.0,
+        149.6,
+        165.2
+      ],
+      "parse_fallback_rate": 0.0
+    },
+    "climate_p50_cooperative": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 182.4,
+        "std": 7.876829593462363,
+        "n": 10,
+        "sem": 2.4908722256359206
+      },
+      "fair_sharers_per_group": 6.0,
+      "free_riders_per_group": 0.0,
+      "extreme_free_rider_contribution": 2.58,
+      "acts_by_half": {
+        "first": {
+          "0": 16,
+          "2": 121,
+          "4": 163
+        },
+        "second": {
+          "0": 28,
+          "2": 79,
+          "4": 193
+        }
+      },
+      "round1_distribution": {
+        "0": 7,
+        "2": 24,
+        "4": 29
+      },
+      "cumulative_trajectory": [
+        16.4,
+        34.2,
+        51.8,
+        70.6,
+        89.4,
+        107.8,
+        125.0,
+        145.0,
+        163.8,
+        182.4
+      ],
+      "parse_fallback_rate": 0.0
+    },
+    "climate_p50_selfish": {
+      "n_games": 10,
+      "success_rate": 0.1,
+      "final_total": {
+        "mean": 107.6,
+        "std": 14.00952057233461,
+        "n": 10,
+        "sem": 4.430199393556307
+      },
+      "fair_sharers_per_group": 2.0,
+      "free_riders_per_group": 4.0,
+      "extreme_free_rider_contribution": 1.1199999999999999,
+      "acts_by_half": {
+        "first": {
+          "0": 122,
+          "2": 102,
+          "4": 76
+        },
+        "second": {
+          "0": 119,
+          "2": 78,
+          "4": 103
+        }
+      },
+      "round1_distribution": {
+        "0": 29,
+        "2": 17,
+        "4": 14
+      },
+      "cumulative_trajectory": [
+        9.0,
+        20.8,
+        31.8,
+        42.4,
+        50.8,
+        59.8,
+        72.0,
+        84.2,
+        95.6,
+        107.6
+      ],
+      "parse_fallback_rate": 0.0
+    },
+    "climate_p50_risk_averse": {
+      "n_games": 10,
+      "success_rate": 0.9,
+      "final_total": {
+        "mean": 128.8,
+        "std": 11.242775458044157,
+        "n": 10,
+        "sem": 3.5552777669262356
+      },
+      "fair_sharers_per_group": 4.3,
+      "free_riders_per_group": 1.7,
+      "extreme_free_rider_contribution": 1.4,
+      "acts_by_half": {
+        "first": {
+          "0": 96,
+          "2": 117,
+          "4": 87
+        },
+        "second": {
+          "0": 73,
+          "2": 101,
+          "4": 126
+        }
+      },
+      "round1_distribution": {
+        "0": 28,
+        "2": 18,
+        "4": 14
+      },
+      "cumulative_trajectory": [
+        9.2,
+        21.0,
+        31.8,
+        46.0,
+        58.2,
+        72.6,
+        86.4,
+        100.0,
+        116.2,
+        128.8
+      ],
+      "parse_fallback_rate": 0.0
+    },
+    "climate_p10_neutral": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 170.0,
+        "std": 9.797958971132712,
+        "n": 10,
+        "sem": 3.098386676965933
+      },
+      "fair_sharers_per_group": 5.7,
+      "free_riders_per_group": 0.3,
+      "extreme_free_rider_contribution": 2.1399999999999997,
+      "acts_by_half": {
+        "first": {
+          "0": 44,
+          "2": 103,
+          "4": 153
+        },
+        "second": {
+          "0": 38,
+          "2": 83,
+          "4": 179
+        }
+      },
+      "round1_distribution": {
+        "0": 15,
+        "2": 20,
+        "4": 25
+      },
+      "cumulative_trajectory": [
+        14.0,
+        31.2,
+        48.4,
+        65.2,
+        81.8,
+        99.4,
+        116.6,
+        134.2,
+        152.6,
+        170.0
+      ],
+      "parse_fallback_rate": 0.0
+    },
+    "climate_p10_cooperative": {
+      "n_games": 10,
+      "success_rate": 1.0,
+      "final_total": {
+        "mean": 175.6,
+        "std": 10.276186062932103,
+        "n": 10,
+        "sem": 3.2496153618543837
+      },
+      "fair_sharers_per_group": 6.0,
+      "free_riders_per_group": 0.0,
+      "extreme_free_rider_contribution": 2.4,
+      "acts_by_half": {
+        "first": {
+          "0": 26,
+          "2": 110,
+          "4": 164
+        },
+        "second": {
+          "0": 36,
+          "2": 88,
+          "4": 176
+        }
+      },
+      "round1_distribution": {
+        "0": 7,
+        "2": 22,
+        "4": 31
+      },
+      "cumulative_trajectory": [
+        16.8,
+        34.0,
+        52.0,
+        69.6,
+        87.6,
+        106.2,
+        122.6,
+        139.8,
+        156.0,
+        175.6
+      ],
+      "parse_fallback_rate": 0.0
+    },
+    "climate_p10_selfish": {
+      "n_games": 10,
+      "success_rate": 0.4,
+      "final_total": {
+        "mean": 116.8,
+        "std": 15.031818105457354,
+        "n": 10,
+        "sem": 4.753478258660236
+      },
+      "fair_sharers_per_group": 3.3,
+      "free_riders_per_group": 2.7,
+      "extreme_free_rider_contribution": 1.3,
+      "acts_by_half": {
+        "first": {
+          "0": 114,
+          "2": 105,
+          "4": 81
+        },
+        "second": {
+          "0": 93,
+          "2": 97,
+          "4": 110
+        }
+      },
+      "round1_distribution": {
+        "0": 28,
+        "2": 19,
+        "4": 13
+      },
+      "cumulative_trajectory": [
+        9.0,
+        21.6,
+        30.4,
+        42.8,
+        53.4,
+        68.6,
+        81.2,
+        95.2,
+        106.4,
+        116.8
+      ],
+      "parse_fallback_rate": 0.0016666666666666668
+    },
+    "climate_p10_risk_averse": {
+      "n_games": 10,
+      "success_rate": 0.6,
+      "final_total": {
+        "mean": 124.8,
+        "std": 15.497670075781642,
+        "n": 10,
+        "sem": 4.900793586530428
+      },
+      "fair_sharers_per_group": 4.0,
+      "free_riders_per_group": 2.0,
+      "extreme_free_rider_contribution": 1.46,
+      "acts_by_half": {
+        "first": {
+          "0": 99,
+          "2": 133,
+          "4": 68
+        },
+        "second": {
+          "0": 71,
+          "2": 103,
+          "4": 126
+        }
+      },
+      "round1_distribution": {
+        "0": 33,
+        "2": 16,
+        "4": 11
+      },
+      "cumulative_trajectory": [
+        7.6,
+        17.8,
+        30.4,
+        41.8,
+        53.8,
+        67.0,
+        80.4,
+        94.6,
+        109.2,
+        124.8
+      ],
+      "parse_fallback_rate": 0.0
+    }
+  },
+  "human_benchmark": {
+    "90": {
+      "success_rate": 0.5,
+      "mean_final_total": 118.2,
+      "fair_sharers_per_group": 3.3
+    },
+    "50": {
+      "success_rate": 0.1,
+      "mean_final_total": 92.2,
+      "fair_sharers_per_group": 2.1
+    },
+    "10": {
+      "success_rate": 0.0,
+      "mean_final_total": 73.0,
+      "fair_sharers_per_group": 1.1
+    }
+  }
+}

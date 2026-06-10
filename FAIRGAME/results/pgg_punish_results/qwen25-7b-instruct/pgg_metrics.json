@@ -1,0 +1,4366 @@
+{
+  "model": "qwen25-7b-instruct",
+  "baseline_en_neutral_by_treatment": {
+    "N": {
+      "n_games": 10,
+      "mean_contribution": 14.26,
+      "mean_contribution_sem": 0.47812132351527686,
+      "mean_contribution_by_period": [
+        9.15,
+        12.875,
+        14.625,
+        14.65,
+        15.05,
+        14.95,
+        14.95,
+        15.375,
+        15.575,
+        15.4
+      ],
+      "mean_earnings_by_period": [
+        25.490000000000002,
+        27.725,
+        28.775,
+        28.79,
+        29.03,
+        28.97,
+        28.97,
+        29.225,
+        29.345,
+        29.24
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P": {
+      "n_games": 10,
+      "mean_contribution": 13.9025,
+      "mean_contribution_sem": 0.5118111902297998,
+      "mean_contribution_by_period": [
+        10.425,
+        12.7,
+        13.525,
+        14.325,
+        14.825,
+        14.25,
+        14.45,
+        14.35,
+        15.75,
+        14.425
+      ],
+      "mean_earnings_by_period": [
+        3.8049999999999997,
+        4.67,
+        6.8950000000000005,
+        4.85,
+        3.965,
+        2.32,
+        3.25,
+        3.225,
+        3.6399999999999997,
+        4.445
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.7777777777777777,
+          "total_expenditure": 75.0,
+          "n_pairs": 27,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.4212860310421287,
+          "total_expenditure": 1092.0,
+          "n_pairs": 451,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.290983606557377,
+          "total_expenditure": 559.0,
+          "n_pairs": 244,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.401330376940133,
+          "total_expenditure": 1083.0,
+          "n_pairs": 451,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.1481481481481484,
+          "total_expenditure": 58.0,
+          "n_pairs": 27,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1167,
+        "prosocial_mean": 2.4414225941422596,
+        "antisocial_total": 1700,
+        "antisocial_mean": 2.3545706371191137,
+        "antisocial_share": 0.5929543076386466
+      },
+      "antisocial_vs_cooperation_corr": 0.24848484848484845,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 6.0,
+          "1-3": 6.925,
+          "4-6": 6.837398373983739,
+          "7+": 7.545918367346939
+        },
+        "slope_assigned_on_received": 0.1365210028189545,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    }
+  },
+  "by_treatment_language": {
+    "N_en": {
+      "n_games": 10,
+      "mean_contribution": 14.26,
+      "mean_contribution_sem": 0.47812132351527686,
+      "mean_contribution_by_period": [
+        9.15,
+        12.875,
+        14.625,
+        14.65,
+        15.05,
+        14.95,
+        14.95,
+        15.375,
+        15.575,
+        15.4
+      ],
+      "mean_earnings_by_period": [
+        25.490000000000002,
+        27.725,
+        28.775,
+        28.79,
+        29.03,
+        28.97,
+        28.97,
+        29.225,
+        29.345,
+        29.24
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_fr": {
+      "n_games": 10,
+      "mean_contribution": 13.8875,
+      "mean_contribution_sem": 0.36446783884940454,
+      "mean_contribution_by_period": [
+        10.0,
+        13.0,
+        14.55,
+        14.5,
+        14.45,
+        14.025,
+        14.4,
+        14.8,
+        14.0,
+        15.15
+      ],
+      "mean_earnings_by_period": [
+        26.0,
+        27.8,
+        28.73,
+        28.7,
+        28.669999999999998,
+        28.415,
+        28.639999999999997,
+        28.880000000000003,
+        28.4,
+        29.089999999999996
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_ar": {
+      "n_games": 10,
+      "mean_contribution": 12.3125,
+      "mean_contribution_sem": 0.21619339336190008,
+      "mean_contribution_by_period": [
+        9.4,
+        11.775,
+        12.925,
+        13.075,
+        13.85,
+        12.025,
+        11.825,
+        13.125,
+        13.4,
+        11.725
+      ],
+      "mean_earnings_by_period": [
+        25.639999999999997,
+        27.064999999999998,
+        27.755000000000003,
+        27.845,
+        28.310000000000002,
+        27.214999999999996,
+        27.095,
+        27.875,
+        28.04,
+        27.035000000000004
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_cn": {
+      "n_games": 10,
+      "mean_contribution": 12.425,
+      "mean_contribution_sem": 0.2742920179500509,
+      "mean_contribution_by_period": [
+        8.3,
+        10.825,
+        13.1,
+        13.375,
+        14.15,
+        13.35,
+        12.575,
+        13.775,
+        11.65,
+        13.15
+      ],
+      "mean_earnings_by_period": [
+        24.98,
+        26.494999999999997,
+        27.860000000000003,
+        28.025,
+        28.49,
+        28.01,
+        27.544999999999998,
+        28.264999999999997,
+        26.99,
+        27.889999999999997
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_vn": {
+      "n_games": 10,
+      "mean_contribution": 10.465,
+      "mean_contribution_sem": 0.21545172184144754,
+      "mean_contribution_by_period": [
+        6.5,
+        9.325,
+        10.65,
+        11.725,
+        10.825,
+        10.8,
+        9.75,
+        11.475,
+        11.775,
+        11.825
+      ],
+      "mean_earnings_by_period": [
+        23.9,
+        25.595,
+        26.389999999999997,
+        27.035000000000004,
+        26.494999999999997,
+        26.48,
+        25.85,
+        26.885,
+        27.064999999999998,
+        27.095
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_en": {
+      "n_games": 10,
+      "mean_contribution": 13.9025,
+      "mean_contribution_sem": 0.5118111902297998,
+      "mean_contribution_by_period": [
+        10.425,
+        12.7,
+        13.525,
+        14.325,
+        14.825,
+        14.25,
+        14.45,
+        14.35,
+        15.75,
+        14.425
+      ],
+      "mean_earnings_by_period": [
+        3.8049999999999997,
+        4.67,
+        6.8950000000000005,
+        4.85,
+        3.965,
+        2.32,
+        3.25,
+        3.225,
+        3.6399999999999997,
+        4.445
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.7777777777777777,
+          "total_expenditure": 75.0,
+          "n_pairs": 27,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.4212860310421287,
+          "total_expenditure": 1092.0,
+          "n_pairs": 451,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.290983606557377,
+          "total_expenditure": 559.0,
+          "n_pairs": 244,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.401330376940133,
+          "total_expenditure": 1083.0,
+          "n_pairs": 451,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.1481481481481484,
+          "total_expenditure": 58.0,
+          "n_pairs": 27,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1167,
+        "prosocial_mean": 2.4414225941422596,
+        "antisocial_total": 1700,
+        "antisocial_mean": 2.3545706371191137,
+        "antisocial_share": 0.5929543076386466
+      },
+      "antisocial_vs_cooperation_corr": 0.24848484848484845,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 6.0,
+          "1-3": 6.925,
+          "4-6": 6.837398373983739,
+          "7+": 7.545918367346939
+        },
+        "slope_assigned_on_received": 0.1365210028189545,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_fr": {
+      "n_games": 10,
+      "mean_contribution": 13.62,
+      "mean_contribution_sem": 0.3221412733568923,
+      "mean_contribution_by_period": [
+        8.85,
+        12.4,
+        13.925,
+        14.375,
+        14.575,
+        14.4,
+        13.075,
+        14.15,
+        15.525,
+        14.925
+      ],
+      "mean_earnings_by_period": [
+        4.635,
+        6.49,
+        6.595000000000001,
+        4.375,
+        5.42,
+        4.8950000000000005,
+        3.34,
+        4.33,
+        5.825,
+        3.9449999999999994
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 3.5517241379310347,
+          "total_expenditure": 103.0,
+          "n_pairs": 29,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.3780487804878048,
+          "total_expenditure": 975.0,
+          "n_pairs": 410,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.142857142857143,
+          "total_expenditure": 690.0,
+          "n_pairs": 322,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.348780487804878,
+          "total_expenditure": 963.0,
+          "n_pairs": 410,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 1.8620689655172413,
+          "total_expenditure": 54.0,
+          "n_pairs": 29,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1078,
+        "prosocial_mean": 2.4555808656036446,
+        "antisocial_total": 1707,
+        "antisocial_mean": 2.243101182654402,
+        "antisocial_share": 0.6129263913824058
+      },
+      "antisocial_vs_cooperation_corr": 0.19999999999999998,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 9.0,
+          "1-3": 5.683333333333334,
+          "4-6": 6.273504273504273,
+          "7+": 7.741758241758242
+        },
+        "slope_assigned_on_received": 0.2308783279422742,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_ar": {
+      "n_games": 10,
+      "mean_contribution": 13.13,
+      "mean_contribution_sem": 0.21752394504207276,
+      "mean_contribution_by_period": [
+        11.025,
+        13.15,
+        13.4,
+        13.925,
+        13.5,
+        14.15,
+        12.975,
+        12.05,
+        13.05,
+        14.075
+      ],
+      "mean_earnings_by_period": [
+        2.87,
+        1.98,
+        1.86,
+        1.35,
+        1.135,
+        0.96,
+        0.9199999999999999,
+        0.845,
+        1.1400000000000001,
+        1.605
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.857142857142857,
+          "total_expenditure": 100.0,
+          "n_pairs": 35,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.890134529147982,
+          "total_expenditure": 1289.0,
+          "n_pairs": 446,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.991596638655462,
+          "total_expenditure": 712.0,
+          "n_pairs": 238,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.8295964125560538,
+          "total_expenditure": 1262.0,
+          "n_pairs": 446,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 3.4,
+          "total_expenditure": 119.0,
+          "n_pairs": 35,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1389,
+        "prosocial_mean": 2.8877338877338876,
+        "antisocial_total": 2093,
+        "antisocial_mean": 2.910987482614743,
+        "antisocial_share": 0.6010913268236645
+      },
+      "antisocial_vs_cooperation_corr": -0.22154790046665226,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 8.214285714285714,
+          "4-6": 8.602564102564102,
+          "7+": 8.977611940298507
+        },
+        "slope_assigned_on_received": 0.12530010223024102,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_cn": {
+      "n_games": 10,
+      "mean_contribution": 12.834999999999999,
+      "mean_contribution_sem": 0.3964810490076698,
+      "mean_contribution_by_period": [
+        10.75,
+        13.3,
+        14.025,
+        13.85,
+        12.275,
+        13.575,
+        12.9,
+        13.0,
+        12.5,
+        12.175
+      ],
+      "mean_earnings_by_period": [
+        5.215,
+        7.8,
+        6.784999999999999,
+        6.6,
+        5.9,
+        6.409999999999999,
+        6.904999999999999,
+        7.99,
+        8.645,
+        3.9449999999999994
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.253731343283582,
+          "total_expenditure": 151.0,
+          "n_pairs": 67,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.1303317535545023,
+          "total_expenditure": 899.0,
+          "n_pairs": 422,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 1.7522522522522523,
+          "total_expenditure": 389.0,
+          "n_pairs": 222,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 1.966824644549763,
+          "total_expenditure": 830.0,
+          "n_pairs": 422,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.0,
+          "total_expenditure": 134.0,
+          "n_pairs": 67,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1050,
+        "prosocial_mean": 2.147239263803681,
+        "antisocial_total": 1353,
+        "antisocial_mean": 1.9029535864978904,
+        "antisocial_share": 0.5630461922596754
+      },
+      "antisocial_vs_cooperation_corr": 0.29179466096643103,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 4.939024390243903,
+          "4-6": 5.73469387755102,
+          "7+": 6.786259541984733
+        },
+        "slope_assigned_on_received": 0.1983706986009296,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_vn": {
+      "n_games": 10,
+      "mean_contribution": 10.78,
+      "mean_contribution_sem": 0.28797183504255724,
+      "mean_contribution_by_period": [
+        8.175,
+        10.875,
+        11.75,
+        12.2,
+        11.475,
+        10.875,
+        11.4,
+        10.325,
+        10.6,
+        10.125
+      ],
+      "mean_earnings_by_period": [
+        10.68,
+        12.305,
+        15.040000000000001,
+        11.815000000000001,
+        12.025,
+        8.334999999999999,
+        8.275,
+        6.555,
+        6.56,
+        5.335
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.022222222222222,
+          "total_expenditure": 91.0,
+          "n_pairs": 45,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 1.7412587412587412,
+          "total_expenditure": 747.0,
+          "n_pairs": 429,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 1.2936507936507937,
+          "total_expenditure": 326.0,
+          "n_pairs": 252,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 1.508158508158508,
+          "total_expenditure": 647.0,
+          "n_pairs": 429,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.2222222222222223,
+          "total_expenditure": 100.0,
+          "n_pairs": 45,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 838,
+        "prosocial_mean": 1.7679324894514767,
+        "antisocial_total": 1073,
+        "antisocial_mean": 1.477961432506887,
+        "antisocial_share": 0.5614861329147044
+      },
+      "antisocial_vs_cooperation_corr": -0.17073170731707318,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 4.608695652173913,
+          "1-3": 4.578125,
+          "4-6": 4.44,
+          "7+": 6.119047619047619
+        },
+        "slope_assigned_on_received": 0.186200227748408,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    }
+  },
+  "by_treatment_personality": {
+    "N_neutral": {
+      "n_games": 10,
+      "mean_contribution": 14.26,
+      "mean_contribution_sem": 0.47812132351527686,
+      "mean_contribution_by_period": [
+        9.15,
+        12.875,
+        14.625,
+        14.65,
+        15.05,
+        14.95,
+        14.95,
+        15.375,
+        15.575,
+        15.4
+      ],
+      "mean_earnings_by_period": [
+        25.490000000000002,
+        27.725,
+        28.775,
+        28.79,
+        29.03,
+        28.97,
+        28.97,
+        29.225,
+        29.345,
+        29.24
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_cooperative": {
+      "n_games": 10,
+      "mean_contribution": 16.067500000000003,
+      "mean_contribution_sem": 0.47653334382577855,
+      "mean_contribution_by_period": [
+        12.0,
+        14.55,
+        16.125,
+        16.3,
+        16.9,
+        16.9,
+        16.85,
+        17.2,
+        16.75,
+        17.1
+      ],
+      "mean_earnings_by_period": [
+        27.2,
+        28.73,
+        29.675,
+        29.78,
+        30.139999999999997,
+        30.139999999999997,
+        30.110000000000003,
+        30.32,
+        30.05,
+        30.26
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_selfish": {
+      "n_games": 10,
+      "mean_contribution": 8.682500000000001,
+      "mean_contribution_sem": 0.460797165548767,
+      "mean_contribution_by_period": [
+        3.35,
+        8.5,
+        8.5,
+        8.65,
+        8.675,
+        9.95,
+        10.125,
+        9.25,
+        10.6,
+        9.225
+      ],
+      "mean_earnings_by_period": [
+        22.009999999999998,
+        25.1,
+        25.1,
+        25.19,
+        25.205000000000002,
+        25.97,
+        26.075,
+        25.55,
+        26.360000000000003,
+        25.535
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_vengeful": {
+      "n_games": 10,
+      "mean_contribution": 9.602500000000001,
+      "mean_contribution_sem": 0.7441480027521407,
+      "mean_contribution_by_period": [
+        7.525,
+        8.45,
+        9.2,
+        8.95,
+        9.95,
+        9.85,
+        9.775,
+        10.575,
+        10.575,
+        11.175
+      ],
+      "mean_earnings_by_period": [
+        24.515,
+        25.07,
+        25.52,
+        25.369999999999997,
+        25.97,
+        25.910000000000004,
+        25.865,
+        26.345,
+        26.345,
+        26.705000000000002
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_neutral": {
+      "n_games": 10,
+      "mean_contribution": 13.9025,
+      "mean_contribution_sem": 0.5118111902297998,
+      "mean_contribution_by_period": [
+        10.425,
+        12.7,
+        13.525,
+        14.325,
+        14.825,
+        14.25,
+        14.45,
+        14.35,
+        15.75,
+        14.425
+      ],
+      "mean_earnings_by_period": [
+        3.8049999999999997,
+        4.67,
+        6.8950000000000005,
+        4.85,
+        3.965,
+        2.32,
+        3.25,
+        3.225,
+        3.6399999999999997,
+        4.445
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.7777777777777777,
+          "total_expenditure": 75.0,
+          "n_pairs": 27,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.4212860310421287,
+          "total_expenditure": 1092.0,
+          "n_pairs": 451,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.290983606557377,
+          "total_expenditure": 559.0,
+          "n_pairs": 244,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.401330376940133,
+          "total_expenditure": 1083.0,
+          "n_pairs": 451,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.1481481481481484,
+          "total_expenditure": 58.0,
+          "n_pairs": 27,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1167,
+        "prosocial_mean": 2.4414225941422596,
+        "antisocial_total": 1700,
+        "antisocial_mean": 2.3545706371191137,
+        "antisocial_share": 0.5929543076386466
+      },
+      "antisocial_vs_cooperation_corr": 0.24848484848484845,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 6.0,
+          "1-3": 6.925,
+          "4-6": 6.837398373983739,
+          "7+": 7.545918367346939
+        },
+        "slope_assigned_on_received": 0.1365210028189545,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_cooperative": {
+      "n_games": 10,
+      "mean_contribution": 16.695,
+      "mean_contribution_sem": 0.3251025479239845,
+      "mean_contribution_by_period": [
+        14.225,
+        16.275,
+        16.925,
+        16.775,
+        16.175,
+        17.4,
+        17.125,
+        17.05,
+        17.55,
+        17.45
+      ],
+      "mean_earnings_by_period": [
+        12.61,
+        15.805000000000001,
+        13.325,
+        12.87,
+        11.35,
+        13.74,
+        13.875,
+        12.33,
+        11.9,
+        12.57
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 1.5294117647058822,
+          "total_expenditure": 26.0,
+          "n_pairs": 17,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 1.375586854460094,
+          "total_expenditure": 586.0,
+          "n_pairs": 426,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 1.4617834394904459,
+          "total_expenditure": 459.0,
+          "n_pairs": 314,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 1.471830985915493,
+          "total_expenditure": 627.0,
+          "n_pairs": 426,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 1.1764705882352942,
+          "total_expenditure": 20.0,
+          "n_pairs": 17,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 612,
+        "prosocial_mean": 1.381489841986456,
+        "antisocial_total": 1106,
+        "antisocial_mean": 1.4610303830911493,
+        "antisocial_share": 0.6437718277066357
+      },
+      "antisocial_vs_cooperation_corr": 0.6504589317376691,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 5.333333333333333,
+          "1-3": 4.072,
+          "4-6": 4.182741116751269,
+          "7+": 5.771428571428571
+        },
+        "slope_assigned_on_received": 0.15816355701244494,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_selfish": {
+      "n_games": 10,
+      "mean_contribution": 8.425,
+      "mean_contribution_sem": 0.4751754062098192,
+      "mean_contribution_by_period": [
+        4.925,
+        9.25,
+        8.325,
+        9.15,
+        9.3,
+        9.4,
+        8.875,
+        10.275,
+        7.35,
+        7.4
+      ],
+      "mean_earnings_by_period": [
+        2.285,
+        2.3449999999999998,
+        1.315,
+        2.8899999999999997,
+        3.2700000000000005,
+        1.225,
+        1.45,
+        4.87,
+        1.67,
+        2.9699999999999998
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 3.2013422818791946,
+          "total_expenditure": 477.0,
+          "n_pairs": 149,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.6458333333333335,
+          "total_expenditure": 889.0,
+          "n_pairs": 336,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.9608695652173913,
+          "total_expenditure": 681.0,
+          "n_pairs": 230,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 3.3035714285714284,
+          "total_expenditure": 1110.0,
+          "n_pairs": 336,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 3.651006711409396,
+          "total_expenditure": 544.0,
+          "n_pairs": 149,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1366,
+        "prosocial_mean": 2.816494845360825,
+        "antisocial_total": 2335,
+        "antisocial_mean": 3.265734265734266,
+        "antisocial_share": 0.6309105647122399
+      },
+      "antisocial_vs_cooperation_corr": 0.012158110873601292,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 6.5,
+          "1-3": 8.151515151515152,
+          "4-6": 9.395348837209303,
+          "7+": 9.213389121338912
+        },
+        "slope_assigned_on_received": 0.0020530363352711765,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_vengeful": {
+      "n_games": 10,
+      "mean_contribution": 12.275,
+      "mean_contribution_sem": 0.5186253196887153,
+      "mean_contribution_by_period": [
+        9.4,
+        10.15,
+        11.225,
+        12.175,
+        12.425,
+        12.775,
+        13.425,
+        13.75,
+        13.65,
+        13.775
+      ],
+      "mean_earnings_by_period": [
+        3.075,
+        1.4849999999999999,
+        1.365,
+        0.015,
+        0.41,
+        0.29500000000000004,
+        0.71,
+        1.09,
+        0.395,
+        0.635
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 4.8,
+          "total_expenditure": 24.0,
+          "n_pairs": 5,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 3.5185185185185186,
+          "total_expenditure": 1520.0,
+          "n_pairs": 432,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 3.5828220858895707,
+          "total_expenditure": 1168.0,
+          "n_pairs": 326,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 3.2824074074074074,
+          "total_expenditure": 1418.0,
+          "n_pairs": 432,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 3.4,
+          "total_expenditure": 17.0,
+          "n_pairs": 5,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1544,
+        "prosocial_mean": 3.533180778032037,
+        "antisocial_total": 2603,
+        "antisocial_mean": 3.4115334207077326,
+        "antisocial_share": 0.6276826621654208
+      },
+      "antisocial_vs_cooperation_corr": -0.01818181818181818,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 7.416666666666667,
+          "4-6": 8.23728813559322,
+          "7+": 11.377162629757786
+        },
+        "slope_assigned_on_received": 0.31829352418728984,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    }
+  },
+  "by_treatment_society": {
+    "N_Boston": {
+      "n_games": 10,
+      "mean_contribution": 13.530000000000001,
+      "mean_contribution_sem": 0.3442544278743719,
+      "mean_contribution_by_period": [
+        8.225,
+        12.15,
+        13.175,
+        13.275,
+        14.6,
+        14.3,
+        14.55,
+        14.675,
+        15.075,
+        15.275
+      ],
+      "mean_earnings_by_period": [
+        24.935,
+        27.29,
+        27.905,
+        27.964999999999996,
+        28.76,
+        28.580000000000002,
+        28.73,
+        28.805,
+        29.044999999999998,
+        29.165
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Melbourne": {
+      "n_games": 10,
+      "mean_contribution": 14.025,
+      "mean_contribution_sem": 0.24275616481472823,
+      "mean_contribution_by_period": [
+        8.5,
+        12.475,
+        13.7,
+        14.55,
+        15.05,
+        14.925,
+        14.6,
+        15.5,
+        15.35,
+        15.6
+      ],
+      "mean_earnings_by_period": [
+        25.1,
+        27.485000000000003,
+        28.22,
+        28.73,
+        29.03,
+        28.955000000000002,
+        28.759999999999998,
+        29.3,
+        29.21,
+        29.360000000000003
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Nottingham": {
+      "n_games": 10,
+      "mean_contribution": 13.575,
+      "mean_contribution_sem": 0.4277362894744065,
+      "mean_contribution_by_period": [
+        8.375,
+        11.875,
+        13.1,
+        13.9,
+        13.55,
+        15.125,
+        14.925,
+        14.725,
+        14.325,
+        15.85
+      ],
+      "mean_earnings_by_period": [
+        25.025,
+        27.125,
+        27.860000000000003,
+        28.339999999999996,
+        28.130000000000003,
+        29.075,
+        28.955000000000002,
+        28.835,
+        28.595,
+        29.51
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_St.Gallen": {
+      "n_games": 10,
+      "mean_contribution": 14.05,
+      "mean_contribution_sem": 0.3396689564855758,
+      "mean_contribution_by_period": [
+        8.2,
+        12.775,
+        13.925,
+        14.125,
+        15.8,
+        15.325,
+        15.375,
+        14.55,
+        15.575,
+        14.85
+      ],
+      "mean_earnings_by_period": [
+        24.919999999999998,
+        27.665,
+        28.355,
+        28.475,
+        29.48,
+        29.195,
+        29.225,
+        28.73,
+        29.345,
+        28.910000000000004
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Zurich": {
+      "n_games": 10,
+      "mean_contribution": 14.194999999999999,
+      "mean_contribution_sem": 0.33767588009806093,
+      "mean_contribution_by_period": [
+        7.975,
+        12.1,
+        14.625,
+        15.075,
+        15.075,
+        15.025,
+        15.25,
+        15.2,
+        16.125,
+        15.5
+      ],
+      "mean_earnings_by_period": [
+        24.785,
+        27.26,
+        28.775,
+        29.044999999999998,
+        29.044999999999998,
+        29.014999999999997,
+        29.15,
+        29.119999999999997,
+        29.675,
+        29.3
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Copenhagen": {
+      "n_games": 10,
+      "mean_contribution": 13.145,
+      "mean_contribution_sem": 0.36909799963334045,
+      "mean_contribution_by_period": [
+        7.975,
+        11.35,
+        13.125,
+        13.975,
+        13.525,
+        14.575,
+        13.85,
+        13.725,
+        14.7,
+        14.65
+      ],
+      "mean_earnings_by_period": [
+        24.785,
+        26.810000000000002,
+        27.875,
+        28.385,
+        28.115,
+        28.744999999999997,
+        28.310000000000002,
+        28.235000000000003,
+        28.82,
+        28.79
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Bonn": {
+      "n_games": 10,
+      "mean_contribution": 13.419999999999998,
+      "mean_contribution_sem": 0.38464991298004425,
+      "mean_contribution_by_period": [
+        8.425,
+        11.225,
+        13.7,
+        14.1,
+        14.375,
+        14.425,
+        14.075,
+        14.95,
+        14.525,
+        14.4
+      ],
+      "mean_earnings_by_period": [
+        25.055,
+        26.735000000000003,
+        28.22,
+        28.46,
+        28.625,
+        28.655,
+        28.445,
+        28.97,
+        28.714999999999996,
+        28.639999999999997
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Seoul": {
+      "n_games": 10,
+      "mean_contribution": 13.3125,
+      "mean_contribution_sem": 0.33481441791602173,
+      "mean_contribution_by_period": [
+        7.9,
+        11.1,
+        12.75,
+        13.325,
+        13.55,
+        14.425,
+        14.9,
+        15.25,
+        14.575,
+        15.35
+      ],
+      "mean_earnings_by_period": [
+        24.740000000000002,
+        26.660000000000004,
+        27.65,
+        27.994999999999997,
+        28.130000000000003,
+        28.655,
+        28.939999999999998,
+        29.15,
+        28.744999999999997,
+        29.21
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Chengdu": {
+      "n_games": 10,
+      "mean_contribution": 12.08,
+      "mean_contribution_sem": 0.7269590390417087,
+      "mean_contribution_by_period": [
+        6.825,
+        9.5,
+        11.95,
+        12.65,
+        13.125,
+        12.675,
+        13.175,
+        13.525,
+        13.7,
+        13.675
+      ],
+      "mean_earnings_by_period": [
+        24.095,
+        25.7,
+        27.169999999999998,
+        27.589999999999996,
+        27.875,
+        27.605,
+        27.905,
+        28.115,
+        28.22,
+        28.205000000000002
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Minsk": {
+      "n_games": 10,
+      "mean_contribution": 14.184999999999999,
+      "mean_contribution_sem": 0.3668408677099951,
+      "mean_contribution_by_period": [
+        8.4,
+        12.225,
+        13.925,
+        14.85,
+        15.3,
+        15.275,
+        15.225,
+        15.225,
+        15.55,
+        15.875
+      ],
+      "mean_earnings_by_period": [
+        25.04,
+        27.335,
+        28.355,
+        28.910000000000004,
+        29.18,
+        29.165,
+        29.135,
+        29.135,
+        29.330000000000002,
+        29.525
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Samara": {
+      "n_games": 10,
+      "mean_contribution": 13.502500000000001,
+      "mean_contribution_sem": 0.36905378259061977,
+      "mean_contribution_by_period": [
+        8.075,
+        12.175,
+        13.05,
+        14.4,
+        14.275,
+        14.45,
+        14.75,
+        14.325,
+        14.375,
+        15.15
+      ],
+      "mean_earnings_by_period": [
+        24.845,
+        27.305,
+        27.830000000000002,
+        28.639999999999997,
+        28.564999999999998,
+        28.669999999999998,
+        28.85,
+        28.595,
+        28.625,
+        29.089999999999996
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Dnipropetrovsk": {
+      "n_games": 10,
+      "mean_contribution": 13.1625,
+      "mean_contribution_sem": 0.4007328356343608,
+      "mean_contribution_by_period": [
+        7.825,
+        11.35,
+        12.575,
+        13.675,
+        13.7,
+        14.325,
+        14.55,
+        14.525,
+        14.575,
+        14.525
+      ],
+      "mean_earnings_by_period": [
+        24.695,
+        26.810000000000002,
+        27.544999999999998,
+        28.205000000000002,
+        28.22,
+        28.595,
+        28.73,
+        28.715000000000003,
+        28.744999999999997,
+        28.714999999999996
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Istanbul": {
+      "n_games": 10,
+      "mean_contribution": 13.7075,
+      "mean_contribution_sem": 0.33720769234668674,
+      "mean_contribution_by_period": [
+        8.875,
+        11.8,
+        13.3,
+        14.975,
+        14.3,
+        14.525,
+        14.45,
+        14.4,
+        15.175,
+        15.275
+      ],
+      "mean_earnings_by_period": [
+        25.325,
+        27.080000000000002,
+        27.98,
+        28.985000000000003,
+        28.580000000000002,
+        28.714999999999996,
+        28.669999999999998,
+        28.639999999999997,
+        29.105,
+        29.165
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Athens": {
+      "n_games": 10,
+      "mean_contribution": 12.370000000000001,
+      "mean_contribution_sem": 0.4459353465843825,
+      "mean_contribution_by_period": [
+        8.05,
+        10.65,
+        12.75,
+        11.875,
+        13.025,
+        12.65,
+        13.375,
+        13.95,
+        13.375,
+        14.0
+      ],
+      "mean_earnings_by_period": [
+        24.830000000000002,
+        26.389999999999997,
+        27.65,
+        27.125,
+        27.814999999999998,
+        27.589999999999996,
+        28.025,
+        28.369999999999997,
+        28.025,
+        28.4
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Riyadh": {
+      "n_games": 10,
+      "mean_contribution": 12.9525,
+      "mean_contribution_sem": 0.474977338640721,
+      "mean_contribution_by_period": [
+        7.175,
+        10.95,
+        13.125,
+        13.4,
+        13.125,
+        14.075,
+        14.275,
+        14.75,
+        14.35,
+        14.3
+      ],
+      "mean_earnings_by_period": [
+        24.305,
+        26.57,
+        27.875,
+        28.04,
+        27.875,
+        28.445,
+        28.564999999999998,
+        28.85,
+        28.610000000000003,
+        28.580000000000002
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "N_Muscat": {
+      "n_games": 10,
+      "mean_contribution": 13.7075,
+      "mean_contribution_sem": 0.3925530749677891,
+      "mean_contribution_by_period": [
+        8.15,
+        11.95,
+        13.875,
+        14.275,
+        14.55,
+        14.575,
+        14.625,
+        15.35,
+        14.8,
+        14.925
+      ],
+      "mean_earnings_by_period": [
+        24.89,
+        27.169999999999998,
+        28.325,
+        28.564999999999998,
+        28.73,
+        28.744999999999997,
+        28.775,
+        29.21,
+        28.880000000000003,
+        28.955000000000002
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 0.0,
+          "total_expenditure": 0.0,
+          "n_pairs": 0,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 0,
+        "prosocial_mean": 0.0,
+        "antisocial_total": 0,
+        "antisocial_mean": 0.0,
+        "antisocial_share": 0.0
+      },
+      "antisocial_vs_cooperation_corr": NaN,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 0.0,
+          "4-6": 0.0,
+          "7+": 0.0
+        },
+        "slope_assigned_on_received": NaN,
+        "n_pairs": 0
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Boston": {
+      "n_games": 10,
+      "mean_contribution": 14.352500000000001,
+      "mean_contribution_sem": 0.4461478641287737,
+      "mean_contribution_by_period": [
+        10.175,
+        14.225,
+        14.275,
+        15.05,
+        15.4,
+        14.55,
+        14.775,
+        15.2,
+        14.7,
+        15.175
+      ],
+      "mean_earnings_by_period": [
+        3.875,
+        8.205,
+        3.9,
+        5.58,
+        3.41,
+        3.025,
+        5.630000000000001,
+        4.61,
+        3.415,
+        3.3200000000000003
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 4.166666666666667,
+          "total_expenditure": 50.0,
+          "n_pairs": 12,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.3255813953488373,
+          "total_expenditure": 1100.0,
+          "n_pairs": 473,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.0695652173913044,
+          "total_expenditure": 476.0,
+          "n_pairs": 230,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.2832980972515857,
+          "total_expenditure": 1080.0,
+          "n_pairs": 473,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.3333333333333335,
+          "total_expenditure": 28.0,
+          "n_pairs": 12,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1150,
+        "prosocial_mean": 2.3711340206185567,
+        "antisocial_total": 1584,
+        "antisocial_mean": 2.2153846153846155,
+        "antisocial_share": 0.5793708851499634
+      },
+      "antisocial_vs_cooperation_corr": 0.23100410659842455,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 3.5,
+          "1-3": 6.382352941176471,
+          "4-6": 6.582781456953643,
+          "7+": 7.034682080924855
+        },
+        "slope_assigned_on_received": 0.07786964690757767,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Melbourne": {
+      "n_games": 10,
+      "mean_contribution": 14.180000000000001,
+      "mean_contribution_sem": 0.26718179412361,
+      "mean_contribution_by_period": [
+        10.175,
+        12.85,
+        13.875,
+        14.875,
+        14.95,
+        15.1,
+        14.175,
+        15.125,
+        15.175,
+        15.5
+      ],
+      "mean_earnings_by_period": [
+        2.315,
+        6.455,
+        6.325,
+        6.7,
+        5.720000000000001,
+        5.89,
+        2.6,
+        3.8950000000000005,
+        5.49,
+        5.55
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 1.9259259259259258,
+          "total_expenditure": 52.0,
+          "n_pairs": 27,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.1266968325791855,
+          "total_expenditure": 940.0,
+          "n_pairs": 442,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.0916030534351147,
+          "total_expenditure": 548.0,
+          "n_pairs": 262,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.2805429864253393,
+          "total_expenditure": 1008.0,
+          "n_pairs": 442,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.5925925925925926,
+          "total_expenditure": 70.0,
+          "n_pairs": 27,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 992,
+        "prosocial_mean": 2.115138592750533,
+        "antisocial_total": 1626,
+        "antisocial_mean": 2.2243502051983586,
+        "antisocial_share": 0.6210847975553858
+      },
+      "antisocial_vs_cooperation_corr": 0.4573255749893281,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 4.0,
+          "1-3": 6.0285714285714285,
+          "4-6": 6.302469135802469,
+          "7+": 6.62962962962963
+        },
+        "slope_assigned_on_received": 0.06781825009387908,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Nottingham": {
+      "n_games": 10,
+      "mean_contribution": 13.607499999999998,
+      "mean_contribution_sem": 0.21246078069453986,
+      "mean_contribution_by_period": [
+        9.325,
+        11.725,
+        13.925,
+        14.2,
+        15.15,
+        14.625,
+        14.925,
+        13.95,
+        14.025,
+        14.225
+      ],
+      "mean_earnings_by_period": [
+        3.4,
+        5.49,
+        7.135,
+        4.885,
+        2.735,
+        2.69,
+        4.1850000000000005,
+        4.175,
+        3.4850000000000003,
+        4.4
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.0416666666666665,
+          "total_expenditure": 49.0,
+          "n_pairs": 24,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.2004310344827585,
+          "total_expenditure": 1021.0,
+          "n_pairs": 464,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.1964285714285716,
+          "total_expenditure": 492.0,
+          "n_pairs": 224,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.3081896551724137,
+          "total_expenditure": 1071.0,
+          "n_pairs": 464,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.8333333333333335,
+          "total_expenditure": 68.0,
+          "n_pairs": 24,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1070,
+        "prosocial_mean": 2.192622950819672,
+        "antisocial_total": 1631,
+        "antisocial_mean": 2.2907303370786516,
+        "antisocial_share": 0.603850425768234
+      },
+      "antisocial_vs_cooperation_corr": -0.21646341463414634,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 6.0,
+          "1-3": 6.5,
+          "4-6": 6.7368421052631575,
+          "7+": 6.644808743169399
+        },
+        "slope_assigned_on_received": -0.0007147131174788896,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_St.Gallen": {
+      "n_games": 10,
+      "mean_contribution": 13.680000000000001,
+      "mean_contribution_sem": 0.24392052439723513,
+      "mean_contribution_by_period": [
+        8.575,
+        12.85,
+        13.625,
+        15.0,
+        13.975,
+        14.45,
+        15.5,
+        13.95,
+        13.775,
+        15.1
+      ],
+      "mean_earnings_by_period": [
+        1.86,
+        4.25,
+        4.74,
+        2.4,
+        3.685,
+        3.4450000000000003,
+        3.065,
+        2.715,
+        3.71,
+        6.685
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.9714285714285715,
+          "total_expenditure": 104.0,
+          "n_pairs": 35,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.2411347517730498,
+          "total_expenditure": 948.0,
+          "n_pairs": 423,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.334507042253521,
+          "total_expenditure": 663.0,
+          "n_pairs": 284,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.652482269503546,
+          "total_expenditure": 1122.0,
+          "n_pairs": 423,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 1.9428571428571428,
+          "total_expenditure": 68.0,
+          "n_pairs": 35,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1052,
+        "prosocial_mean": 2.296943231441048,
+        "antisocial_total": 1853,
+        "antisocial_mean": 2.4973045822102424,
+        "antisocial_share": 0.6378657487091222
+      },
+      "antisocial_vs_cooperation_corr": 0.5636363636363636,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 6.6,
+          "4-6": 7.0625,
+          "7+": 7.440366972477064
+        },
+        "slope_assigned_on_received": 0.05594318464988787,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Zurich": {
+      "n_games": 10,
+      "mean_contribution": 14.05,
+      "mean_contribution_sem": 0.24392621835300932,
+      "mean_contribution_by_period": [
+        10.025,
+        12.975,
+        14.7,
+        14.225,
+        14.15,
+        14.425,
+        15.175,
+        14.175,
+        15.525,
+        15.125
+      ],
+      "mean_earnings_by_period": [
+        4.415,
+        8.72,
+        6.76,
+        4.6049999999999995,
+        2.79,
+        5.475,
+        6.385,
+        4.6850000000000005,
+        6.734999999999999,
+        4.1450000000000005
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 3.0476190476190474,
+          "total_expenditure": 64.0,
+          "n_pairs": 21,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.248380129589633,
+          "total_expenditure": 1041.0,
+          "n_pairs": 463,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 1.9396551724137931,
+          "total_expenditure": 450.0,
+          "n_pairs": 232,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.2721382289416847,
+          "total_expenditure": 1052.0,
+          "n_pairs": 463,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 3.142857142857143,
+          "total_expenditure": 66.0,
+          "n_pairs": 21,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1105,
+        "prosocial_mean": 2.2830578512396693,
+        "antisocial_total": 1568,
+        "antisocial_mean": 2.189944134078212,
+        "antisocial_share": 0.586606808829031
+      },
+      "antisocial_vs_cooperation_corr": 0.18787878787878787,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 5.09433962264151,
+          "4-6": 6.25,
+          "7+": 7.333333333333333
+        },
+        "slope_assigned_on_received": 0.2747399811784261,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Copenhagen": {
+      "n_games": 10,
+      "mean_contribution": 13.627500000000001,
+      "mean_contribution_sem": 0.19855205027061967,
+      "mean_contribution_by_period": [
+        9.4,
+        11.975,
+        13.95,
+        14.375,
+        14.55,
+        13.7,
+        14.375,
+        14.15,
+        14.65,
+        15.15
+      ],
+      "mean_earnings_by_period": [
+        2.685,
+        8.105,
+        8.945,
+        8.74,
+        5.415,
+        4.86,
+        4.64,
+        3.63,
+        3.17,
+        4.529999999999999
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.0,
+          "total_expenditure": 24.0,
+          "n_pairs": 12,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.1582278481012658,
+          "total_expenditure": 1023.0,
+          "n_pairs": 474,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.057017543859649,
+          "total_expenditure": 469.0,
+          "n_pairs": 228,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.061181434599156,
+          "total_expenditure": 977.0,
+          "n_pairs": 474,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.0833333333333335,
+          "total_expenditure": 25.0,
+          "n_pairs": 12,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1047,
+        "prosocial_mean": 2.154320987654321,
+        "antisocial_total": 1471,
+        "antisocial_mean": 2.060224089635854,
+        "antisocial_share": 0.5841938046068308
+      },
+      "antisocial_vs_cooperation_corr": -0.15197638592001614,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 2.0,
+          "1-3": 5.521739130434782,
+          "4-6": 6.177514792899408,
+          "7+": 6.541666666666667
+        },
+        "slope_assigned_on_received": 0.12485886483504585,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Bonn": {
+      "n_games": 10,
+      "mean_contribution": 13.3025,
+      "mean_contribution_sem": 0.2591505889975514,
+      "mean_contribution_by_period": [
+        9.975,
+        11.675,
+        13.9,
+        13.675,
+        14.675,
+        13.875,
+        13.025,
+        14.275,
+        13.3,
+        14.65
+      ],
+      "mean_earnings_by_period": [
+        4.24,
+        3.8,
+        5.345000000000001,
+        4.485,
+        3.685,
+        2.205,
+        3.15,
+        3.315,
+        3.3600000000000003,
+        4.265
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.857142857142857,
+          "total_expenditure": 80.0,
+          "n_pairs": 28,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.26338329764454,
+          "total_expenditure": 1057.0,
+          "n_pairs": 467,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.1285714285714286,
+          "total_expenditure": 447.0,
+          "n_pairs": 210,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.4668094218415417,
+          "total_expenditure": 1152.0,
+          "n_pairs": 467,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.6785714285714284,
+          "total_expenditure": 75.0,
+          "n_pairs": 28,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1137,
+        "prosocial_mean": 2.296969696969697,
+        "antisocial_total": 1674,
+        "antisocial_mean": 2.374468085106383,
+        "antisocial_share": 0.5955176093916755
+      },
+      "antisocial_vs_cooperation_corr": -0.06666666666666665,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 8.318181818181818,
+          "4-6": 6.909090909090909,
+          "7+": 7.184615384615385
+        },
+        "slope_assigned_on_received": 0.03633096678061179,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Seoul": {
+      "n_games": 10,
+      "mean_contribution": 13.632499999999999,
+      "mean_contribution_sem": 0.4129004789965199,
+      "mean_contribution_by_period": [
+        9.625,
+        13.375,
+        13.9,
+        14.0,
+        13.775,
+        13.7,
+        14.025,
+        15.0,
+        14.9,
+        14.025
+      ],
+      "mean_earnings_by_period": [
+        3.425,
+        5.365,
+        6.435,
+        3.95,
+        2.94,
+        5.535,
+        2.085,
+        4.535,
+        5.18,
+        4.8149999999999995
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.3333333333333335,
+          "total_expenditure": 84.0,
+          "n_pairs": 36,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.202672605790646,
+          "total_expenditure": 989.0,
+          "n_pairs": 449,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.243478260869565,
+          "total_expenditure": 516.0,
+          "n_pairs": 230,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.351893095768374,
+          "total_expenditure": 1056.0,
+          "n_pairs": 449,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.3055555555555554,
+          "total_expenditure": 83.0,
+          "n_pairs": 36,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1073,
+        "prosocial_mean": 2.2123711340206187,
+        "antisocial_total": 1655,
+        "antisocial_mean": 2.3146853146853146,
+        "antisocial_share": 0.6066715542521994
+      },
+      "antisocial_vs_cooperation_corr": -0.5227987675648555,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 10.0,
+          "1-3": 5.709677419354839,
+          "4-6": 6.583333333333333,
+          "7+": 7.255434782608695
+        },
+        "slope_assigned_on_received": 0.08087338742454578,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Chengdu": {
+      "n_games": 10,
+      "mean_contribution": 13.747499999999999,
+      "mean_contribution_sem": 0.2800161205676876,
+      "mean_contribution_by_period": [
+        9.55,
+        12.85,
+        13.975,
+        14.3,
+        14.075,
+        14.45,
+        14.95,
+        14.6,
+        13.7,
+        15.025
+      ],
+      "mean_earnings_by_period": [
+        3.9850000000000003,
+        7.745,
+        6.92,
+        5.615,
+        4.0600000000000005,
+        4.885,
+        4.6850000000000005,
+        5.585,
+        3.6550000000000002,
+        4.88
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 3.3,
+          "total_expenditure": 33.0,
+          "n_pairs": 10,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.203579418344519,
+          "total_expenditure": 985.0,
+          "n_pairs": 447,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.055944055944056,
+          "total_expenditure": 588.0,
+          "n_pairs": 286,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.3713646532438477,
+          "total_expenditure": 1060.0,
+          "n_pairs": 447,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 3.5,
+          "total_expenditure": 35.0,
+          "n_pairs": 10,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1018,
+        "prosocial_mean": 2.227571115973742,
+        "antisocial_total": 1683,
+        "antisocial_mean": 2.2651413189771197,
+        "antisocial_share": 0.6231025546094039
+      },
+      "antisocial_vs_cooperation_corr": -0.7841981513472833,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 6.133333333333334,
+          "4-6": 6.1879194630872485,
+          "7+": 7.319277108433735
+        },
+        "slope_assigned_on_received": 0.2324972531502699,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Minsk": {
+      "n_games": 10,
+      "mean_contribution": 13.344999999999999,
+      "mean_contribution_sem": 0.45849694049627465,
+      "mean_contribution_by_period": [
+        8.45,
+        12.25,
+        13.55,
+        13.9,
+        14.8,
+        13.925,
+        14.725,
+        13.925,
+        13.925,
+        14.0
+      ],
+      "mean_earnings_by_period": [
+        1.795,
+        4.415,
+        6.195,
+        1.845,
+        4.55,
+        2.81,
+        4.4799999999999995,
+        5.135,
+        3.1399999999999997,
+        1.8350000000000002
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.6,
+          "total_expenditure": 52.0,
+          "n_pairs": 20,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.3035714285714284,
+          "total_expenditure": 1032.0,
+          "n_pairs": 448,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.272727272727273,
+          "total_expenditure": 600.0,
+          "n_pairs": 264,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.4308035714285716,
+          "total_expenditure": 1089.0,
+          "n_pairs": 448,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.6,
+          "total_expenditure": 52.0,
+          "n_pairs": 20,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1084,
+        "prosocial_mean": 2.3162393162393164,
+        "antisocial_total": 1741,
+        "antisocial_mean": 2.378415300546448,
+        "antisocial_share": 0.616283185840708
+      },
+      "antisocial_vs_cooperation_corr": 0.0,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 6.5,
+          "4-6": 6.945205479452055,
+          "7+": 7.102150537634409
+        },
+        "slope_assigned_on_received": -0.057558174090489016,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Samara": {
+      "n_games": 10,
+      "mean_contribution": 13.065000000000001,
+      "mean_contribution_sem": 0.33580748453044734,
+      "mean_contribution_by_period": [
+        8.525,
+        11.55,
+        13.45,
+        13.575,
+        13.325,
+        13.375,
+        14.0,
+        14.125,
+        14.475,
+        14.25
+      ],
+      "mean_earnings_by_period": [
+        1.47,
+        6.640000000000001,
+        4.785,
+        4.975,
+        4.58,
+        2.93,
+        2.885,
+        2.2350000000000003,
+        4.425,
+        5.1850000000000005
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 3.380952380952381,
+          "total_expenditure": 71.0,
+          "n_pairs": 21,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.437219730941704,
+          "total_expenditure": 1087.0,
+          "n_pairs": 446,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.093984962406015,
+          "total_expenditure": 557.0,
+          "n_pairs": 266,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.3587443946188342,
+          "total_expenditure": 1052.0,
+          "n_pairs": 446,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.0,
+          "total_expenditure": 42.0,
+          "n_pairs": 21,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1158,
+        "prosocial_mean": 2.4796573875803,
+        "antisocial_total": 1651,
+        "antisocial_mean": 2.252387448840382,
+        "antisocial_share": 0.587753648985404
+      },
+      "antisocial_vs_cooperation_corr": 0.06686960980480709,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 2.0,
+          "1-3": 6.2682926829268295,
+          "4-6": 7.09375,
+          "7+": 6.978947368421053
+        },
+        "slope_assigned_on_received": 0.09917795642184227,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Dnipropetrovsk": {
+      "n_games": 10,
+      "mean_contribution": 13.99,
+      "mean_contribution_sem": 0.2820362466855004,
+      "mean_contribution_by_period": [
+        10.1,
+        12.625,
+        13.925,
+        14.775,
+        14.625,
+        14.55,
+        15.2,
+        15.1,
+        14.325,
+        14.675
+      ],
+      "mean_earnings_by_period": [
+        3.4450000000000003,
+        4.975,
+        5.11,
+        6.28,
+        4.285,
+        6.7,
+        2.9899999999999998,
+        4.1850000000000005,
+        4.3950000000000005,
+        4.3100000000000005
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.12,
+          "total_expenditure": 53.0,
+          "n_pairs": 25,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.2207505518763795,
+          "total_expenditure": 1006.0,
+          "n_pairs": 453,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.0655737704918034,
+          "total_expenditure": 504.0,
+          "n_pairs": 244,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.2339955849889623,
+          "total_expenditure": 1012.0,
+          "n_pairs": 453,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.12,
+          "total_expenditure": 53.0,
+          "n_pairs": 25,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1059,
+        "prosocial_mean": 2.215481171548117,
+        "antisocial_total": 1569,
+        "antisocial_mean": 2.173130193905817,
+        "antisocial_share": 0.5970319634703196
+      },
+      "antisocial_vs_cooperation_corr": -0.17575757575757575,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 5.828571428571428,
+          "4-6": 6.302631578947368,
+          "7+": 6.953757225433526
+        },
+        "slope_assigned_on_received": 0.20687232016792423,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Istanbul": {
+      "n_games": 10,
+      "mean_contribution": 13.365,
+      "mean_contribution_sem": 0.4092710321752296,
+      "mean_contribution_by_period": [
+        9.225,
+        12.25,
+        13.95,
+        13.85,
+        13.825,
+        14.125,
+        13.875,
+        14.475,
+        14.65,
+        13.425
+      ],
+      "mean_earnings_by_period": [
+        5.7700000000000005,
+        7.715000000000001,
+        6.115,
+        3.785,
+        5.035,
+        4.855,
+        3.825,
+        3.9799999999999995,
+        4.125,
+        3.45
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 1.44,
+          "total_expenditure": 36.0,
+          "n_pairs": 25,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.1019955654101996,
+          "total_expenditure": 948.0,
+          "n_pairs": 451,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 1.9193548387096775,
+          "total_expenditure": 476.0,
+          "n_pairs": 248,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.246119733924612,
+          "total_expenditure": 1013.0,
+          "n_pairs": 451,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.2,
+          "total_expenditure": 55.0,
+          "n_pairs": 25,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 984,
+        "prosocial_mean": 2.0672268907563027,
+        "antisocial_total": 1544,
+        "antisocial_mean": 2.132596685082873,
+        "antisocial_share": 0.6107594936708861
+      },
+      "antisocial_vs_cooperation_corr": 0.5030303030303029,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 8.0,
+          "1-3": 6.476190476190476,
+          "4-6": 6.3076923076923075,
+          "7+": 6.4391891891891895
+        },
+        "slope_assigned_on_received": -0.06024808868717851,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Athens": {
+      "n_games": 10,
+      "mean_contribution": 13.632499999999999,
+      "mean_contribution_sem": 0.48489761233114403,
+      "mean_contribution_by_period": [
+        9.8,
+        12.45,
+        13.7,
+        14.775,
+        14.7,
+        13.225,
+        13.725,
+        14.325,
+        14.65,
+        14.975
+      ],
+      "mean_earnings_by_period": [
+        3.2950000000000004,
+        5.37,
+        7.385,
+        2.9,
+        6.0600000000000005,
+        4.68,
+        4.220000000000001,
+        3.775,
+        4.67,
+        4.035
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.1,
+          "total_expenditure": 42.0,
+          "n_pairs": 20,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.1389473684210527,
+          "total_expenditure": 1016.0,
+          "n_pairs": 475,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.085714285714286,
+          "total_expenditure": 438.0,
+          "n_pairs": 210,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.2842105263157895,
+          "total_expenditure": 1085.0,
+          "n_pairs": 475,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 1.7,
+          "total_expenditure": 34.0,
+          "n_pairs": 20,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1058,
+        "prosocial_mean": 2.1373737373737374,
+        "antisocial_total": 1557,
+        "antisocial_mean": 2.2085106382978723,
+        "antisocial_share": 0.5954110898661568
+      },
+      "antisocial_vs_cooperation_corr": 0.7560975609756098,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 0.0,
+          "1-3": 7.842105263157895,
+          "4-6": 6.049689440993789,
+          "7+": 6.6521739130434785
+        },
+        "slope_assigned_on_received": 0.023141598467076172,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Riyadh": {
+      "n_games": 10,
+      "mean_contribution": 13.309999999999999,
+      "mean_contribution_sem": 0.4645965992126934,
+      "mean_contribution_by_period": [
+        7.725,
+        12.075,
+        13.975,
+        14.025,
+        14.375,
+        14.4,
+        14.225,
+        13.975,
+        14.175,
+        14.15
+      ],
+      "mean_earnings_by_period": [
+        1.7600000000000002,
+        7.9799999999999995,
+        8.870000000000001,
+        5.6,
+        6.984999999999999,
+        3.935,
+        4.525,
+        6.01,
+        5.3149999999999995,
+        5.035
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.5,
+          "total_expenditure": 40.0,
+          "n_pairs": 16,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.177350427350427,
+          "total_expenditure": 1019.0,
+          "n_pairs": 468,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 1.9482758620689655,
+          "total_expenditure": 452.0,
+          "n_pairs": 232,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.0598290598290596,
+          "total_expenditure": 964.0,
+          "n_pairs": 468,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.0,
+          "total_expenditure": 32.0,
+          "n_pairs": 16,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1059,
+        "prosocial_mean": 2.18801652892562,
+        "antisocial_total": 1448,
+        "antisocial_mean": 2.022346368715084,
+        "antisocial_share": 0.5775827682489031
+      },
+      "antisocial_vs_cooperation_corr": -0.4863244349440517,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 2.0,
+          "1-3": 6.0,
+          "4-6": 5.9156626506024095,
+          "7+": 6.448275862068965
+        },
+        "slope_assigned_on_received": 0.09365555703093878,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    },
+    "P_Muscat": {
+      "n_games": 10,
+      "mean_contribution": 13.8475,
+      "mean_contribution_sem": 0.40781344454977897,
+      "mean_contribution_by_period": [
+        8.825,
+        12.725,
+        13.525,
+        15.25,
+        14.65,
+        14.55,
+        14.55,
+        14.1,
+        15.025,
+        15.275
+      ],
+      "mean_earnings_by_period": [
+        3.7299999999999995,
+        5.35,
+        5.635,
+        6.23,
+        5.1450000000000005,
+        4.79,
+        4.12,
+        4.035,
+        5.015,
+        2.93
+      ],
+      "deviation_binned_punishment": {
+        "[-20,-11]": {
+          "mean_expenditure": 2.3,
+          "total_expenditure": 23.0,
+          "n_pairs": 10,
+          "is_antisocial": false
+        },
+        "[-10,-1]": {
+          "mean_expenditure": 2.2656903765690375,
+          "total_expenditure": 1083.0,
+          "n_pairs": 478,
+          "is_antisocial": false
+        },
+        "[0]": {
+          "mean_expenditure": 2.1294642857142856,
+          "total_expenditure": 477.0,
+          "n_pairs": 224,
+          "is_antisocial": true
+        },
+        "[1,10]": {
+          "mean_expenditure": 2.1631799163179917,
+          "total_expenditure": 1034.0,
+          "n_pairs": 478,
+          "is_antisocial": true
+        },
+        "[11,20]": {
+          "mean_expenditure": 2.2,
+          "total_expenditure": 22.0,
+          "n_pairs": 10,
+          "is_antisocial": true
+        }
+      },
+      "antisocial_prosocial_split": {
+        "prosocial_total": 1106,
+        "prosocial_mean": 2.2663934426229506,
+        "antisocial_total": 1533,
+        "antisocial_mean": 2.1530898876404496,
+        "antisocial_share": 0.5809018567639257
+      },
+      "antisocial_vs_cooperation_corr": 0.22424242424242422,
+      "vengeance": {
+        "mean_assigned_next_by_received_bin": {
+          "0": 2.0,
+          "1-3": 6.527777777777778,
+          "4-6": 6.51875,
+          "7+": 6.576687116564417
+        },
+        "slope_assigned_on_received": 0.07215372120496163,
+        "n_pairs": 360
+      },
+      "parse_fallback_rate": {
+        "contrib": 0.0,
+        "punish": 0.0
+      }
+    }
+  },
+  "human_benchmark": {
+    "P_mean_contribution": {
+      "Boston": 18.0,
+      "Copenhagen": 17.7,
+      "St.Gallen": 16.7,
+      "Zurich": 16.2,
+      "Nottingham": 15.0,
+      "Seoul": 14.7,
+      "Bonn": 14.5,
+      "Melbourne": 14.1,
+      "Chengdu": 13.9,
+      "Minsk": 12.9,
+      "Samara": 11.7,
+      "Dnipropetrovsk": 10.9,
+      "Muscat": 9.9,
+      "Istanbul": 7.1,
+      "Riyadh": 6.9,
+      "Athens": 5.7
+    },
+    "N_mean_contribution": {
+      "Copenhagen": 11.5,
+      "Dnipropetrovsk": 10.6,
+      "Minsk": 10.5,
+      "St.Gallen": 10.1,
+      "Muscat": 10.0,
+      "Samara": 9.7,
+      "Zurich": 9.3,
+      "Boston": 9.3,
+      "Bonn": 9.2,
+      "Chengdu": 8.0,
+      "Seoul": 7.9,
+      "Riyadh": 7.6,
+      "Nottingham": 6.9,
+      "Athens": 6.4,
+      "Istanbul": 5.4,
+      "Melbourne": 4.9
+    },
+    "antisocial_vs_contribution_spearman_rho": -0.9
+  }
+}

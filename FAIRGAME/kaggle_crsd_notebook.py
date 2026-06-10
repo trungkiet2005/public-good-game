@@ -80,7 +80,7 @@ TREATMENTS = [90, 50, 10]      # loss probabilities (%)
 # (faithful to the paper, for the human comparison); "neutral" = abstract shared-account
 # control. Running both lets you measure the FRAMING EFFECT on the same LLM.
 # Set to ["climate"] to replicate the paper only, or ["neutral"] for the abstract control.
-FRAMINGS = ["neutral", "climate"]
+FRAMINGS = ["climate"]
 OUTPUT_DIR = Path("/kaggle/working/crsd_results")
 SMOKE_TEST = True              # in 1 reply mẫu + parse khi nạp mỗi model
 
