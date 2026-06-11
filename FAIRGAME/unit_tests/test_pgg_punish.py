@@ -366,3 +366,36 @@ def _run_all():
 
 if __name__ == "__main__":
     sys.exit(0 if _run_all() else 1)
+
+
+# --------------------------------------------------------------------------- #
+# Follow-up: norm-laden society personas (positive control)
+# --------------------------------------------------------------------------- #
+def test_norm_persona_block():
+    from pgg_prompt import society_block, NORM_PERSONAS_EN
+    assert set(NORM_PERSONAS_EN) == {"Boston", "Copenhagen", "St.Gallen", "Zurich",
+                                     "Athens", "Istanbul", "Riyadh", "Muscat"}
+    txt = society_block("en", "norm:Athens")
+    assert "Athens" in txt and len(txt) > 100          # rich, not a bare label
+    assert society_block("en", "Athens") == ("You are a participant from Athens, Greece.")
+    # norm personas must never reference the game itself (no demand effects)
+    for city, text in NORM_PERSONAS_EN.items():
+        low = text.lower()
+        for banned in ("token", "contribut", "deduct", "punish", "this game", "project"):
+            assert banned not in low, f"{city} persona leaks game language: {banned}"
+
+
+def test_norm_persona_unknown_city_raises():
+    from pgg_prompt import society_block
+    try:
+        society_block("en", "norm:Paris")
+    except KeyError:
+        pass
+    else:
+        raise AssertionError("expected KeyError for undefined norm persona")
+
+
+def test_norm_persona_in_prompt():
+    g = _make_game(society="norm:Copenhagen")
+    prompt = g.build_contrib_prompts()[0]
+    assert "Copenhagen" in prompt and "civic" in prompt

@@ -45,6 +45,9 @@ class CRSDGame:
         self.target: int = params["target"]
         self.loss_prob: int = params["loss_prob"]            # 90 / 50 / 10
         self.options: Sequence[int] = params.get("contribution_options", (0, 2, 4))
+        # False = faithful Milinski visibility (no cumulative sum shown).
+        # True  = self-summation-confound CONTROL (running total displayed).
+        self.show_running_total: bool = bool(params.get("show_running_total", False))
 
         assert len(personalities) == self.n_players, "need one personality per player"
         self.players: List[CRSDPlayer] = [
@@ -70,7 +73,8 @@ class CRSDGame:
                 "KEEP_PROB": keep_prob,
                 "CURRENT_ROUND": self.current_round + 1,
                 "PERSONALITY_BLOCK": personality_block(self.language, p.personality),
-                "HISTORY_BLOCK": format_history(self.history, player_ids, p.id, self.language),
+                "HISTORY_BLOCK": format_history(self.history, player_ids, p.id, self.language,
+                                                show_running_total=self.show_running_total),
             }
             prompts.append(build_prompt(self.template, mapping))
         return prompts
@@ -113,6 +117,7 @@ class CRSDGame:
             "language": self.language,
             "personality_condition": self.personality_condition,
             "framing": self.framing,
+            "show_running_total": self.show_running_total,
             "n_players": self.n_players,
             "n_rounds": self.n_rounds,
             "endowment": self.endowment,

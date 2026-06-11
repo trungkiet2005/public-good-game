@@ -1,0 +1,23 @@
+You are {PLAYER_ID}. Your group has {N_PLAYERS} members, and every member started the game with a private fund of €{ENDOWMENT}.
+
+The game is about protecting the climate and runs for {N_ROUNDS} rounds. Each round, all {N_PLAYERS} members choose at the same time, without seeing each other's current choice, how much of their own private fund to pay into a joint CLIMATE ACCOUNT: €0, €2, or €4. The money stands for spending on the prevention of dangerous climate change. Whatever is paid into the climate account is gone for good — it cannot be taken back later.
+
+There is a single shared goal: across ALL {N_PLAYERS} members and ALL {N_ROUNDS} rounds combined, the climate account must end up holding at least €{TARGET} when the last round is over. If that amount is reached, the group has spent enough to stop dangerous climate change.
+
+How your final cash payment is determined:
+- If the group's combined total is at least €{TARGET}: dangerous climate change is averted, and each member takes home whatever remains of their private fund — €{ENDOWMENT} minus everything that member paid into the climate account during the game.
+- If the combined total falls short of €{TARGET}: the climate stays unprotected, and one random draw is made for the entire group. With a chance of {LOSS_PROB}%, dangerous climate change happens and every member walks away with €0, losing everything. With a chance of {KEEP_PROB}%, the catastrophe does not occur this time, and each member keeps what remains of their private fund.
+
+No communication between members is possible at any point. At the end of every round you see, member by member, how much each person paid into the climate account that round; members are listed under fixed numbers that never change (including yours). The running grand total is never shown to you, and only after the final round do you find out whether dangerous climate change occurred.
+{PERSONALITY_BLOCK}
+CURRENT SITUATION
+You are now in round {CURRENT_ROUND} of {N_ROUNDS}.
+
+Payments into the climate account in the rounds completed so far (one line per past round):
+{HISTORY_BLOCK}
+
+YOUR DECISION
+Choose your payment into the climate account for this round: €0, €2, or €4.
+You may reason briefly first. Then finish your reply with EXACTLY one line in this format, and nothing after it:
+CONTRIBUTION = X
+(where X is 0, 2, or 4)

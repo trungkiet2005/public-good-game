@@ -1,0 +1,47 @@
+{
+ "gemma2-9b-it": {
+  "n_games": 10,
+  "n_punish_decisions": 359,
+  "n_zero_punish_decisions": 41,
+  "pct_anti_dominant": 0.5153203342618384,
+  "motive_rates": {
+   "freeride": 0.3871866295264624,
+   "revenge": 0.28690807799442897,
+   "fairness": 0.17548746518105848,
+   "deterrence": 0.298050139275766
+  },
+  "pct_freeride_claimed": 0.3871866295264624,
+  "pct_anti_dominant_given_freeride_claimed": 0.33093525179856115,
+  "mean_anti_share_given_freeride_claimed": 0.3788469224620304
+ },
+ "llama-3-1-8b": {
+  "n_games": 10,
+  "n_punish_decisions": 339,
+  "n_zero_punish_decisions": 61,
+  "pct_anti_dominant": 0.5162241887905604,
+  "motive_rates": {
+   "freeride": 0.032448377581120944,
+   "revenge": 0.17994100294985252,
+   "fairness": 0.0943952802359882,
+   "deterrence": 0.22418879056047197
+  },
+  "pct_freeride_claimed": 0.032448377581120944,
+  "pct_anti_dominant_given_freeride_claimed": 0.6363636363636364,
+  "mean_anti_share_given_freeride_claimed": 0.6453168044077136
+ },
+ "qwen25-7b-instruct": {
+  "n_games": 10,
+  "n_punish_decisions": 383,
+  "n_zero_punish_decisions": 17,
+  "pct_anti_dominant": 0.577023498694517,
+  "motive_rates": {
+   "freeride": 0.13838120104438642,
+   "revenge": 0.5744125326370757,
+   "fairness": 0.26109660574412535,
+   "deterrence": 0.34464751958224543
+  },
+  "pct_freeride_claimed": 0.13838120104438642,
+  "pct_anti_dominant_given_freeride_claimed": 0.49056603773584906,
+  "mean_anti_share_given_freeride_claimed": 0.5411868006207629
+ }
+}
