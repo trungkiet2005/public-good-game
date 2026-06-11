@@ -3,7 +3,6 @@
 
 \documentclass[openacc]{rsproca_new}
 
-\usepackage{multicol}
 \usepackage[utf8]{inputenc}
 \usepackage{eurosym}
 \usepackage{newunicodechar}
@@ -41,8 +40,6 @@ Among the most striking findings in the experimental study of human cooperation 
 
 \maketitle
 
-\begin{multicols}{2}
-
 \section{Introduction}
 
 The provision of public goods poses one of the most enduring problems in the social and biological sciences: rational individuals who share in a collective benefit have a private incentive to withhold their own contribution, so that universal free-riding can unravel an outcome from which all would gain \cite{ledyard1995public, dawes1980social}. In the laboratory, this tension is distilled in the linear public-goods game, where players repeatedly decide how much of a private endowment to invest in a common project whose returns are shared regardless of investment; absent further structure, contributions decay towards the free-riding equilibrium over successive rounds \cite{ledyard1995public}. A large body of work shows that this decay can be arrested when players are permitted to punish one another at a personal cost, sacrificing their own payoff to reduce that of low contributors: such costly peer punishment functions as a decentralised institution that sustains cooperation where material self-interest alone would erode it \cite{fehr2000cooperation, fehr2002altruistic}, and a substantial evolutionary literature has since examined when costly punishment and related institutional designs can emerge and stabilise collective action \cite{han2015avoiding,han2016synergy,song2026punishment}. Yet the form this institution takes is far from universal. In a sixteen-society comparison spanning participant pools from Boston to Athens to Riyadh, \cite{herrmann2008antisocial} documented striking cross-societal heterogeneity, including widespread \emph{antisocial} punishment---deduction points aimed at cooperators who contributed as much as or more than the punisher---whose prevalence covaried negatively with the cooperation a society could ultimately achieve. The capacity of a punishment institution to support collective action thus depends not merely on its existence but on culturally structured norms governing who gets punished and why, in line with broader accounts of how communities sustain commons through locally tailored rules and sanctioning \cite{ostrom1990governing}.
@@ -78,8 +75,6 @@ These limitations chart the natural next steps. Personas richer than a neutral c
 \section{Conclusion}
 
 In Herrmann's public-goods game with costly peer punishment, large language model agents reproduce the existence of (anti)social punishment but neither its institutional function nor its cultural structure. They contribute generously and they punish, and a majority of their punishment---54\% to 59\% of all deduction points---is antisocial, aimed at members who gave as much as or more than the punisher, rivalling the most punitive human pools. Yet the punishment institution does not raise cooperation, and for one model significantly lowers it; the strong cross-societal coupling between antisocial punishment and cooperation collapses from a human $\rho\approx-0.90$ to near zero; and the geography of cooperation flattens, with sixteen neutral personas moving contribution by about a single token. The agents reproduce the behaviour while losing the relational logic that makes it matter. For silicon-subject research this means that human-looking marginals are no guarantee of human-like mechanism, and that the diagnostic, conditional structure of a paradigm is where validation must focus. For multi-agent LLM systems it means that the sanctioning institutions humans use to stabilise cooperation cannot be assumed to transfer---granted the power to punish, today's agents are as likely to turn it on good citizens as on free-riders.
-
-\end{multicols}
 
 \enlargethispage{20pt}
 
