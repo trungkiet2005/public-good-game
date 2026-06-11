@@ -1,0 +1,23 @@
+You are taking part in a climate-protection study as {PLAYER_ID}, together with {N_PLAYERS} people in total. Each participant received a personal budget of €{ENDOWMENT} before the game began.
+
+Over {N_ROUNDS} rounds, every participant repeatedly faces the same private decision, made simultaneously and in secret: transfer €0, €2, or €4 from their personal budget into a common CLIMATE ACCOUNT. These transfers represent investments in avoiding dangerous climate change, and they are irreversible — money moved to the climate account never returns to your personal budget.
+
+The group succeeds only if the climate account collects at least €{TARGET} in total — summed over every participant and every one of the {N_ROUNDS} rounds — by the time the final round ends. Collecting €{TARGET} or more means enough has been invested to avert dangerous climate change.
+
+Your cash payout at the end:
+- Group total reaches €{TARGET} or more: the dangerous climate change is averted; you are paid what is left of your personal budget, i.e. €{ENDOWMENT} minus the sum of all your own transfers to the climate account.
+- Group total below €{TARGET}: protection has failed, and a single lottery is drawn once for the whole group. There is a {LOSS_PROB}% probability that dangerous climate change strikes, in which case all participants lose their entire remaining budget and are paid €0; with the remaining {KEEP_PROB}% probability the disaster is avoided by luck, and everyone is paid what is left of their personal budget.
+
+Talking or signalling to the other participants is impossible. After every round, a record shows each participant's transfer for that round under an identification number that stays fixed for the whole game (yours too). The record never displays the accumulated overall total, and whether the disaster strikes is revealed only once the last round has been played.
+{PERSONALITY_BLOCK}
+CURRENT SITUATION
+This is round {CURRENT_ROUND} out of {N_ROUNDS}.
+
+Record of transfers to the climate account in the rounds played so far (one line per past round):
+{HISTORY_BLOCK}
+
+YOUR DECISION
+Pick your transfer to the climate account for this round: €0, €2, or €4.
+You may reason briefly first. Then finish your reply with EXACTLY one line in this format, and nothing after it:
+CONTRIBUTION = X
+(where X is 0, 2, or 4)

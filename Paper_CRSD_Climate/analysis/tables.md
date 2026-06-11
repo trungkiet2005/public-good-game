@@ -16,8 +16,12 @@
 
 ### Risk-sensitivity ANOVA (human F=13.78, p<0.0001, eta2~0.51)
 
-| model | F | p | eta2 |
-|---|---|---|---|
-| Qwen2.5-7B | 1.76 | 0.191 | 0.115 |
-| Gemma-2-9B | 2.23 | 0.127 | 0.142 |
-| Llama-3.1-8B | 3.64 | 0.0398 | 0.212 |
+ANOVA + evidence for the null: BIC Bayes factor BF01 (>1 favours no risk effect)
+and TOST equivalence on the 90% vs 10% contrast, bounds = +/- half the human
+90->10 decline (+/-22.6 EUR).
+
+| model | F | p | eta2 | BF01 | diff 90-10 (EUR) | TOST p (90v10) |
+|---|---|---|---|---|---|---|
+| Qwen2.5-7B | 1.76 | 0.191 | 0.115 | 4.78 | +2.0 | 1e-05 |
+| Gemma-2-9B | 2.23 | 0.127 | 0.142 | 3.04 | +10.2 | 0.014 |
+| Llama-3.1-8B | 3.64 | 0.0398 | 0.212 | 0.84 | +7.4 | 0.0011 |

@@ -32,15 +32,20 @@ PLACEHOLDER_KEYS = (
 # Localized labels used when rendering the contribution history block.
 LABELS: Dict[str, Dict[str, str]] = {
     "en": {"round": "Round", "round_total": "round total", "you": "(you)",
-           "no_rounds": "(no rounds have been played yet)"},
+           "no_rounds": "(no rounds have been played yet)",
+           "running_total": "cumulative total invested so far"},
     "fr": {"round": "Tour", "round_total": "total du tour", "you": "(vous)",
-           "no_rounds": "(aucun tour n'a encore été joué)"},
+           "no_rounds": "(aucun tour n'a encore été joué)",
+           "running_total": "total cumulé investi jusqu'ici"},
     "vn": {"round": "Vòng", "round_total": "tổng vòng", "you": "(bạn)",
-           "no_rounds": "(chưa có vòng nào được chơi)"},
+           "no_rounds": "(chưa có vòng nào được chơi)",
+           "running_total": "tổng tích lũy đã đầu tư đến nay"},
     "cn": {"round": "轮次", "round_total": "本轮合计", "you": "（你）",
-           "no_rounds": "（尚未进行任何轮次）"},
+           "no_rounds": "（尚未进行任何轮次）",
+           "running_total": "迄今累计投入总额"},
     "ar": {"round": "الجولة", "round_total": "مجموع الجولة", "you": "(أنت)",
-           "no_rounds": "(لم تُلعب أي جولة بعد)"},
+           "no_rounds": "(لم تُلعب أي جولة بعد)",
+           "running_total": "المجموع التراكمي المستثمر حتى الآن"},
 }
 
 # Optional disposition sentence (the personality manipulation). "none" => "".
@@ -109,7 +114,8 @@ def parse_contribution(text: str, options: Sequence[int] = (0, 2, 4),
 
 
 def format_history(history: List[List[int]], player_ids: Sequence[str],
-                   you_id: str, language: str = "en") -> str:
+                   you_id: str, language: str = "en",
+                   show_running_total: bool = False) -> str:
     """Render the faithful contribution history (per-round, per-player + round total).
 
     Args:
@@ -118,6 +124,12 @@ def format_history(history: List[List[int]], player_ids: Sequence[str],
         player_ids: fixed labels, e.g. ["Player 1", ..., "Player 6"].
         you_id: the reading player's id (marked "(you)").
         language: label localization.
+        show_running_total: False = faithful Milinski visibility (the default —
+            players never see the cumulative-to-target sum). True = the
+            CONTROL treatment for the self-summation confound: a final line
+            states the cumulative total invested so far, so any remaining
+            flatness across risk treatments cannot be blamed on the agent
+            failing to sum the history itself.
     """
     lab = LABELS.get(language, LABELS["en"])
     if not history:
@@ -131,6 +143,9 @@ def format_history(history: List[List[int]], player_ids: Sequence[str],
         rt = sum(row)
         lines.append(f"{lab['round']} {r_idx}:  " + "   ".join(parts)
                      + f"   ({lab['round_total']}: €{rt})")
+    if show_running_total:
+        cum = sum(sum(row) for row in history)
+        lines.append(f"{lab['running_total']}: €{cum}")
     return "\n".join(lines)
 
 

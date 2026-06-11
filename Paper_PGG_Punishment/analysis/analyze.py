@@ -101,6 +101,58 @@ def spearman_ci(rho, n):
     return float(math.tanh(z - 1.96 * se)), float(math.tanh(z + 1.96 * se))
 
 
+def tost_welch(a, b, bound):
+    """Two-one-sided-tests (TOST) Welch equivalence test of |mean(a)-mean(b)| < bound.
+
+    Returns (diff, p_tost, df); p_tost is the larger one-sided p-value
+    (Lakens et al. 2018), so p_tost < .05 establishes equivalence.
+    """
+    a = np.asarray(a, dtype=float)
+    b = np.asarray(b, dtype=float)
+    n1, n2 = len(a), len(b)
+    if n1 < 2 or n2 < 2:
+        return float("nan"), float("nan"), float("nan")
+    v1, v2 = a.var(ddof=1), b.var(ddof=1)
+    se = math.sqrt(v1 / n1 + v2 / n2)
+    df = (v1 / n1 + v2 / n2) ** 2 / ((v1 / n1) ** 2 / (n1 - 1) + (v2 / n2) ** 2 / (n2 - 1))
+    diff = float(a.mean() - b.mean())
+    if se == 0:
+        return diff, 0.0 if abs(diff) < bound else 1.0, float(df)
+    p_lo = 1 - sps.t.cdf((diff + bound) / se, df)   # H1: diff > -bound
+    p_hi = sps.t.cdf((diff - bound) / se, df)       # H1: diff < +bound
+    return diff, float(max(p_lo, p_hi)), float(df)
+
+
+def bf01_jzs(a, b, rscale=math.sqrt(2) / 2):
+    """JZS Bayes factor in favour of the null for a two-sample t test
+    (Rouder et al. 2009), default scale sqrt(2)/2; BF01 > 1 favours
+    "no difference between treatments"."""
+    from scipy import integrate
+    a = np.asarray(a, dtype=float)
+    b = np.asarray(b, dtype=float)
+    n1, n2 = len(a), len(b)
+    nu = n1 + n2 - 2
+    neff = n1 * n2 / (n1 + n2)
+    t = float(sps.ttest_ind(a, b, equal_var=True).statistic)
+
+    def integrand(g):
+        c = 1 + neff * g * rscale**2
+        return (c ** -0.5 * (1 + t**2 / (c * nu)) ** (-(nu + 1) / 2)
+                * (2 * math.pi) ** -0.5 * g ** -1.5 * math.exp(-1 / (2 * g)))
+
+    num, _ = integrate.quad(integrand, 0, np.inf)
+    den = (1 + t**2 / nu) ** (-(nu + 1) / 2)
+    return float(den / num)
+
+
+def fisher_z_diff_spearman(r1, n1, r2, n2):
+    """Two-sided test that two independent Spearman correlations differ,
+    via Fisher z with the Fieller variance correction 1.06/(n-3)."""
+    se = math.sqrt(1.06 / (n1 - 3) + 1.06 / (n2 - 3))
+    z = (math.atanh(r1) - math.atanh(r2)) / se
+    return float(z), float(2 * (1 - sps.norm.cdf(abs(z))))
+
+
 def holm(pvals):
     m = len(pvals)
     order = sorted(range(m), key=lambda i: pvals[i])
@@ -132,6 +184,13 @@ def analyse(df, metrics):
             "P_minus_N": float(nP.mean() - nN.mean()), "mwu_U": float(U), "mwu_p": float(pv),
             "rank_biserial": float(rb), "hedges_g": g, "hedges_g_lo": glo, "hedges_g_hi": ghi,
             "human_P_minus_N": HUMAN_P_GRAND - HUMAN_N_GRAND}
+        # Evidence FOR the institutional null: TOST equivalence on P-N with
+        # SESOI = half the human grand-mean gain, and a JZS Bayes factor.
+        bound = 0.5 * (HUMAN_P_GRAND - HUMAN_N_GRAND)
+        diff, pt, dfree = tost_welch(nP, nN, bound)
+        out["punish_effect"][model].update({
+            "tost_bound": float(bound), "tost_p": pt, "tost_df": dfree,
+            "bf01_jzs": bf01_jzs(nP, nN)})
         pe_ps.append(pv)
         mb = metrics[model]["baseline_en_neutral_by_treatment"]["P"]
         out["deviation"][model] = mb["deviation_binned_punishment"]
@@ -154,11 +213,15 @@ def analyse(df, metrics):
         rho_hum = sps.spearmanr([c for c, _ in valid], [h for _, h in valid]).correlation
         rh_lo, rh_hi = spearman_ci(rho_hum, len(valid))
         W, pw = sps.wilcoxon([c for c, _ in valid], [h for _, h in valid])
+        # Does the model's antisocial-cooperation coupling differ from the
+        # human rho = -0.90 (16 pools)? Fisher-z with Fieller correction.
+        zd, pz = fisher_z_diff_spearman(rho_anti, len(anti), -0.90, 16)
         out["cross_societal"][model] = {
             "societies": socs, "antisocial_total": anti, "mean_contribution": coop,
             "human_contribution": hum, "spearman_antisocial_vs_coop": float(rho_anti),
             "sac_ci": [ra_lo, ra_hi], "spearman_llm_vs_human_rank": float(rho_hum),
             "shr_ci": [rh_lo, rh_hi], "wilcoxon_W": float(W), "wilcoxon_p": float(pw),
+            "z_vs_human_rho": zd, "p_vs_human_rho": pz,
             "mean_llm_minus_human": float(np.mean([c - h for c, h in valid]))}
     adj = holm(pe_ps)
     for i, model in enumerate(MODELS):
@@ -228,8 +291,10 @@ def make_figures(pgg):
 def write_tables(pgg):
     L = ["# PGG paper - consolidated statistics\n",
          "## Baseline EN/neutral vs human (Herrmann 2008); human N/P grand-mean 8.6/12.9\n",
-         "| model | contrib N | contrib P | P−N | Hedges g [95% CI] | rank-biserial | MWU p (Holm) | antisocial share |",
-         "|---|---|---|---|---|---|---|---|"]
+         "TOST equivalence bounds = +/- half the human P-N gain (+/-2.14 tokens);",
+         "BF01 = JZS Bayes factor in favour of no P-N difference (>1 favours null).\n",
+         "| model | contrib N | contrib P | P−N | Hedges g [95% CI] | rank-biserial | MWU p (Holm) | TOST p | BF01 | antisocial share |",
+         "|---|---|---|---|---|---|---|---|---|---|"]
     for model in MODELS:
         bN = pgg["baseline"][model]["N"]; bP = pgg["baseline"][model]["P"]
         pe = pgg["punish_effect"][model]; sh = pgg["antisocial_split"][model]["antisocial_share"]
@@ -237,14 +302,18 @@ def write_tables(pgg):
                  f"| {bP['mean_contribution']:.2f}±{bP['sem_contribution']:.2f} "
                  f"| {pe['P_minus_N']:+.2f} "
                  f"| {pe['hedges_g']:.2f} [{pe['hedges_g_lo']:.2f}, {pe['hedges_g_hi']:.2f}] "
-                 f"| {pe['rank_biserial']:+.2f} | {pe['mwu_p']:.3g} ({pe['mwu_p_holm']:.3g}) | {sh:.0%} |")
+                 f"| {pe['rank_biserial']:+.2f} | {pe['mwu_p']:.3g} ({pe['mwu_p_holm']:.3g}) "
+                 f"| {pe['tost_p']:.2g} | {pe['bf01_jzs']:.2f} | {sh:.0%} |")
     L += ["\n### Cross-societal (treatment P, 16 societies); human Spearman(antisoc,coop)=-0.90\n",
-          "| model | Spearman(antisoc,coop) [CI] | Spearman(LLM,HUM) [CI] | Wilcoxon p | mean LLM−HUM |",
-          "|---|---|---|---|---|"]
+          "p vs human rho: Fisher-z (Fieller-corrected) test that the model coupling",
+          "differs from the human rho=-0.90.\n",
+          "| model | Spearman(antisoc,coop) [CI] | p vs human rho | Spearman(LLM,HUM) [CI] | Wilcoxon p | mean LLM−HUM |",
+          "|---|---|---|---|---|---|"]
     for model in MODELS:
         cs = pgg["cross_societal"][model]
         L.append(f"| {MODEL_LABEL[model]} | {cs['spearman_antisocial_vs_coop']:+.2f} "
                  f"[{cs['sac_ci'][0]:+.2f}, {cs['sac_ci'][1]:+.2f}] "
+                 f"| {cs['p_vs_human_rho']:.2g} "
                  f"| {cs['spearman_llm_vs_human_rank']:+.2f} "
                  f"[{cs['shr_ci'][0]:+.2f}, {cs['shr_ci'][1]:+.2f}] "
                  f"| {cs['wilcoxon_p']:.3g} | {cs['mean_llm_minus_human']:+.2f} |")
@@ -256,21 +325,27 @@ def write_si(pgg):
     rows = []
     # Baseline with effect sizes
     rows.append(r"\begin{table*}[t]\centering")
-    rows.append(r"\caption{Punishment effect on cooperation with effect sizes: "
-                r"Hedges $g$ and rank-biserial correlation $r$ for the P$-$N contrast "
-                r"on the ten per-group means, with Holm--Bonferroni adjusted "
-                r"Mann--Whitney $p$-values and 95\%\ confidence intervals. Human "
-                r"grand-mean gain $\approx+4.3$ tokens \cite{herrmann2008antisocial}.}")
+    rows.append(r"\caption{Punishment effect on cooperation with effect sizes and "
+                r"evidence for the institutional null: Hedges $g$ and rank-biserial "
+                r"correlation $r$ for the P$-$N contrast on the ten per-group means, "
+                r"Holm--Bonferroni adjusted Mann--Whitney $p$-values, the TOST "
+                r"Welch equivalence test with bounds $\pm2.14$ tokens (half the "
+                r"human grand-mean gain; $p<0.05$ establishes that the institutional "
+                r"effect is reliably smaller than half the human effect), and the "
+                r"JZS Bayes factor $\mathrm{BF}_{01}$ in favour of no P$-$N "
+                r"difference (values $>1$ favour the null). Human grand-mean gain "
+                r"$\approx+4.3$ tokens \cite{herrmann2008antisocial}.}")
     rows.append(r"\label{tab:si_punish}")
-    rows.append(r"\begin{tabular}{lccccc}\toprule")
+    rows.append(r"\begin{tabular}{lccccccc}\toprule")
     rows.append(r"Model & $\Delta$ (P$-$N) & Hedges $g$ [95\% CI] & $r$ & "
-                r"MWU $p$ (Holm) & Antisocial \\\midrule")
+                r"MWU $p$ (Holm) & TOST $p$ & $\mathrm{BF}_{01}$ & Antisocial \\\midrule")
     for model in MODELS:
         pe = pgg["punish_effect"][model]
         sh = pgg["antisocial_split"][model]["antisocial_share"]
         rows.append(f"{MODEL_LABEL[model]} & {pe['P_minus_N']:+.2f} & "
                     f"{pe['hedges_g']:.2f} [{pe['hedges_g_lo']:.2f}, {pe['hedges_g_hi']:.2f}] & "
                     f"{pe['rank_biserial']:+.2f} & {pe['mwu_p']:.3f} ({pe['mwu_p_holm']:.3f}) & "
+                    f"{pe['tost_p']:.3f} & {pe['bf01_jzs']:.2f} & "
                     f"{sh*100:.0f}\\% \\\\")
     rows.append(r"\bottomrule\end{tabular}\end{table*}")
     rows.append("")
@@ -295,12 +370,15 @@ def write_si(pgg):
     # Cross-societal with CIs
     rows.append(r"\begin{table*}[t]\centering")
     rows.append(r"\caption{Cross-societal structure (treatment P, 16 society "
-                r"personas) with Fisher-$z$ 95\%\ confidence intervals. Human "
-                r"reference: Spearman$(\text{antisocial},\text{cooperation})"
-                r"\approx-0.90$ \cite{herrmann2008antisocial}.}")
+                r"personas) with Fisher-$z$ 95\%\ confidence intervals. "
+                r"$p_{\mathrm{vs.\,hum}}$ is the two-sided Fisher-$z$ test "
+                r"(Fieller-corrected) that the model's antisocial--cooperation "
+                r"coupling differs from the human $\rho\approx-0.90$ over the "
+                r"same 16 pools \cite{herrmann2008antisocial}.}")
     rows.append(r"\label{tab:si_cross}")
-    rows.append(r"\begin{tabular}{lcccc}\toprule")
+    rows.append(r"\begin{tabular}{lccccc}\toprule")
     rows.append(r"Model & $\rho_{\mathrm{anti,coop}}$ [95\% CI] & "
+                r"$p_{\mathrm{vs.\,hum}}$ & "
                 r"$\rho_{\mathrm{LLM,HUM}}$ [95\% CI] & Wilcoxon $p$ & "
                 r"$\overline{\text{LLM}-\text{HUM}}$ \\\midrule")
     for model in MODELS:
@@ -308,6 +386,7 @@ def write_si(pgg):
         rows.append(f"{MODEL_LABEL[model]} & "
                     f"{cs['spearman_antisocial_vs_coop']:+.2f} "
                     f"[{cs['sac_ci'][0]:+.2f}, {cs['sac_ci'][1]:+.2f}] & "
+                    f"{cs['p_vs_human_rho']:.4f} & "
                     f"{cs['spearman_llm_vs_human_rank']:+.2f} "
                     f"[{cs['shr_ci'][0]:+.2f}, {cs['shr_ci'][1]:+.2f}] & "
                     f"{cs['wilcoxon_p']:.3f} & {cs['mean_llm_minus_human']:+.2f} \\\\")

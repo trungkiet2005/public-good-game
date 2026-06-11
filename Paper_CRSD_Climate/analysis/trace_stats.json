@@ -1,0 +1,146 @@
+{
+ "gemma2-9b-it": {
+  "by_treatment": {
+   "90": {
+    "n_games": 10,
+    "n_decisions": 600,
+    "pct_prob_mention": 0.265,
+    "pct_riskword": 0.6716666666666666,
+    "pct_correct_cum": 0.21296296296296297,
+    "pct_correct_remaining": 0.11481481481481481,
+    "mean_contrib_prob_mentioned": 2.981132075471698,
+    "mean_contrib_prob_not_mentioned": 2.7392290249433104
+   },
+   "50": {
+    "n_games": 10,
+    "n_decisions": 600,
+    "pct_prob_mention": 0.17666666666666667,
+    "pct_riskword": 0.68,
+    "pct_correct_cum": 0.24074074074074073,
+    "pct_correct_remaining": 0.1814814814814815,
+    "mean_contrib_prob_mentioned": 2.8679245283018866,
+    "mean_contrib_prob_not_mentioned": 2.6801619433198383
+   },
+   "10": {
+    "n_games": 10,
+    "n_decisions": 600,
+    "pct_prob_mention": 0.2,
+    "pct_riskword": 0.6766666666666666,
+    "pct_correct_cum": 0.23148148148148148,
+    "pct_correct_remaining": 0.15555555555555556,
+    "mean_contrib_prob_mentioned": 2.6333333333333333,
+    "mean_contrib_prob_not_mentioned": 2.6333333333333333
+   }
+  },
+  "kruskal_prob_mentioned_only": {
+   "H": 8.120640036013986,
+   "p": 0.01724350000178135,
+   "n": [
+    159,
+    106,
+    120
+   ],
+   "means": [
+    2.981132075471698,
+    2.8679245283018866,
+    2.6333333333333333
+   ]
+  }
+ },
+ "llama-3-1-8b": {
+  "by_treatment": {
+   "90": {
+    "n_games": 10,
+    "n_decisions": 600,
+    "pct_prob_mention": 0.14833333333333334,
+    "pct_riskword": 0.43,
+    "pct_correct_cum": 0.1925925925925926,
+    "pct_correct_remaining": 0.1537037037037037,
+    "mean_contrib_prob_mentioned": 3.1235955056179776,
+    "mean_contrib_prob_not_mentioned": 2.927592954990215
+   },
+   "50": {
+    "n_games": 10,
+    "n_decisions": 600,
+    "pct_prob_mention": 0.14166666666666666,
+    "pct_riskword": 0.4166666666666667,
+    "pct_correct_cum": 0.17407407407407408,
+    "pct_correct_remaining": 0.1574074074074074,
+    "mean_contrib_prob_mentioned": 2.7294117647058824,
+    "mean_contrib_prob_not_mentioned": 2.7572815533980584
+   },
+   "10": {
+    "n_games": 10,
+    "n_decisions": 600,
+    "pct_prob_mention": 0.15333333333333332,
+    "pct_riskword": 0.4033333333333333,
+    "pct_correct_cum": 0.16296296296296298,
+    "pct_correct_remaining": 0.1425925925925926,
+    "mean_contrib_prob_mentioned": 2.9347826086956523,
+    "mean_contrib_prob_not_mentioned": 2.8149606299212597
+   }
+  },
+  "kruskal_prob_mentioned_only": {
+   "H": 4.1119216503656935,
+   "p": 0.12796981986312886,
+   "n": [
+    89,
+    85,
+    92
+   ],
+   "means": [
+    3.1235955056179776,
+    2.7294117647058824,
+    2.9347826086956523
+   ]
+  }
+ },
+ "qwen25-7b-instruct": {
+  "by_treatment": {
+   "90": {
+    "n_games": 10,
+    "n_decisions": 600,
+    "pct_prob_mention": 0.08,
+    "pct_riskword": 0.7266666666666667,
+    "pct_correct_cum": 0.2759259259259259,
+    "pct_correct_remaining": 0.24074074074074073,
+    "mean_contrib_prob_mentioned": 3.1666666666666665,
+    "mean_contrib_prob_not_mentioned": 3.039855072463768
+   },
+   "50": {
+    "n_games": 10,
+    "n_decisions": 600,
+    "pct_prob_mention": 0.08,
+    "pct_riskword": 0.68,
+    "pct_correct_cum": 0.2740740740740741,
+    "pct_correct_remaining": 0.26851851851851855,
+    "mean_contrib_prob_mentioned": 3.3333333333333335,
+    "mean_contrib_prob_not_mentioned": 3.0905797101449277
+   },
+   "10": {
+    "n_games": 10,
+    "n_decisions": 600,
+    "pct_prob_mention": 0.06,
+    "pct_riskword": 0.6666666666666666,
+    "pct_correct_cum": 0.28703703703703703,
+    "pct_correct_remaining": 0.24814814814814815,
+    "mean_contrib_prob_mentioned": 2.6666666666666665,
+    "mean_contrib_prob_not_mentioned": 3.0390070921985815
+   }
+  },
+  "kruskal_prob_mentioned_only": {
+   "H": 4.915777001850632,
+   "p": 0.08561553737415557,
+   "n": [
+    48,
+    48,
+    36
+   ],
+   "means": [
+    3.1666666666666665,
+    3.3333333333333335,
+    2.6666666666666665
+   ]
+  }
+ }
+}

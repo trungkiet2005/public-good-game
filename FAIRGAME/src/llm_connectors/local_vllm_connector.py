@@ -20,8 +20,17 @@ _GLOBAL_ENGINE_TYPE = None  # "vllm" or "transformers"
 def _init_vllm_engine(model_path: str, max_model_len: int = 4096,
                       temperature: float = 1.0, max_tokens: int = 1024,
                       gpu_memory_utilization: float = 0.90,
-                      tensor_parallel_size: int = 1):
-    """Initialize vLLM engine (preferred for high throughput)."""
+                      tensor_parallel_size: int = 1,
+                      seed: int = 0):
+    """Initialize vLLM engine (preferred for high throughput).
+
+    ``seed`` is the ENGINE-level RNG seed (vLLM default 0). Passing a different
+    seed gives an independent sampling stream for seed-robustness sweeps while
+    keeping per-request sampling non-deterministic across identical prompts in
+    a batch (do NOT use per-request SamplingParams seeds for that purpose:
+    identical prompts would then collapse to identical replies and kill the
+    across-group variance the experiments rely on).
+    """
     import os
     # FlashInfer's JIT sampler ngã trên GPU mới (vd Blackwell sm_120) với lỗi
     # "FlashInfer requires GPUs with sm75 or higher" khi arch-detection hỏng.
@@ -45,9 +54,10 @@ def _init_vllm_engine(model_path: str, max_model_len: int = 4096,
         gpu_memory_utilization=gpu_memory_utilization,
         tensor_parallel_size=tensor_parallel_size,
         enforce_eager=True,  # Avoid CUDA graph issues on some setups
+        seed=seed,
     )
     _GLOBAL_ENGINE_TYPE = "vllm"
-    print(f"[LocalVLLM] Loaded model from {model_path} with vLLM engine")
+    print(f"[LocalVLLM] Loaded model from {model_path} with vLLM engine (seed={seed})")
 
 
 def _init_transformers_engine(model_path: str, temperature: float = 1.0,
@@ -124,6 +134,29 @@ def init_local_llm(model_path: str, engine: str = "vllm", force: bool = False, *
         _init_transformers_engine(model_path, **kwargs)
     else:
         raise ValueError(f"Unknown engine type: {engine}. Use 'vllm' or 'transformers'.")
+
+
+def set_sampling_temperature(temperature: float):
+    """Swap the sampling temperature WITHOUT reloading the model.
+
+    Used by the temperature-robustness sweep: reloading a 70B model just to
+    change a sampling parameter wastes minutes of GPU time. Rebuilds the
+    sampling params, preserving max_tokens/logprobs.
+    """
+    global _GLOBAL_SAMPLING_PARAMS
+    if _GLOBAL_SAMPLING_PARAMS is None:
+        raise RuntimeError("No engine initialized — call init_local_llm first.")
+    if _GLOBAL_ENGINE_TYPE == "vllm":
+        from vllm import SamplingParams
+        old = _GLOBAL_SAMPLING_PARAMS
+        _GLOBAL_SAMPLING_PARAMS = SamplingParams(
+            temperature=temperature,
+            max_tokens=old.max_tokens,
+            logprobs=old.logprobs,
+        )
+    else:
+        _GLOBAL_SAMPLING_PARAMS["temperature"] = temperature
+    print(f"[LocalVLLM] sampling temperature -> {temperature}")
 
 
 def free_local_llm():

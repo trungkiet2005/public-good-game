@@ -276,3 +276,38 @@ def _run_all():
 
 if __name__ == "__main__":
     sys.exit(0 if _run_all() else 1)
+
+
+# --------------------------------------------------------------------------- #
+# Follow-up: running-total control (self-summation confound)
+# --------------------------------------------------------------------------- #
+def test_format_history_running_total():
+    h = [[4, 4, 4, 4, 4, 4], [2, 2, 2, 2, 2, 2]]
+    ids = [f"Player {i + 1}" for i in range(6)]
+    faithful = format_history(h, ids, "Player 1", "en")
+    assert "cumulative total" not in faithful          # default stays faithful
+    shown = format_history(h, ids, "Player 1", "en", show_running_total=True)
+    assert "cumulative total invested so far" in shown
+    assert "36" in shown.splitlines()[-1]              # 24 + 12
+
+
+def test_game_show_running_total_param():
+    params = dict(n_players=6, n_rounds=10, endowment=40, target=120,
+                  loss_prob=90, contribution_options=(0, 2, 4),
+                  show_running_total=True)
+    g = CRSDGame("g", "en", "neutral", ["none"] * 6, _TEMPLATE_EN, params)
+    g.ingest_round([4] * 6, [""] * 6, [True] * 6)
+    prompt = g.build_round_prompts()[0]
+    assert "cumulative total invested so far" in prompt
+    assert "24" in prompt
+    _ingest_constant(g, [4] * 6, 9)
+    res = g.settle(FakeRng(0.999))
+    assert res["show_running_total"] is True
+
+
+def test_game_default_hides_running_total():
+    g = _make_game()
+    g.ingest_round([4] * 6, [""] * 6, [True] * 6)
+    assert "cumulative total invested so far" not in g.build_round_prompts()[0]
+    _ingest_constant(g, [4] * 6, 9)
+    assert g.settle(FakeRng(0.999))["show_running_total"] is False
