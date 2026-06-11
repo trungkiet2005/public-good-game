@@ -18,15 +18,15 @@ Loss & Model & Hedges $g$ [95\% CI] & Welch $p$ (Holm) & Fisher $p$ (Holm) & par
  & Llama-3.1-8B & 7.7 [5.1, 10.4] & 4e-12 (3e-11) & 1e-05 (1e-04) & 0.0\% \\
 \bottomrule\end{tabular}\end{table*}
 
-\begin{table}[t]\centering
-\caption{Risk-sensitivity one-way ANOVA of the final group total across the three loss-probability treatments, per model, with $\eta^2$ effect size. Human reference: $F=13.78$, $P<0.0001$.}
+\begin{table*}[t]\centering
+\caption{Risk sensitivity per model: one-way ANOVA of the final group total across the three loss-probability treatments with $\eta^2$ effect size, together with two analyses that quantify evidence \emph{for} the null. $\mathrm{BF}_{01}$ is the BIC-approximate Bayes factor in favour of the single-mean null over the three-mean alternative (values $>1$ favour ``no risk effect''). TOST is the two-one-sided-tests Welch equivalence test on the extreme contrast (90\%\ vs 10\%\ loss probability) with equivalence bounds $\pm$\euro 22.6, i.e.\ half the human 90\%$\to$10\%\ decline of \euro 45.2; $p<0.05$ establishes that the model's risk response is reliably smaller than half the human response. Human reference: $F_{2,27}=13.78$, $P<0.0001$.}
 \label{tab:si_anova}
-\begin{tabular}{lccc}\toprule
-Model & $F_{2,27}$ & $p$ & $\eta^2$ \\\midrule
-Qwen2.5-7B & 1.76 & 0.191 & 0.115 \\
-Gemma-2-9B & 2.23 & 0.127 & 0.142 \\
-Llama-3.1-8B & 3.64 & 0.040 & 0.212 \\
-\bottomrule\end{tabular}\end{table}
+\begin{tabular}{lcccccc}\toprule
+Model & $F_{2,27}$ & $p$ & $\eta^2$ & $\mathrm{BF}_{01}$ & $\Delta_{90-10}$ (\euro) & TOST $p$ \\\midrule
+Qwen2.5-7B & 1.76 & 0.191 & 0.115 & 4.78 & +2.0 & 0.000 \\
+Gemma-2-9B & 2.23 & 0.127 & 0.142 & 3.04 & +10.2 & 0.014 \\
+Llama-3.1-8B & 3.64 & 0.040 & 0.212 & 0.84 & +7.4 & 0.001 \\
+\bottomrule\end{tabular}\end{table*}
 
 \begin{table*}[t]\centering
 \caption{Language robustness (neutral disposition, climate framing): per model and language, mean of the three loss-probability treatments. Success is target attainment; total is final group investment (\euro); parse-fail is format non-compliance.}

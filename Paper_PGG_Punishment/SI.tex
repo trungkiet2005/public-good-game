@@ -71,12 +71,19 @@ Llama-3.1-8B & \texttt{meta-llama/Llama-3.1-8B-Instruct}& \cite{llama2024} \\
 
 Table~\ref{tab:si_punish} reports the punishment effect on cooperation (P$-$N) with
 Hedges $g$ and rank-biserial $r$ effect sizes, Holm-adjusted Mann--Whitney
-$p$-values and 95\%\ confidence intervals: only Gemma differs from zero, and in the
-negative direction ($g=-2.93$, $r=-0.94$). Table~\ref{tab:si_deviation} gives the
+$p$-values, 95\%\ confidence intervals, TOST Welch equivalence tests
+\cite{lakens2018equivalence} with bounds $\pm2.14$ tokens (half the human
+grand-mean gain) and JZS Bayes factors $\mathrm{BF}_{01}$ \cite{rouder2009bayesian}:
+equivalence to a sub-human-scale effect is established for Qwen and Llama (TOST
+$p\le0.010$; $\mathrm{BF}_{01}=2.3$ and $2.5$), while only Gemma differs from
+zero---in the negative direction ($g=-2.93$, $r=-0.94$,
+$\mathrm{BF}_{01}=1.8\times10^{-4}$). Table~\ref{tab:si_deviation} gives the
 full deviation-binned punishment for all three models, showing that only Gemma
 reproduces the human monotone free-riding gradient. Table~\ref{tab:si_cross}
-reports the cross-societal correlations with Fisher-$z$ confidence intervals; none
-approaches the human $\rho\approx-0.90$. Table~\ref{tab:si_society} gives the full
+reports the cross-societal correlations with Fisher-$z$ confidence intervals and
+Fieller-corrected Fisher-$z$ tests against the human coupling; none approaches
+the human $\rho\approx-0.90$, and every model's coupling differs from it
+significantly ($p\le0.0011$). Table~\ref{tab:si_society} gives the full
 per-society contributions for the primary model against the human pools, and
 Table~\ref{tab:si_personality} the dispositional breakdown, in which a
 \emph{vengeful} prompt raises the antisocial share without restoring the

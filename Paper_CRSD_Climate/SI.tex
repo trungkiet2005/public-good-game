@@ -77,8 +77,17 @@ throughout ($g$ between $3.2$ and $9.7$). Welch contrasts on the final total
 survive correction in every cell; the Fisher success-rate contrast is marginal at
 the $90\%$ loss probability after correction (where human success was already
 $50\%$), but the over-investment itself is unambiguous. Table~\ref{tab:si_anova}
-gives the risk-sensitivity ANOVA with $\eta^2$ effect sizes: the human reference
-($F=13.78$, $\eta^2\approx0.51$) is several-fold larger than any model.
+gives the risk-sensitivity ANOVA with $\eta^2$ effect sizes, together with the
+evidence \emph{for} the risk null: the BIC-approximate Bayes factor
+$\mathrm{BF}_{01}$ \cite{wagenmakers2007practical} comparing the single-mean
+null against the three-mean alternative, and the two-one-sided-tests (TOST)
+Welch equivalence test \cite{lakens2018equivalence} on the 90\%-versus-10\%
+contrast with equivalence bounds $\pm$€22.6 (half the human decline of €45.2).
+The human reference ($F_{2,27}=13.78$, $\eta^2\approx0.51$) is several-fold
+larger than any model; equivalence is established for all three models (TOST
+$p\le0.014$) and the Bayes factors favour the null for Qwen and Gemma
+($\mathrm{BF}_{01}=4.8$ and $3.0$) while remaining equivocal for Llama
+($\mathrm{BF}_{01}=0.8$).
 Tables~\ref{tab:si_language} and~\ref{tab:si_personality} give the full language
 and disposition breakdowns.
 

@@ -120,6 +120,46 @@ def eta_squared(F, k_groups, n_total):
     return float((F * dfb) / (F * dfb + dfw))
 
 
+def tost_welch(m1, s1, n1, m2, s2, n2, bound):
+    """Two-one-sided-tests (TOST) Welch equivalence test of |m1-m2| < bound.
+
+    Returns (diff, p_tost, df) where p_tost is the larger of the two
+    one-sided p-values (Lakens et al. 2018); p_tost < .05 establishes
+    equivalence within +/- bound.
+    """
+    if n1 < 2 or n2 < 2:
+        return float("nan"), float("nan"), float("nan")
+    se = math.sqrt(s1**2 / n1 + s2**2 / n2)
+    num = (s1**2 / n1 + s2**2 / n2) ** 2
+    den = (s1**2 / n1) ** 2 / (n1 - 1) + (s2**2 / n2) ** 2 / (n2 - 1)
+    df = num / den
+    diff = m1 - m2
+    if se == 0:
+        return float(diff), 0.0 if abs(diff) < bound else 1.0, float(df)
+    p_lo = 1 - sps.t.cdf((diff + bound) / se, df)   # H1: diff > -bound
+    p_hi = sps.t.cdf((diff - bound) / se, df)       # H1: diff < +bound
+    return float(diff), float(max(p_lo, p_hi)), float(df)
+
+
+def bf01_anova_bic(groups):
+    """BIC-approximate Bayes factor for the one-way ANOVA null (single mean)
+    against the alternative of separate group means (Wagenmakers 2007).
+
+    BF01 > 1 favours the null; e.g. BF01 = 3 means the data are three times
+    more likely under "no treatment effect".
+    """
+    allv = np.concatenate([np.asarray(g, dtype=float) for g in groups])
+    n = len(allv)
+    rss0 = float(((allv - allv.mean()) ** 2).sum())
+    rss1 = float(sum(((np.asarray(g, dtype=float) - np.mean(g)) ** 2).sum()
+                     for g in groups))
+    if rss1 == 0:
+        return float("nan")
+    bic0 = n * math.log(rss0 / n) + 1 * math.log(n)
+    bic1 = n * math.log(rss1 / n) + len(groups) * math.log(n)
+    return float(math.exp((bic1 - bic0) / 2))
+
+
 def holm(pvals):
     m = len(pvals)
     order = sorted(range(m), key=lambda i: pvals[i])
@@ -162,6 +202,20 @@ def analyse(df):
         F, pv = sps.f_oneway(gt[90], gt[50], gt[10])
         out["anova"][model] = {"F": float(F), "p": float(pv),
                                "eta2": eta_squared(F, 3, sum(len(gt[p]) for p in gt))}
+        # Evidence FOR the risk null: TOST equivalence on each pairwise risk
+        # contrast (SESOI = half the human 90->10 decline) and a BIC-approximate
+        # Bayes factor for the one-way ANOVA null.
+        bound = 0.5 * (HUMAN_CRSD[90]["mean"] - HUMAN_CRSD[10]["mean"])
+        tost = {}
+        for pa, pb in ((90, 50), (50, 10), (90, 10)):
+            a = np.asarray(gt[pa], dtype=float)
+            b = np.asarray(gt[pb], dtype=float)
+            diff, pt, dfree = tost_welch(a.mean(), a.std(ddof=1), len(a),
+                                         b.mean(), b.std(ddof=1), len(b), bound)
+            tost[f"{pa}v{pb}"] = {"diff": diff, "p": pt, "df": dfree}
+        out["anova"][model].update({
+            "tost_bound": float(bound), "tost": tost,
+            "bf01_bic": bf01_anova_bic([gt[90], gt[50], gt[10]])})
         out["personality"][model] = {}
         pers = md[(md["language"] == "en") & (md["framing"] == "climate")]
         for c in ("neutral", "cooperative", "selfish", "risk_averse"):
@@ -286,10 +340,16 @@ def write_tables(crsd):
                      f"| {s['fisher_p_success_vs_human']:.1e} ({hp['fisher_p_holm']:.1e}) "
                      f"| {s['parse_fallback_rate']*100:.1f}% |")
     L += ["\n### Risk-sensitivity ANOVA (human F=13.78, p<0.0001, eta2~0.51)\n",
-          "| model | F | p | eta2 |", "|---|---|---|---|"]
+          "ANOVA + evidence for the null: BIC Bayes factor BF01 (>1 favours no risk effect)",
+          "and TOST equivalence on the 90% vs 10% contrast, bounds = +/- half the human",
+          "90->10 decline (+/-22.6 EUR).\n",
+          "| model | F | p | eta2 | BF01 | diff 90-10 (EUR) | TOST p (90v10) |",
+          "|---|---|---|---|---|---|---|"]
     for model in MODELS:
         a = crsd["anova"][model]
-        L.append(f"| {MODEL_LABEL[model]} | {a['F']:.2f} | {a['p']:.3g} | {a['eta2']:.3f} |")
+        t = a["tost"]["90v10"]
+        L.append(f"| {MODEL_LABEL[model]} | {a['F']:.2f} | {a['p']:.3g} | {a['eta2']:.3f} "
+                 f"| {a['bf01_bic']:.2f} | {t['diff']:+.1f} | {t['p']:.2g} |")
     (HERE / "tables.md").write_text("\n".join(L), encoding="utf-8")
     print("tables ->", HERE / "tables.md")
 
@@ -326,18 +386,31 @@ def write_si(crsd):
     rows.append(r"\bottomrule\end{tabular}\end{table*}")
     rows.append("")
 
-    # ANOVA with eta^2
-    rows.append(r"\begin{table}[t]\centering")
-    rows.append(r"\caption{Risk-sensitivity one-way ANOVA of the final group total "
-                r"across the three loss-probability treatments, per model, with "
-                r"$\eta^2$ effect size. Human reference: $F=13.78$, $P<0.0001$.}")
+    # ANOVA with eta^2, Bayes factor and TOST equivalence
+    rows.append(r"\begin{table*}[t]\centering")
+    rows.append(r"\caption{Risk sensitivity per model: one-way ANOVA of the final "
+                r"group total across the three loss-probability treatments with "
+                r"$\eta^2$ effect size, together with two analyses that quantify "
+                r"evidence \emph{for} the null. $\mathrm{BF}_{01}$ is the "
+                r"BIC-approximate Bayes factor in favour of the single-mean null "
+                r"over the three-mean alternative (values $>1$ favour ``no risk "
+                r"effect''). TOST is the two-one-sided-tests Welch equivalence "
+                r"test on the extreme contrast (90\%\ vs 10\%\ loss probability) "
+                r"with equivalence bounds $\pm$\euro 22.6, i.e.\ half the human "
+                r"90\%$\to$10\%\ decline of \euro 45.2; $p<0.05$ establishes that "
+                r"the model's risk response is reliably smaller than half the "
+                r"human response. Human reference: $F_{2,27}=13.78$, $P<0.0001$.}")
     rows.append(r"\label{tab:si_anova}")
-    rows.append(r"\begin{tabular}{lccc}\toprule")
-    rows.append(r"Model & $F_{2,27}$ & $p$ & $\eta^2$ \\\midrule")
+    rows.append(r"\begin{tabular}{lcccccc}\toprule")
+    rows.append(r"Model & $F_{2,27}$ & $p$ & $\eta^2$ & $\mathrm{BF}_{01}$ & "
+                r"$\Delta_{90-10}$ (\euro) & TOST $p$ \\\midrule")
     for model in MODELS:
         a = crsd["anova"][model]
-        rows.append(f"{MODEL_LABEL[model]} & {a['F']:.2f} & {a['p']:.3f} & {a['eta2']:.3f} \\\\")
-    rows.append(r"\bottomrule\end{tabular}\end{table}")
+        t = a["tost"]["90v10"]
+        rows.append(f"{MODEL_LABEL[model]} & {a['F']:.2f} & {a['p']:.3f} & "
+                    f"{a['eta2']:.3f} & {a['bf01_bic']:.2f} & {t['diff']:+.1f} & "
+                    f"{t['p']:.3f} \\\\")
+    rows.append(r"\bottomrule\end{tabular}\end{table*}")
     rows.append("")
 
     # Language breakdown (averaged over treatments)
