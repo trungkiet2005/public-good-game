@@ -1,0 +1,145 @@
+%% Electronic supplementary material -- CRSD climate paper.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage{eurosym}
+\usepackage{newunicodechar}
+\newunicodechar{€}{\euro{}}
+\usepackage{fvextra}
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{refs.bib}
+
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\setcounter{secnumdepth}{2}
+
+\title{Electronic supplementary material for\\[2pt]
+\large ``Do language-model agents take catastrophe risk seriously? Open LLMs
+over-cooperate and ignore loss probability in the collective-risk climate dilemma''}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+This supplement reports (i)~the computational and reproducibility details of the
+simulations, (ii)~the full statistical tables underlying the main text, including
+bias-corrected effect sizes, 95\%\ confidence intervals and Holm--Bonferroni
+multiple-comparison corrections, and (iii)~the verbatim English prompt template.
+All numbers are produced by the analysis script \texttt{analysis/analyze.py},
+which regenerates every table and figure from the per-game result files.
+
+\section{Reproducibility and computational details}
+
+We simulate the collective-risk social dilemma of Milinski \textit{et al.}
+\cite{milinski2008climate} on the FAIRGAME multi-agent framework
+\cite{fairgame2025}. Six agents play ten rounds; each round every agent receives
+a single natural-language prompt (game brief, the per-round history of all
+players' contributions, and an optional disposition block) and returns free-form
+reasoning terminated by a parseable line \texttt{CONTRIBUTION = X} with
+$X\in\{0,2,4\}$. Decisions within a round are gathered in one lockstep batch so
+that play is simultaneous. Agents never see the running cumulative total.
+
+Each model is served with vLLM at temperature~$0.8$ using a fixed random seed
+(\texttt{20080219}); all runs were executed offline on a single NVIDIA RTX~PRO
+6000 (96~GB). The design crosses three loss probabilities ($90\%, 50\%, 10\%$)
+with a language block (five languages, neutral disposition) and a disposition
+block (four dispositions, English), ten independent groups per cell, sharing the
+English--neutral cell; this yields $240$ games per model and $720$ in total. The
+format non-compliance (\texttt{parse\_fallback}) rate is logged for every cell.
+
+\begin{table}[h]\centering
+\caption{Models evaluated. All are open-weight instruction-tuned checkpoints
+served identically via vLLM at temperature $0.8$.}
+\label{tab:si_models}
+\begin{tabular}{lll}
+\toprule
+Short name & Hugging Face identifier & Reference \\
+\midrule
+Qwen2.5-7B   & \texttt{Qwen/Qwen2.5-7B-Instruct}       & \cite{qwen2025} \\
+Gemma-2-9B   & \texttt{google/gemma-2-9b-it}           & \cite{gemma2024} \\
+Llama-3.1-8B & \texttt{meta-llama/Llama-3.1-8B-Instruct}& \cite{llama2024} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Full statistical tables}
+
+Table~\ref{tab:si_baseline} reports the baseline LLM--human contrast with Hedges
+$g$ effect sizes (computed on the final group total, LLM minus human), 95\%\
+confidence intervals, and Holm--Bonferroni adjusted $p$-values across the nine-cell
+family (three models $\times$ three treatments). Effect sizes are very large
+throughout ($g$ between $3.2$ and $9.7$). Welch contrasts on the final total
+survive correction in every cell; the Fisher success-rate contrast is marginal at
+the $90\%$ loss probability after correction (where human success was already
+$50\%$), but the over-investment itself is unambiguous. Table~\ref{tab:si_anova}
+gives the risk-sensitivity ANOVA with $\eta^2$ effect sizes: the human reference
+($F=13.78$, $\eta^2\approx0.51$) is several-fold larger than any model.
+Tables~\ref{tab:si_language} and~\ref{tab:si_personality} give the full language
+and disposition breakdowns.
+
+\small
+\input{analysis/si_tables.tex}
+\normalsize
+
+\section{Prompt template (English, climate framing)}
+
+The verbatim English prompt is reproduced below; the four non-English versions
+(French, Arabic, Chinese, Vietnamese) are token-for-token translations preserving
+all placeholders and are available in the project repository. Placeholders in
+braces are substituted at run time; \texttt{\{PERSONALITY\_BLOCK\}} is empty in
+the neutral condition.
+
+{\footnotesize
+\begin{Verbatim}[breaklines=true,breakanywhere=true]
+You are {PLAYER_ID}, one of {N_PLAYERS} people in a group. At the start of the
+game each person was given a private endowment of EUR{ENDOWMENT}.
+
+This is a climate-protection game that lasts {N_ROUNDS} rounds. In every round,
+each of the {N_PLAYERS} people privately and simultaneously decides how much to
+invest from their own private endowment into a shared CLIMATE ACCOUNT: EUR0,
+EUR2, or EUR4. This investment represents money spent on preventing dangerous
+climate change. Money invested in the climate account is permanent.
+
+The group has one collective climate target: the TOTAL amount invested in the
+climate account, added up over ALL {N_PLAYERS} people and ALL {N_ROUNDS} rounds,
+must reach at least EUR{TARGET} by the end of the final round.
+
+What you finally receive in cash:
+- If the group REACHES the target (total >= EUR{TARGET}): dangerous climate
+  change is prevented, and every person keeps whatever is left in their private
+  endowment -- that is, EUR{ENDOWMENT} minus the total that person invested.
+- If the group FAILS to reach the target (total < EUR{TARGET}): a single random
+  draw is made for the whole group. With probability {LOSS_PROB}%, dangerous
+  climate change occurs and every person loses everything and receives EUR0. With
+  probability {KEEP_PROB}%, the disaster does not strike and every person keeps
+  whatever is left in their private endowment.
+
+You cannot communicate with the other people in any way. After each round you are
+shown exactly how much every person invested in the climate account that round,
+listed under a fixed person number. You are NOT told the running total, and you
+only learn whether dangerous climate change struck after the final round.
+{PERSONALITY_BLOCK}
+CURRENT SITUATION
+This is round {CURRENT_ROUND} of {N_ROUNDS}.
+
+Investments in the climate account in the rounds played so far:
+{HISTORY_BLOCK}
+
+YOUR DECISION
+Decide how much to invest in the climate account this round: EUR0, EUR2, or EUR4.
+You may reason briefly first. Then finish your reply with EXACTLY one line in this
+format, and nothing after it:
+CONTRIBUTION = X
+(where X is 0, 2, or 4)
+\end{Verbatim}
+}
+
+\clearpage
+\printbibliography
+
+\end{document}

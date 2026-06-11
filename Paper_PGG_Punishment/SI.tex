@@ -1,0 +1,180 @@
+%% Electronic supplementary material -- PGG punishment paper.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{fvextra}
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{refs.bib}
+
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\setcounter{secnumdepth}{2}
+
+\title{Electronic supplementary material for\\[2pt]
+\large ``Antisocial but inconsequential: large language model agents punish
+cooperators yet neither sustain cooperation nor reproduce its cross-cultural
+geography''}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+This supplement reports (i)~the computational and reproducibility details, (ii)~the
+full statistical tables underlying the main text, including effect sizes,
+confidence intervals, the complete deviation-binned punishment, the per-society
+breakdown and the dispositional analysis, and (iii)~the verbatim English prompt
+templates for both stages. All numbers are produced by \texttt{analysis/analyze.py}.
+
+\section{Reproducibility and computational details}
+
+We simulate the public-goods game with costly peer punishment of Herrmann
+\textit{et al.}\ \cite{herrmann2008antisocial} on the FAIRGAME framework
+\cite{fairgame2025}. Four agents are matched as partners for ten periods. Each
+period every agent receives a 20-token endowment and a contribution prompt, and
+returns reasoning terminated by \texttt{CONTRIBUTION = X} ($0\le X\le20$); in
+treatment~P a second prompt elicits a punishment vector \texttt{DEDUCT: A=a B=b
+C=c} ($0\le a,b,c\le10$). Co-players are re-labelled every period to block
+identity tracking, and decisions within a stage are gathered in one lockstep
+batch.
+
+Each model is served with vLLM at temperature~$0.8$ using a fixed random seed
+(\texttt{20080307}); all runs were executed offline on a single NVIDIA RTX~PRO
+6000 (96~GB). The design crosses two treatments (N, P) with a language block
+(five languages, neutral disposition), a disposition block (four dispositions,
+English) and a society block (sixteen neutral city personas, English), ten
+independent groups per cell, sharing the English--neutral--no-society cell; this
+yields $480$ games per model and $1440$ in total. Punishment is classified by the
+contribution deviation between target and punisher: deviation $\geq 0$ (the target
+gave at least as much as the punisher) is antisocial, deviation $<0$ is punishment
+of free-riding. The format non-compliance rate is logged for every cell.
+
+\begin{table}[h]\centering
+\caption{Models evaluated. All are open-weight instruction-tuned checkpoints
+served identically via vLLM at temperature $0.8$.}
+\label{tab:si_models}
+\begin{tabular}{lll}
+\toprule
+Short name & Hugging Face identifier & Reference \\
+\midrule
+Qwen2.5-7B   & \texttt{Qwen/Qwen2.5-7B-Instruct}       & \cite{qwen2025} \\
+Gemma-2-9B   & \texttt{google/gemma-2-9b-it}           & \cite{gemma2024} \\
+Llama-3.1-8B & \texttt{meta-llama/Llama-3.1-8B-Instruct}& \cite{llama2024} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Full statistical tables}
+
+Table~\ref{tab:si_punish} reports the punishment effect on cooperation (P$-$N) with
+Hedges $g$ and rank-biserial $r$ effect sizes, Holm-adjusted Mann--Whitney
+$p$-values and 95\%\ confidence intervals: only Gemma differs from zero, and in the
+negative direction ($g=-2.93$, $r=-0.94$). Table~\ref{tab:si_deviation} gives the
+full deviation-binned punishment for all three models, showing that only Gemma
+reproduces the human monotone free-riding gradient. Table~\ref{tab:si_cross}
+reports the cross-societal correlations with Fisher-$z$ confidence intervals; none
+approaches the human $\rho\approx-0.90$. Table~\ref{tab:si_society} gives the full
+per-society contributions for the primary model against the human pools, and
+Table~\ref{tab:si_personality} the dispositional breakdown, in which a
+\emph{vengeful} prompt raises the antisocial share without restoring the
+institutional function of punishment.
+
+\small
+\input{analysis/si_tables.tex}
+\normalsize
+
+\section{Prompt templates (English)}
+
+The verbatim English contribution-stage and punishment-stage prompts are
+reproduced below; the four non-English versions are token-for-token translations
+preserving all placeholders, available in the project repository. Placeholders in
+braces are substituted at run time; \texttt{\{SOCIETY\_BLOCK\}} and
+\texttt{\{PERSONALITY\_BLOCK\}} are empty in the neutral, no-society condition.
+
+\subsection*{Contribution stage}
+{\footnotesize
+\begin{Verbatim}[breaklines=true,breakanywhere=true]
+You are {PLAYER_ID}, one of {N_PLAYERS} members of a group. The same {N_PLAYERS}
+members stay together for the whole game.
+
+The game lasts {N_ROUNDS} periods. At the start of EVERY period each member
+receives a fresh endowment of {ENDOWMENT} tokens. In each period you privately and
+simultaneously decide how many of your {ENDOWMENT} tokens to put into a shared
+group project; you keep the rest in your private account.
+
+How tokens become income each period:
+- Every token you keep in your private account is worth 1 token of income to you.
+- Every token placed in the group project is shared among all {N_PLAYERS} members:
+  each member receives {MPCR} tokens of income for EACH token in the project, no
+  matter who put it there.
+
+You contribute {ACTION_DESC} to the group project this period.
+
+The other members are shown to you only under temporary labels ({OTHER_LABELS}).
+These labels are reassigned every period and do not tell you who is who across
+periods. You cannot communicate in any way, and all decisions are anonymous.
+{TREATMENT_BLOCK}
+After each period you are shown how many tokens each member placed in the project
+that period, the total in the group project, and your own income for that period.
+{SOCIETY_BLOCK}
+{PERSONALITY_BLOCK}
+CURRENT SITUATION
+This is period {CURRENT_ROUND} of {N_ROUNDS}.
+
+Results of the periods played so far:
+{HISTORY_BLOCK}
+
+YOUR DECISION
+Decide how many of your {ENDOWMENT} tokens to place in the group project this
+period ({ACTION_DESC}). You may reason briefly first. Then finish your reply with
+EXACTLY one line in this format, and nothing after it:
+CONTRIBUTION = X
+(where X is an integer from {CONTRIB_MIN} to {CONTRIB_MAX})
+\end{Verbatim}
+}
+
+\subsection*{Punishment stage (treatment P)}
+{\footnotesize
+\begin{Verbatim}[breaklines=true,breakanywhere=true]
+You are {PLAYER_ID}. This is the second stage of period {CURRENT_ROUND} of
+{N_ROUNDS}.
+
+This period you placed {MY_CONTRIB} tokens in the group project. The total placed
+by all members was {GROUP_PROJECT_TOTAL}, and your income from the first stage
+this period is {MY_INCOME_THIS_PERIOD} tokens.
+
+Here is how much each of the other members placed in the project this period:
+{OTHERS_BLOCK}
+
+You may now assign deduction points to each of these members, simultaneously and
+anonymously. For EACH member you choose a whole number of deduction points from 0
+to {MAX_PUNISH}.
+- Each deduction point you assign costs YOU {PUNISH_COST} token.
+- Each deduction point you assign reduces THAT member's income this period by
+  {PUNISH_IMPACT} tokens.
+The other members decide at the same time and may assign deduction points to
+anyone, including you. No one is told who assigned points to whom; you are only
+told the total number of points you received.
+{RECEIVED_LAST_PERIOD}
+{SOCIETY_BLOCK}
+{PERSONALITY_BLOCK}
+DEDUCTIONS SO FAR
+{PUNISH_HISTORY_BLOCK}
+
+YOUR DECISION
+Decide how many deduction points (0 to {MAX_PUNISH}) to assign to each member
+shown above. You may reason briefly first. Then finish your reply with EXACTLY one
+line in this format, and nothing after it:
+DEDUCT: A=a B=b C=c
+(where a, b, c are integers from 0 to {MAX_PUNISH}, for Member A, Member B,
+Member C)
+\end{Verbatim}
+}
+
+\clearpage
+\printbibliography
+
+\end{document}

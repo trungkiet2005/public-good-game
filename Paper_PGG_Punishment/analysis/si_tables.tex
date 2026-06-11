@@ -1,0 +1,73 @@
+\begin{table*}[t]\centering
+\caption{Punishment effect on cooperation with effect sizes: Hedges $g$ and rank-biserial correlation $r$ for the P$-$N contrast on the ten per-group means, with Holm--Bonferroni adjusted Mann--Whitney $p$-values and 95\%\ confidence intervals. Human grand-mean gain $\approx+4.3$ tokens \cite{herrmann2008antisocial}.}
+\label{tab:si_punish}
+\begin{tabular}{lccccc}\toprule
+Model & $\Delta$ (P$-$N) & Hedges $g$ [95\% CI] & $r$ & MWU $p$ (Holm) & Antisocial \\\midrule
+Qwen2.5-7B & -0.36 & -0.22 [-1.06, 0.62] & -0.11 & 0.705 (1.000) & 59\% \\
+Gemma-2-9B & -3.55 & -2.93 [-4.20, -1.66] & -0.94 & 0.000 (0.001) & 55\% \\
+Llama-3.1-8B & +0.08 & 0.06 [-0.78, 0.90] & +0.04 & 0.910 (1.000) & 54\% \\
+\bottomrule\end{tabular}\end{table*}
+
+\begin{table*}[t]\centering
+\caption{Mean punishment expenditure by contribution deviation (target minus punisher) for the English, neutral baseline, treatment P. Deviations $<0$ are punishment of free-riding; deviations $\geq 0$ are antisocial.}
+\label{tab:si_deviation}
+\begin{tabular}{lccccc}\toprule
+Model & $\leq-11$ & $-10$ to $-1$ & $0$ & $1$ to $10$ & $11$ to $20$ \\\midrule
+Qwen2.5-7B & 2.78 & 2.42 & 2.29 & 2.40 & 2.15 \\
+Gemma-2-9B & 3.71 & 2.45 & 1.40 & 2.17 & 2.06 \\
+Llama-3.1-8B & 2.84 & 2.86 & 2.60 & 2.78 & 2.53 \\
+\bottomrule\end{tabular}\end{table*}
+
+\begin{table*}[t]\centering
+\caption{Cross-societal structure (treatment P, 16 society personas) with Fisher-$z$ 95\%\ confidence intervals. Human reference: Spearman$(\text{antisocial},\text{cooperation})\approx-0.90$ \cite{herrmann2008antisocial}.}
+\label{tab:si_cross}
+\begin{tabular}{lcccc}\toprule
+Model & $\rho_{\mathrm{anti,coop}}$ [95\% CI] & $\rho_{\mathrm{LLM,HUM}}$ [95\% CI] & Wilcoxon $p$ & $\overline{\text{LLM}-\text{HUM}}$ \\\midrule
+Qwen2.5-7B & -0.09 [-0.56, +0.43] & +0.33 [-0.20, +0.71] & 0.669 & +0.80 \\
+Gemma-2-9B & -0.15 [-0.60, +0.37] & +0.06 [-0.45, +0.54] & 0.005 & -3.30 \\
+Llama-3.1-8B & +0.30 [-0.23, +0.69] & +0.17 [-0.35, +0.62] & 0.025 & -2.47 \\
+\bottomrule\end{tabular}\end{table*}
+
+\begin{table*}[t]\centering
+\caption{Per-society contributions for Gemma-2-9B against the human pools of Herrmann \textit{et al.}\ \cite{herrmann2008antisocial}; antisocial = total antisocial punishment points (treatment P). Societies ordered by human treatment-P contribution.}
+\label{tab:si_society}
+\begin{tabular}{lccccc}\toprule
+Society & LLM N & LLM P & Antisocial & Human N & Human P \\\midrule
+Boston & 13.52 & 9.70 & 1487 & 9.3 & 18.0 \\
+Copenhagen & 13.00 & 9.05 & 1404 & 11.5 & 17.7 \\
+St.Gallen & 13.97 & 9.78 & 1460 & 10.1 & 16.7 \\
+Zurich & 13.33 & 9.50 & 1496 & 9.3 & 16.2 \\
+Nottingham & 13.12 & 9.49 & 1446 & 6.9 & 15.0 \\
+Seoul & 13.44 & 9.57 & 1346 & 7.9 & 14.7 \\
+Bonn & 12.97 & 9.97 & 1293 & 9.2 & 14.5 \\
+Melbourne & 13.19 & 9.73 & 1393 & 4.9 & 14.1 \\
+Chengdu & 13.41 & 8.94 & 1374 & 8.0 & 13.9 \\
+Minsk & 12.34 & 9.70 & 1589 & 10.5 & 12.9 \\
+Samara & 12.60 & 9.81 & 1507 & 9.7 & 11.7 \\
+Dnipropetrovsk & 13.73 & 9.87 & 1470 & 10.6 & 10.9 \\
+Muscat & 13.90 & 9.42 & 1472 & 10.0 & 9.9 \\
+Istanbul & 13.64 & 9.77 & 1218 & 5.4 & 7.1 \\
+Riyadh & 13.46 & 9.46 & 1477 & 7.6 & 6.9 \\
+Athens & 13.90 & 9.36 & 1592 & 6.4 & 5.7 \\
+\bottomrule\end{tabular}\end{table*}
+
+\begin{table*}[t]\centering
+\caption{Dispositional steerability (English, treatment P): mean contribution and antisocial share of punishment by disposition prompt and model.}
+\label{tab:si_personality}
+\begin{tabular}{llcc}\toprule
+Model & Disposition & Mean contribution & Antisocial share \\\midrule
+\multirow{4}{*}{Qwen2.5-7B} & Neutral & 13.90 & 59\% \\
+ & Cooperative & 16.70 & 64\% \\
+ & Selfish & 8.43 & 63\% \\
+ & Vengeful & 12.28 & 63\% \\
+\midrule
+\multirow{4}{*}{Gemma-2-9B} & Neutral & 9.86 & 55\% \\
+ & Cooperative & 14.28 & 61\% \\
+ & Selfish & 6.41 & 59\% \\
+ & Vengeful & 8.39 & 66\% \\
+\midrule
+\multirow{4}{*}{Llama-3.1-8B} & Neutral & 10.75 & 54\% \\
+ & Cooperative & 11.95 & 57\% \\
+ & Selfish & 8.40 & 56\% \\
+ & Vengeful & 10.70 & 56\% \\
+\bottomrule\end{tabular}\end{table*}
