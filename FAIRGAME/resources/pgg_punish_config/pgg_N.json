@@ -15,7 +15,7 @@
     "punishImpactRatio": 3,
     "relabelOthers": true,
     "showReceivedPunishment": false,
-    "floorPeriodEarnings": true,
+    "floorPeriodEarnings": false,
     "agentsCommunicate": false,
     "languages": ["en", "fr", "ar", "cn", "vn"],
     "personalityConditions": {

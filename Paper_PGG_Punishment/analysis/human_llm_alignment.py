@@ -28,7 +28,7 @@ from scipy import stats
 HERE = Path(__file__).resolve().parent
 PROJECT = HERE.parents[1]
 RESULTS = PROJECT / "FAIRGAME" / "results" / "pgg_punish_results"
-HUMAN_CSV = (PROJECT / "4969858_extracted" / "HerrmannThoeniGaechter" /
+HUMAN_CSV = (PROJECT / "AntisocialPunishment_Dataset" / "HerrmannThoeniGaechter" /
              "HerrmannThoeniGaechterDATA.csv")
 FIGDIR = HERE.parent / "figures"
 FIGDIR.mkdir(parents=True, exist_ok=True)
@@ -78,7 +78,11 @@ def load_human():
     df[numeric] = df[numeric].apply(pd.to_numeric, errors="coerce")
     df["treatment"] = df["p"].map({"N-experiment": "N", "P-experiment": "P"})
     df["deviation"] = df["otherscontribution"] - df["senderscontribution"]
-    decisions = df.drop_duplicates(["subjectid", "treatment", "period"]).copy()
+    # subjectid is not globally unique (it repeats across sessions); the person key
+    # is (sessionid, subjectid). Deduping/grouping on subjectid alone would merge
+    # distinct participants who share an id in different sessions.
+    decisions = df.drop_duplicates(
+        ["sessionid", "subjectid", "treatment", "period"]).copy()
     return df, decisions
 
 
@@ -272,19 +276,27 @@ def analyse():
     human_reg = mechanism_regression(hgroups, "mgroupid")
 
     hreact = human_decisions[human_decisions["treatment"] == "P"][
-        ["subjectid", "period", "senderscontribution", "recpun"]].rename(
+        ["sessionid", "subjectid", "period", "senderscontribution", "recpun"]].rename(
             columns={"senderscontribution": "contribution", "recpun": "received"})
     out = {
         "notes": {
             "country": "Country is derived metadata; the source CSV identifies city pools only.",
             "units": "Punishment means include zero assignments and are per punisher-target opportunity.",
             "independence": "Human regression clusters by matching group; LLM regressions use HC1 with n=10 games.",
+            "punishment_estimator": ("Human and LLM punishment are compared as raw per-opportunity "
+                                     "means; Herrmann et al. modelled punishment with interval "
+                                     "(censored) regression clustered by matching group, so these "
+                                     "descriptive means do not reproduce the published coefficients."),
+            "person_key": ("Human person unit is (sessionid, subjectid); subjectid alone is not "
+                           "globally unique across sessions."),
+            "design": ("Human N/P are within-subject (two counterbalanced ten-period sequences per "
+                       "participant; CSV 'secseq'); LLM N/P are independent between-group games."),
         },
         "countries": COUNTRIES,
         "human": {
             "conditional_punishment": hprofile,
             "mechanism_regression": human_reg,
-            "reaction": reaction_summary(hreact, ["subjectid"]),
+            "reaction": reaction_summary(hreact, ["sessionid", "subjectid"]),
             "city": hcity.to_dict(orient="records"),
             "city_correlations": {
                 "contribution_vs_civic": rho(hcity.contribution.tolist(), hcity.civic.tolist()),
@@ -296,7 +308,7 @@ def analyse():
         "models": {},
     }
 
-    human_unit = human_decisions.groupby(["subjectid", "treatment"])[
+    human_unit = human_decisions.groupby(["sessionid", "subjectid", "treatment"])[
         "senderscontribution"].mean().reset_index()
     for treatment in ("N", "P"):
         vals = human_unit.loc[human_unit.treatment == treatment, "senderscontribution"]
@@ -418,7 +430,8 @@ def write_markdown(result):
                      f"{fmt(c['llm_anti_mean_vs_ruleoflaw'])} |")
 
     lines += ["", "## Interpretation cautions", "",
-              "- Human P and N are sequential for most subjects; LLM P and N are independent games.",
+              "- Human P and N are sequential within-subject (two counterbalanced ten-period sequences per participant); LLM P and N are independent between-group games, so the P-N contrast is a within-subject gain for humans but a between-group difference for the models.",
+              "- Human punishment here is summarized as raw per-opportunity means, whereas Herrmann et al. used interval (censored) regression clustered by matching group; the means are comparable to the LLM means but do not reproduce the paper's censored coefficients.",
               "- The city prompt is only a location label, so city alignment tests model priors rather than a rich cultural manipulation.",
               "- LLM mechanism regressions have only ten baseline groups and are descriptive.",
               "- Demographic alignment cannot be estimated because the existing LLM runs have no matched demographic personas."]

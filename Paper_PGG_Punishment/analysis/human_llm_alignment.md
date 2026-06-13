@@ -34,9 +34,9 @@ Wasserstein distance uses player-level ten-period mean contributions.
 
 | model | W-dist N | W-dist P | trajectory RMSE N | trajectory RMSE P |
 |---|---:|---:|---:|---:|
-| Qwen2.5-7B | 5.73 | 3.42 | 6.45 | 0.90 |
-| Gemma-2-9B | 5.36 | 5.04 | 6.68 | 3.57 |
-| Llama-3.1-8B | 3.18 | 4.33 | 3.26 | 2.61 |
+| Qwen2.5-7B | 5.73 | 3.50 | 6.45 | 0.90 |
+| Gemma-2-9B | 5.36 | 5.00 | 6.68 | 3.57 |
+| Llama-3.1-8B | 3.18 | 4.31 | 3.26 | 2.61 |
 
 ## Reaction to received punishment
 
@@ -45,7 +45,7 @@ controlling current contribution and period.
 
 | source | n player-periods | raw slope | adjusted slope | robust SE | p |
 |---|---:|---:|---:|---:|---:|
-| Human | 10080 | 0.331 | 0.141 | 0.023 | 0.000 |
+| Human | 10052 | 0.332 | 0.142 | 0.023 | 0.000 |
 | Qwen2.5-7B | 360 | -0.040 | 0.016 | 0.065 | 0.804 |
 | Gemma-2-9B | 360 | -0.081 | -0.079 | 0.059 | 0.182 |
 | Llama-3.1-8B | 360 | 0.002 | -0.002 | 0.056 | 0.973 |
@@ -63,7 +63,8 @@ All punishment quantities below are normalized per opportunity, not totals.
 
 ## Interpretation cautions
 
-- Human P and N are sequential for most subjects; LLM P and N are independent games.
+- Human P and N are sequential within-subject (two counterbalanced ten-period sequences per participant); LLM P and N are independent between-group games, so the P-N contrast is a within-subject gain for humans but a between-group difference for the models.
+- Human punishment here is summarized as raw per-opportunity means, whereas Herrmann et al. used interval (censored) regression clustered by matching group; the means are comparable to the LLM means but do not reproduce the paper's censored coefficients.
 - The city prompt is only a location label, so city alignment tests model priors rather than a rich cultural manipulation.
 - LLM mechanism regressions have only ten baseline groups and are descriptive.
 - Demographic alignment cannot be estimated because the existing LLM runs have no matched demographic personas.

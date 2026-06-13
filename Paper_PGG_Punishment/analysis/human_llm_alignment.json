@@ -2,7 +2,10 @@
   "notes": {
     "country": "Country is derived metadata; the source CSV identifies city pools only.",
     "units": "Punishment means include zero assignments and are per punisher-target opportunity.",
-    "independence": "Human regression clusters by matching group; LLM regressions use HC1 with n=10 games."
+    "independence": "Human regression clusters by matching group; LLM regressions use HC1 with n=10 games.",
+    "punishment_estimator": "Human and LLM punishment are compared as raw per-opportunity means; Herrmann et al. modelled punishment with interval (censored) regression clustered by matching group, so these descriptive means do not reproduce the published coefficients.",
+    "person_key": "Human person unit is (sessionid, subjectid); subjectid alone is not globally unique across sessions.",
+    "design": "Human N/P are within-subject (two counterbalanced ten-period sequences per participant; CSV 'secseq'); LLM N/P are independent between-group games."
   },
   "countries": {
     "Boston": "United States",
@@ -77,18 +80,18 @@
       }
     },
     "reaction": {
-      "n": 10080,
-      "slope": 0.3308192284177529,
-      "se": 0.022250354907952293,
-      "p": 5.31443993212225e-50,
-      "adjusted_slope": 0.14077598443450662,
-      "adjusted_se": 0.022996216057388788,
-      "adjusted_p": 9.258098607104945e-10,
+      "n": 10052,
+      "slope": 0.33197272883464074,
+      "se": 0.022411482408788506,
+      "p": 1.214175540203956e-49,
+      "adjusted_slope": 0.14169749331389156,
+      "adjusted_se": 0.023122843531018445,
+      "adjusted_p": 8.89734625480525e-10,
       "mean_delta_by_received": {
-        "0": -0.470825302260382,
-        "1-3": 0.6005917159763313,
-        "4-6": 1.6197975253093364,
-        "7+": 2.732051282051282
+        "0": -0.47093942054433713,
+        "1-3": 0.6025213199851687,
+        "4-6": 1.6223224351747463,
+        "7+": 2.739974126778784
       }
     },
     "city": [
@@ -255,11 +258,11 @@
         "raw_full_share": 0.18364312267657992
       },
       "P": {
-        "n_units": 1120,
-        "mean": 13.247321428571428,
-        "sd": 5.889265007395497,
-        "q10": 4.2,
-        "median": 14.55,
+        "n_units": 1148,
+        "mean": 13.071138211382115,
+        "sd": 5.967349515140336,
+        "q10": 4.0,
+        "median": 14.4,
         "q90": 20.0,
         "raw_zero_share": 0.08491071428571428,
         "raw_full_share": 0.39357142857142857
@@ -388,7 +391,7 @@
           "q90": 15.990000000000002,
           "raw_zero_share": 0.01,
           "raw_full_share": 0.08,
-          "wasserstein_vs_human": 3.4191071428571425
+          "wasserstein_vs_human": 3.4977845528455287
         }
       },
       "trajectory": {
@@ -618,7 +621,7 @@
           "q90": 14.81,
           "raw_zero_share": 0.02,
           "raw_full_share": 0.0125,
-          "wasserstein_vs_human": 5.358596654275092
+          "wasserstein_vs_human": 5.358596654275093
         },
         "P": {
           "n_units": 40,
@@ -629,7 +632,7 @@
           "q90": 11.8,
           "raw_zero_share": 0.035,
           "raw_full_share": 0.0125,
-          "wasserstein_vs_human": 5.039821428571429
+          "wasserstein_vs_human": 4.995888501742161
         }
       },
       "trajectory": {
@@ -859,7 +862,7 @@
           "q90": 13.42,
           "raw_zero_share": 0.0475,
           "raw_full_share": 0.06,
-          "wasserstein_vs_human": 3.1841263940520443
+          "wasserstein_vs_human": 3.1841263940520452
         },
         "P": {
           "n_units": 40,
@@ -870,7 +873,7 @@
           "q90": 13.42,
           "raw_zero_share": 0.055,
           "raw_full_share": 0.0825,
-          "wasserstein_vs_human": 4.328035714285715
+          "wasserstein_vs_human": 4.311123693379791
         }
       },
       "trajectory": {
