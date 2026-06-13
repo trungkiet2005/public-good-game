@@ -366,7 +366,7 @@ def load_model(model_cfg):
         conn.init_local_llm(model_cfg["path"], engine="vllm", force=True,
                             max_model_len=max_model_len, temperature=temperature,
                             max_tokens=max_tokens, gpu_memory_utilization=GPU_UTIL,
-                            tensor_parallel_size=TP_SIZE)
+                            tensor_parallel_size=TP_SIZE, seed=SEED)
     else:
         conn.init_local_llm(model_cfg["path"], engine="transformers", force=True,
                             temperature=temperature, max_tokens=max_tokens)

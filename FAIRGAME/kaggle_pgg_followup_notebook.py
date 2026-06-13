@@ -19,6 +19,10 @@ trước các câu hỏi reviewer Q1:
                       Muscat+ar, Chengdu+cn, Boston/Nottingham/Melbourne+en):
                       label văn hóa có mạnh hơn khi prompt cùng ngôn ngữ không?
                       So với cell cùng thành phố bằng tiếng Anh từ run gốc.
+  5. SEED_BASELINE   — baseline {N,P} trên 3 engine seeds độc lập × 10 group,
+                      thay vì xem 30 group từ một sampling stream là robustness.
+  6. SOCIETY_HIGHN   — treatment P × 16 neutral city labels × 20 group/city,
+                      tăng power cho geography nhưng vẫn giữ số group cân bằng.
 
 YÊU CẦU: repo Code input là bản ĐÃ CÓ commit follow-up (pgg_prompt.py có
 NORM_PERSONAS_EN + society "norm:<City>"). Cell 3 tự kiểm tra.
@@ -87,15 +91,25 @@ MODELS_SMALL = [
 ]
 
 # --- BẬT/TẮT từng thí nghiệm -------------------------------------------------- #
-RUN_BIG_BASELINE = True     # 1. model lớn × {N,P} baseline n=N_GROUPS_BIG
-RUN_SMALL_HIGHN = True      # 2. model nhỏ × {N,P} baseline n=N_GROUPS_HIGHN
-RUN_NORM_PERSONA = True     # 3. model nhỏ × {N,P} × 8 norm personas × N_GROUPS_NORM
-RUN_CONGRUENT_LANG = True   # 4. model nhỏ × P × 6 cell city×native-language × N_GROUPS_CONG
+RUN_BIG_BASELINE = False    # session riêng khi model lớn đã upload đủ
+RUN_SMALL_HIGHN = False     # n=30 một stream; dùng RUN_SEED_BASELINE tốt hơn
+RUN_NORM_PERSONA = False    # positive-control session riêng
+RUN_CONGRUENT_LANG = False  # positive-control session riêng
+RUN_SEED_BASELINE = True    # 5. model nhỏ × 3 engine seeds × {N,P} × 10 group
+RUN_SOCIETY_HIGHN = True    # 6. model nhỏ × P × 16 city labels × 20 group
+
+# Recommended sessions:
+#   confirmatory: SEED_BASELINE + SOCIETY_HIGHN (defaults above)
+#   positive controls: turn those off, turn NORM_PERSONA + CONGRUENT_LANG on
+#   scale check: run BIG_BASELINE alone
 
 N_GROUPS_BIG = 30
 N_GROUPS_HIGHN = 30
 N_GROUPS_NORM = 10
 N_GROUPS_CONG = 10
+N_GROUPS_PER_SEED = 10
+N_GROUPS_SOCIETY = 20
+ENGINE_SEEDS = [20080307, 20080411, 20080523]
 
 # 8 persona norm-laden (positive control) — khớp NORM_PERSONAS_EN trong pgg_prompt.py
 NORM_SOCIETIES = ["norm:Boston", "norm:Copenhagen", "norm:St.Gallen", "norm:Zurich",
@@ -365,6 +379,27 @@ def build_congruent_games(n_groups):
                                  neutral, city, ct, pt, params))
     return games
 
+
+def build_society_games(n_groups, treatments=("P",)):
+    """Balanced neutral-label city cells for cross-societal alignment.
+
+    Equal group counts prevent a city's simulation precision from depending on
+    the unequal human pool sizes. Human pool size can be used later as an
+    analysis weight without changing the LLM design.
+    """
+    games = []
+    societies = load_config("P")["societies"]
+    for tr in treatments:
+        cfg = load_config(tr)
+        params = params_from_config(cfg)
+        neutral = cfg["personalityConditions"]["neutral"]
+        ct, pt = templates_contrib["en"], templates_punish["en"]
+        for city in societies:
+            for k in range(n_groups):
+                games.append(PGGGame(f"{tr}_en_soc20-{city}_{k}", "en", "neutral",
+                                     neutral, city, ct, pt, params))
+    return games
+
 # =====================================================================
 # CELL 5: Kế hoạch chạy
 # =====================================================================
@@ -373,7 +408,7 @@ ENGINE_JOBS = []
 
 if RUN_BIG_BASELINE:
     for m in MODELS_BIG:
-        ENGINE_JOBS.append({"model": m, "blocks": [
+        ENGINE_JOBS.append({"model": m, "engine_seed": SEED, "blocks": [
             ("big", lambda: build_baseline_games(N_GROUPS_BIG, "big"))]})
 
 for m in MODELS_SMALL:
@@ -384,8 +419,25 @@ for m in MODELS_SMALL:
         blocks.append(("norm", lambda: build_norm_games(N_GROUPS_NORM)))
     if RUN_CONGRUENT_LANG:
         blocks.append(("cong", lambda: build_congruent_games(N_GROUPS_CONG)))
+    if RUN_SOCIETY_HIGHN:
+        blocks.append(("soc20", lambda: build_society_games(N_GROUPS_SOCIETY)))
+    if RUN_SEED_BASELINE and SEED in ENGINE_SEEDS:
+        tag = f"seed{SEED}"
+        blocks.append((tag, lambda n=N_GROUPS_PER_SEED, t=tag:
+                       build_baseline_games(n, t)))
     if blocks:
-        ENGINE_JOBS.append({"model": m, "blocks": blocks})
+        ENGINE_JOBS.append({"model": m, "engine_seed": SEED, "blocks": blocks})
+    if RUN_SEED_BASELINE:
+        for engine_seed in ENGINE_SEEDS:
+            if engine_seed == SEED:
+                continue
+            tag = f"seed{engine_seed}"
+            ENGINE_JOBS.append({
+                "model": m,
+                "engine_seed": engine_seed,
+                "blocks": [(tag, lambda n=N_GROUPS_PER_SEED, t=tag:
+                             build_baseline_games(n, t))],
+            })
 
 
 def _count(builder):
@@ -400,7 +452,7 @@ for j in ENGINE_JOBS:
 # =====================================================================
 # CELL 6: Runner
 # =====================================================================
-def load_model(model_cfg):
+def load_model(model_cfg, engine_seed):
     engine = model_cfg.get("engine", DEFAULT_ENGINE)
     print(f"🚀 Loading {model_cfg['short_name']} ({engine}) ← {model_cfg['path']}")
     if engine == "vllm":
@@ -409,7 +461,7 @@ def load_model(model_cfg):
                             temperature=model_cfg.get("temperature", TEMPERATURE),
                             max_tokens=model_cfg.get("max_tokens", MAX_TOKENS),
                             gpu_memory_utilization=model_cfg.get("gpu_util", GPU_UTIL),
-                            tensor_parallel_size=TP_SIZE)
+                            tensor_parallel_size=TP_SIZE, seed=engine_seed)
     else:
         conn.init_local_llm(model_cfg["path"], engine="transformers", force=True,
                             temperature=model_cfg.get("temperature", TEMPERATURE),
@@ -433,7 +485,7 @@ def smoke_test(model_cfg):
     print("🧪 Parsed punishment:", parse_punishment(presp[0], probe.n_players - 1, probe.max_punish))
 
 
-def save_block(model_cfg, tag, results):
+def save_block(model_cfg, tag, results, engine_seed):
     short = model_cfg["short_name"]
     run_dir = OUTPUT_DIR / f"{short}__{tag}"
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -441,11 +493,22 @@ def save_block(model_cfg, tag, results):
         r["model"] = short
         r["model_path"] = model_cfg["path"]
         r["run_tag"] = tag
+        r["engine_seed"] = engine_seed
+        r["temperature"] = model_cfg.get("temperature", TEMPERATURE)
     (run_dir / "pgg_results.json").write_text(
         json.dumps(results, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
     df = pgg_results.to_dataframe(results)
     df.insert(0, "model", short)
     df.insert(1, "run_tag", tag)
+    df.insert(2, "engine_seed", engine_seed)
+    df.insert(3, "temperature", model_cfg.get("temperature", TEMPERATURE))
+    df["replicate_id"] = df["game_id"].str.extract(r"_(\d+)$").astype(int)
+    # Audit/cell-matching identifier only. N and P remain independent simulated
+    # groups; this must not be treated as a paired-human-subject identifier.
+    df["replicate_cell_id"] = (short + "|" + tag + "|" +
+                               df["language"].astype(str) + "|" +
+                               df["society"].astype(str) + "|" +
+                               df["replicate_id"].astype(str))
     df.to_csv(run_dir / "pgg_all_games.csv", index=False)
     return df
 
@@ -463,16 +526,17 @@ def quick_table(short, tag, results):
               f"{sum(vals) / len(vals):5.2f}  (n={len(vals)})")
 
 
-all_dfs, manifest = [], {"seed": SEED, "jobs": []}
+all_dfs, manifest = [], {"runner_seed": SEED, "engine_seeds": ENGINE_SEEDS, "jobs": []}
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 for job in ENGINE_JOBS:
     m = job["model"]
+    engine_seed = job.get("engine_seed", SEED)
     if not Path(m["path"]).exists():
         print(f"⏭️  BỎ QUA {m['short_name']}: path không tồn tại.")
         manifest["jobs"].append({"model": m["short_name"], "status": "skipped"})
         continue
-    load_model(m)
+    load_model(m, engine_seed)
     if SMOKE_TEST:
         smoke_test(m)
     for tag, builder in job["blocks"]:
@@ -486,10 +550,12 @@ for job in ENGINE_JOBS:
             games, responder, rng=random.Random(SEED),
             max_parse_retries=MAX_PARSE_RETRIES,
             progress=lambda d, t: print(f"   [{m['short_name']}|{tag}] period {d}/{t}"))
-        df = save_block(m, tag, results)
+        df = save_block(m, tag, results, engine_seed)
         quick_table(m["short_name"], tag, results)
         all_dfs.append(df)
         manifest["jobs"].append({"model": m["short_name"], "tag": tag,
+                                 "engine_seed": engine_seed,
+                                 "temperature": m.get("temperature", TEMPERATURE),
                                  "n_games": int(len(df)), "status": "done"})
     conn.free_local_llm()
 
