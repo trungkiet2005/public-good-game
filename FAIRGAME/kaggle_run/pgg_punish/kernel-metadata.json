@@ -1,0 +1,22 @@
+{
+  "id": "trungkiet/small-publicgoodgame",
+  "title": "FAIRGAME PGG Punishment (offline GPU)",
+  "code_file": "kaggle_pgg_punish_notebook.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "false",
+  "dataset_sources": [
+    "foundnotkiet/llama-3-1-8b",
+    "trungkiet/vllm-wheels"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "trungkiet/git-public-good-game"
+  ],
+  "model_sources": [
+    "google/gemma-2/transformers/gemma-2-9b-it/2"
+  ]
+}
