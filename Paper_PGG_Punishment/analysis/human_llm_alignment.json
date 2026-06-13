@@ -1,0 +1,1020 @@
+{
+  "notes": {
+    "country": "Country is derived metadata; the source CSV identifies city pools only.",
+    "units": "Punishment means include zero assignments and are per punisher-target opportunity.",
+    "independence": "Human regression clusters by matching group; LLM regressions use HC1 with n=10 games."
+  },
+  "countries": {
+    "Boston": "United States",
+    "Melbourne": "Australia",
+    "Nottingham": "United Kingdom",
+    "St.Gallen": "Switzerland",
+    "Zurich": "Switzerland",
+    "Copenhagen": "Denmark",
+    "Bonn": "Germany",
+    "Seoul": "South Korea",
+    "Chengdu": "China",
+    "Minsk": "Belarus",
+    "Samara": "Russia",
+    "Dnipropetrovsk": "Ukraine",
+    "Istanbul": "Turkey",
+    "Athens": "Greece",
+    "Riyadh": "Saudi Arabia",
+    "Muscat": "Oman"
+  },
+  "human": {
+    "conditional_punishment": {
+      "[-20,-11]": {
+        "mean": 2.3258954785672343,
+        "n": 1703,
+        "total": 3961.0
+      },
+      "[-10,-1]": {
+        "mean": 0.9276132930513595,
+        "n": 8275,
+        "total": 7676.0
+      },
+      "[0]": {
+        "mean": 0.19722955145118734,
+        "n": 13644,
+        "total": 2691.0
+      },
+      "[1,10]": {
+        "mean": 0.45148036253776436,
+        "n": 8275,
+        "total": 3736.0
+      },
+      "[11,20]": {
+        "mean": 0.6723429242513213,
+        "n": 1703,
+        "total": 1145.0
+      }
+    },
+    "mechanism_regression": {
+      "n": 280,
+      "r2": 0.6181981597810116,
+      "coefficients": {
+        "const": {
+          "b": 5.0914042192137465,
+          "se": 0.6751321145623811,
+          "p": 4.651485975874224e-14
+        },
+        "c1": {
+          "b": 0.7714657895400098,
+          "se": 0.04673559221984939,
+          "p": 3.2656805347481616e-61
+        },
+        "prosocial": {
+          "b": 0.5481318165198613,
+          "se": 0.184410358714243,
+          "p": 0.002955312122207692
+        },
+        "antisocial": {
+          "b": -2.2538994675474995,
+          "se": 0.34719595674047005,
+          "p": 8.486100931401644e-11
+        }
+      }
+    },
+    "reaction": {
+      "n": 10080,
+      "slope": 0.3308192284177529,
+      "se": 0.022250354907952293,
+      "p": 5.31443993212225e-50,
+      "adjusted_slope": 0.14077598443450662,
+      "adjusted_se": 0.022996216057388788,
+      "adjusted_p": 9.258098607104945e-10,
+      "mean_delta_by_received": {
+        "0": -0.470825302260382,
+        "1-3": 0.6005917159763313,
+        "4-6": 1.6197975253093364,
+        "7+": 2.732051282051282
+      }
+    },
+    "city": [
+      {
+        "city": "Athens",
+        "country": "Greece",
+        "contribution": 5.702272727272727,
+        "anti_mean_per_opportunity": 1.01840490797546,
+        "anti_share": 0.6207928197456993,
+        "civic": 7.462086999999999,
+        "ruleoflaw": 0.7075652000000001
+      },
+      {
+        "city": "Bonn",
+        "country": "Germany",
+        "contribution": 14.486666666666666,
+        "anti_mean_per_opportunity": 0.12781350482315113,
+        "anti_share": 0.2268188302425107,
+        "civic": 8.885947,
+        "ruleoflaw": 1.7305920000000004
+      },
+      {
+        "city": "Boston",
+        "country": "United States",
+        "contribution": 17.980357142857144,
+        "anti_mean_per_opportunity": 0.08122503328894808,
+        "anti_share": 0.3027295285359802,
+        "civic": 8.653322000000001,
+        "ruleoflaw": 1.53994
+      },
+      {
+        "city": "Chengdu",
+        "country": "China",
+        "contribution": 13.876041666666667,
+        "anti_mean_per_opportunity": 0.15041242115477924,
+        "anti_share": 0.2857142857142857,
+        "civic": 9.337529000000002,
+        "ruleoflaw": -0.40965160000000006
+      },
+      {
+        "city": "Copenhagen",
+        "country": "Denmark",
+        "contribution": 17.748529411764707,
+        "anti_mean_per_opportunity": 0.10611111111111111,
+        "anti_share": 0.3701550387596899,
+        "civic": 9.274885000000001,
+        "ruleoflaw": 1.9443629999999994
+      },
+      {
+        "city": "Dnipropetrovsk",
+        "country": "Ukraine",
+        "contribution": 10.879545454545454,
+        "anti_mean_per_opportunity": 0.358695652173913,
+        "anti_share": 0.33597285067873306,
+        "civic": 7.610876,
+        "ruleoflaw": -0.7445152000000003
+      },
+      {
+        "city": "Istanbul",
+        "country": "Turkey",
+        "contribution": 7.1265625,
+        "anti_mean_per_opportunity": 0.36729857819905215,
+        "anti_share": 0.369340746624305,
+        "civic": 9.790349,
+        "ruleoflaw": 0.017654800000000002
+      },
+      {
+        "city": "Melbourne",
+        "country": "Australia",
+        "contribution": 14.1225,
+        "anti_mean_per_opportunity": 0.20046893317702227,
+        "anti_share": 0.31433823529411764,
+        "civic": 9.018102,
+        "ruleoflaw": 1.7942700000000007
+      },
+      {
+        "city": "Minsk",
+        "country": "Belarus",
+        "contribution": 12.923529411764706,
+        "anti_mean_per_opportunity": 0.47336834208552137,
+        "anti_share": 0.45265423242467717,
+        "civic": 6.909045000000003,
+        "ruleoflaw": -1.2328340000000004
+      },
+      {
+        "city": "Muscat",
+        "country": "Oman",
+        "contribution": 9.898076923076923,
+        "anti_mean_per_opportunity": 1.1989071038251367,
+        "anti_share": 0.5226298237255836,
+        "civic": NaN,
+        "ruleoflaw": 0.7511266
+      },
+      {
+        "city": "Nottingham",
+        "country": "United Kingdom",
+        "contribution": 15.014285714285714,
+        "anti_mean_per_opportunity": 0.10080645161290322,
+        "anti_share": 0.17985611510791366,
+        "civic": 8.652624000000001,
+        "ruleoflaw": 1.7194360000000002
+      },
+      {
+        "city": "Riyadh",
+        "country": "Saudi Arabia",
+        "contribution": 6.914583333333334,
+        "anti_mean_per_opportunity": 0.6674786845310596,
+        "anti_share": 0.4160971905846621,
+        "civic": 8.315913999999998,
+        "ruleoflaw": 0.22096730000000003
+      },
+      {
+        "city": "Samara",
+        "country": "Russia",
+        "contribution": 11.724342105263158,
+        "anti_mean_per_opportunity": 0.6005716327259736,
+        "anti_share": 0.44577035269159376,
+        "civic": 8.050114000000002,
+        "ruleoflaw": -0.8842833
+      },
+      {
+        "city": "Seoul",
+        "country": "South Korea",
+        "contribution": 14.651190476190477,
+        "anti_mean_per_opportunity": 0.18166758696852567,
+        "anti_share": 0.3181818181818182,
+        "civic": 8.831525999999998,
+        "ruleoflaw": 0.7274449
+      },
+      {
+        "city": "St.Gallen",
+        "country": "Switzerland",
+        "contribution": 16.733333333333334,
+        "anti_mean_per_opportunity": 0.1503267973856209,
+        "anti_share": 0.3102517985611511,
+        "civic": 8.582848999999998,
+        "ruleoflaw": 1.9633280000000004
+      },
+      {
+        "city": "Zurich",
+        "country": "Switzerland",
+        "contribution": 16.151086956521738,
+        "anti_mean_per_opportunity": 0.13290828837665522,
+        "anti_share": 0.2561436672967864,
+        "civic": 8.582848999999996,
+        "ruleoflaw": 1.963328
+      }
+    ],
+    "city_correlations": {
+      "contribution_vs_civic": 0.3428571428571428,
+      "contribution_vs_ruleoflaw": 0.6647058823529411,
+      "anti_mean_vs_civic": -0.48214285714285704,
+      "anti_mean_vs_ruleoflaw": -0.5823529411764706
+    },
+    "distribution": {
+      "N": {
+        "n_units": 1076,
+        "mean": 8.785780669144982,
+        "sd": 5.212868910082977,
+        "q10": 2.5,
+        "median": 8.3,
+        "q90": 16.55,
+        "raw_zero_share": 0.24126394052044609,
+        "raw_full_share": 0.18364312267657992
+      },
+      "P": {
+        "n_units": 1120,
+        "mean": 13.247321428571428,
+        "sd": 5.889265007395497,
+        "q10": 4.2,
+        "median": 14.55,
+        "q90": 20.0,
+        "raw_zero_share": 0.08491071428571428,
+        "raw_full_share": 0.39357142857142857
+      }
+    },
+    "trajectory": {
+      "N": [
+        10.817843866171003,
+        10.871747211895912,
+        10.764869888475836,
+        10.198884758364311,
+        9.66263940520446,
+        8.766728624535316,
+        8.097583643122677,
+        7.601301115241636,
+        6.66635687732342,
+        4.409851301115242
+      ],
+      "P": [
+        11.019642857142857,
+        12.32767857142857,
+        13.014285714285714,
+        13.315178571428572,
+        13.598214285714286,
+        13.871428571428572,
+        13.971428571428572,
+        14.057142857142857,
+        14.039285714285715,
+        13.258928571428571
+      ]
+    }
+  },
+  "models": {
+    "qwen25-7b-instruct": {
+      "conditional_punishment": {
+        "[-20,-11]": {
+          "mean": 2.7777777777777777,
+          "n": 27,
+          "total": 75.0
+        },
+        "[-10,-1]": {
+          "mean": 2.4212860310421287,
+          "n": 451,
+          "total": 1092.0
+        },
+        "[0]": {
+          "mean": 2.290983606557377,
+          "n": 244,
+          "total": 559.0
+        },
+        "[1,10]": {
+          "mean": 2.401330376940133,
+          "n": 451,
+          "total": 1083.0
+        },
+        "[11,20]": {
+          "mean": 2.1481481481481484,
+          "n": 27,
+          "total": 58.0
+        }
+      },
+      "conditional_alignment": {
+        "rmse": 1.5999361263110687,
+        "pearson": 0.8629469093266132,
+        "spearman": 0.7
+      },
+      "mechanism_regression": {
+        "n": 10,
+        "r2": 0.5612027538934319,
+        "coefficients": {
+          "const": {
+            "b": 10.635809145438131,
+            "se": 1.7444612735142715,
+            "p": 1.0814387992920525e-09
+          },
+          "c1": {
+            "b": 0.35775346905445493,
+            "se": 0.08554877058387679,
+            "p": 2.891267492949094e-05
+          },
+          "prosocial": {
+            "b": -0.35913562707155133,
+            "se": 1.1156885046228824,
+            "p": 0.7475315106195626
+          },
+          "antisocial": {
+            "b": 0.3435237127671691,
+            "se": 1.4872583904331915,
+            "p": 0.8173320269778226
+          }
+        }
+      },
+      "reaction": {
+        "n": 360,
+        "slope": -0.040215655380130125,
+        "se": 0.093376650786177,
+        "p": 0.6666995099711062,
+        "adjusted_slope": 0.016002325699572537,
+        "adjusted_se": 0.0645783709003466,
+        "adjusted_p": 0.8042914866866859,
+        "mean_delta_by_received": {
+          "0": 9.0,
+          "1-3": 0.975,
+          "4-6": 0.7398373983739838,
+          "7+": 0.10714285714285714
+        }
+      },
+      "distribution": {
+        "N": {
+          "n_units": 40,
+          "mean": 14.26,
+          "sd": 1.6376656306916617,
+          "q10": 12.1,
+          "median": 14.350000000000001,
+          "q90": 16.3,
+          "raw_zero_share": 0.0,
+          "raw_full_share": 0.08,
+          "wasserstein_vs_human": 5.729907063197026
+        },
+        "P": {
+          "n_units": 40,
+          "mean": 13.902499999999998,
+          "sd": 1.9565127926216859,
+          "q10": 11.39,
+          "median": 13.8,
+          "q90": 15.990000000000002,
+          "raw_zero_share": 0.01,
+          "raw_full_share": 0.08,
+          "wasserstein_vs_human": 3.4191071428571425
+        }
+      },
+      "trajectory": {
+        "N": {
+          "means": [
+            9.15,
+            12.875,
+            14.625,
+            14.65,
+            15.05,
+            14.95,
+            14.95,
+            15.375,
+            15.575,
+            15.4
+          ],
+          "rmse_vs_human": 6.452112447391856,
+          "pearson_vs_human": -0.5603772727144807
+        },
+        "P": {
+          "means": [
+            10.425,
+            12.7,
+            13.525,
+            14.325,
+            14.825,
+            14.25,
+            14.45,
+            14.35,
+            15.75,
+            14.425
+          ],
+          "rmse_vs_human": 0.8956658501087444,
+          "pearson_vs_human": 0.9406679153270179
+        }
+      },
+      "city": [
+        {
+          "city": "Athens",
+          "contribution": 13.6325,
+          "anti_mean_per_opportunity": 2.2085106382978723,
+          "anti_share": 0.5954110898661568
+        },
+        {
+          "city": "Bonn",
+          "contribution": 13.3025,
+          "anti_mean_per_opportunity": 2.374468085106383,
+          "anti_share": 0.5955176093916755
+        },
+        {
+          "city": "Boston",
+          "contribution": 14.3525,
+          "anti_mean_per_opportunity": 2.2153846153846155,
+          "anti_share": 0.5793708851499634
+        },
+        {
+          "city": "Chengdu",
+          "contribution": 13.7475,
+          "anti_mean_per_opportunity": 2.2651413189771197,
+          "anti_share": 0.6231025546094039
+        },
+        {
+          "city": "Copenhagen",
+          "contribution": 13.6275,
+          "anti_mean_per_opportunity": 2.060224089635854,
+          "anti_share": 0.5841938046068308
+        },
+        {
+          "city": "Dnipropetrovsk",
+          "contribution": 13.99,
+          "anti_mean_per_opportunity": 2.173130193905817,
+          "anti_share": 0.5970319634703196
+        },
+        {
+          "city": "Istanbul",
+          "contribution": 13.365,
+          "anti_mean_per_opportunity": 2.132596685082873,
+          "anti_share": 0.6107594936708861
+        },
+        {
+          "city": "Melbourne",
+          "contribution": 14.18,
+          "anti_mean_per_opportunity": 2.2243502051983586,
+          "anti_share": 0.6210847975553858
+        },
+        {
+          "city": "Minsk",
+          "contribution": 13.345,
+          "anti_mean_per_opportunity": 2.378415300546448,
+          "anti_share": 0.616283185840708
+        },
+        {
+          "city": "Muscat",
+          "contribution": 13.8475,
+          "anti_mean_per_opportunity": 2.1530898876404496,
+          "anti_share": 0.5809018567639257
+        },
+        {
+          "city": "Nottingham",
+          "contribution": 13.6075,
+          "anti_mean_per_opportunity": 2.2907303370786516,
+          "anti_share": 0.603850425768234
+        },
+        {
+          "city": "Riyadh",
+          "contribution": 13.31,
+          "anti_mean_per_opportunity": 2.022346368715084,
+          "anti_share": 0.5775827682489031
+        },
+        {
+          "city": "Samara",
+          "contribution": 13.065,
+          "anti_mean_per_opportunity": 2.252387448840382,
+          "anti_share": 0.587753648985404
+        },
+        {
+          "city": "Seoul",
+          "contribution": 13.6325,
+          "anti_mean_per_opportunity": 2.3146853146853146,
+          "anti_share": 0.6066715542521994
+        },
+        {
+          "city": "St.Gallen",
+          "contribution": 13.68,
+          "anti_mean_per_opportunity": 2.4973045822102424,
+          "anti_share": 0.6378657487091222
+        },
+        {
+          "city": "Zurich",
+          "contribution": 14.05,
+          "anti_mean_per_opportunity": 2.189944134078212,
+          "anti_share": 0.586606808829031
+        }
+      ],
+      "city_alignment": {
+        "n_cities": 16,
+        "contribution_llm_vs_human": 0.32965424671494575,
+        "anti_mean_llm_vs_human": -0.28823529411764703,
+        "anti_share_llm_vs_human": -0.26176470588235295,
+        "llm_contribution_vs_civic": 0.15013410820738635,
+        "llm_contribution_vs_ruleoflaw": 0.3664460153215245,
+        "llm_anti_mean_vs_civic": -0.08928571428571427,
+        "llm_anti_mean_vs_ruleoflaw": 0.055882352941176466
+      }
+    },
+    "gemma2-9b-it": {
+      "conditional_punishment": {
+        "[-20,-11]": {
+          "mean": 3.7058823529411766,
+          "n": 17,
+          "total": 63.0
+        },
+        "[-10,-1]": {
+          "mean": 2.4516129032258065,
+          "n": 434,
+          "total": 1064.0
+        },
+        "[0]": {
+          "mean": 1.4026845637583893,
+          "n": 298,
+          "total": 418.0
+        },
+        "[1,10]": {
+          "mean": 2.1705069124423964,
+          "n": 434,
+          "total": 942.0
+        },
+        "[11,20]": {
+          "mean": 2.0588235294117645,
+          "n": 17,
+          "total": 35.0
+        }
+      },
+      "conditional_alignment": {
+        "rmse": 1.4530960821443208,
+        "pearson": 0.9741698728516958,
+        "spearman": 0.8999999999999998
+      },
+      "mechanism_regression": {
+        "n": 10,
+        "r2": 0.5506829340530341,
+        "coefficients": {
+          "const": {
+            "b": 12.564268049037494,
+            "se": 3.4105825179572697,
+            "p": 0.00022968627283097246
+          },
+          "c1": {
+            "b": 0.2912006935818209,
+            "se": 0.26856057016455853,
+            "p": 0.2782310339756723
+          },
+          "prosocial": {
+            "b": -1.2118496540492538,
+            "se": 0.7539120367143051,
+            "p": 0.10796332176759711
+          },
+          "antisocial": {
+            "b": -0.35712650453253847,
+            "se": 1.3181185901176729,
+            "p": 0.7864398324472794
+          }
+        }
+      },
+      "reaction": {
+        "n": 360,
+        "slope": -0.08069531360932142,
+        "se": 0.08557353886948434,
+        "p": 0.34568409207060824,
+        "adjusted_slope": -0.07926248103409518,
+        "adjusted_se": 0.059441867980889476,
+        "adjusted_p": 0.1823857063086043,
+        "mean_delta_by_received": {
+          "0": 3.2857142857142856,
+          "1-3": 1.3222222222222222,
+          "4-6": -0.3137254901960784,
+          "7+": -0.045454545454545456
+        }
+      },
+      "distribution": {
+        "N": {
+          "n_units": 40,
+          "mean": 13.407499999999999,
+          "sd": 1.3240163257185429,
+          "q10": 11.790000000000001,
+          "median": 13.600000000000001,
+          "q90": 14.81,
+          "raw_zero_share": 0.02,
+          "raw_full_share": 0.0125,
+          "wasserstein_vs_human": 5.358596654275092
+        },
+        "P": {
+          "n_units": 40,
+          "mean": 9.86,
+          "sd": 1.457746768484033,
+          "q10": 7.99,
+          "median": 9.850000000000001,
+          "q90": 11.8,
+          "raw_zero_share": 0.035,
+          "raw_full_share": 0.0125,
+          "wasserstein_vs_human": 5.039821428571429
+        }
+      },
+      "trajectory": {
+        "N": {
+          "means": [
+            5.55,
+            9.325,
+            12.225,
+            14.2,
+            15.2,
+            15.65,
+            15.425,
+            14.725,
+            16.1,
+            15.675
+          ],
+          "rmse_vs_human": 6.6832672420166395,
+          "pearson_vs_human": -0.648381745619311
+        },
+        "P": {
+          "means": [
+            5.2,
+            9.275,
+            11.025,
+            11.375,
+            10.4,
+            10.95,
+            10.975,
+            10.5,
+            10.55,
+            8.35
+          ],
+          "rmse_vs_human": 3.5717853170039917,
+          "pearson_vs_human": 0.8377406486378255
+        }
+      },
+      "city": [
+        {
+          "city": "Athens",
+          "contribution": 9.3575,
+          "anti_mean_per_opportunity": 2.1630434782608696,
+          "anti_share": 0.5631411390166254
+        },
+        {
+          "city": "Bonn",
+          "contribution": 9.9675,
+          "anti_mean_per_opportunity": 1.7379032258064515,
+          "anti_share": 0.5428211586901763
+        },
+        {
+          "city": "Boston",
+          "contribution": 9.7025,
+          "anti_mean_per_opportunity": 1.956578947368421,
+          "anti_share": 0.5741312741312742
+        },
+        {
+          "city": "Chengdu",
+          "contribution": 8.94,
+          "anti_mean_per_opportunity": 1.841823056300268,
+          "anti_share": 0.5441584158415842
+        },
+        {
+          "city": "Copenhagen",
+          "contribution": 9.0475,
+          "anti_mean_per_opportunity": 1.8972972972972972,
+          "anti_share": 0.5899159663865546
+        },
+        {
+          "city": "Dnipropetrovsk",
+          "contribution": 9.87,
+          "anti_mean_per_opportunity": 1.9547872340425532,
+          "anti_share": 0.5608546356352537
+        },
+        {
+          "city": "Istanbul",
+          "contribution": 9.765,
+          "anti_mean_per_opportunity": 1.6111111111111112,
+          "anti_share": 0.5461883408071749
+        },
+        {
+          "city": "Melbourne",
+          "contribution": 9.73,
+          "anti_mean_per_opportunity": 1.918732782369146,
+          "anti_share": 0.539922480620155
+        },
+        {
+          "city": "Minsk",
+          "contribution": 9.7,
+          "anti_mean_per_opportunity": 2.124331550802139,
+          "anti_share": 0.5820512820512821
+        },
+        {
+          "city": "Muscat",
+          "contribution": 9.4225,
+          "anti_mean_per_opportunity": 1.9918809201623815,
+          "anti_share": 0.5637686710072769
+        },
+        {
+          "city": "Nottingham",
+          "contribution": 9.4875,
+          "anti_mean_per_opportunity": 1.9331550802139037,
+          "anti_share": 0.5540229885057472
+        },
+        {
+          "city": "Riyadh",
+          "contribution": 9.455,
+          "anti_mean_per_opportunity": 2.0205198358413132,
+          "anti_share": 0.5452196382428941
+        },
+        {
+          "city": "Samara",
+          "contribution": 9.8075,
+          "anti_mean_per_opportunity": 2.025537634408602,
+          "anti_share": 0.5882123341139734
+        },
+        {
+          "city": "Seoul",
+          "contribution": 9.575,
+          "anti_mean_per_opportunity": 1.806711409395973,
+          "anti_share": 0.5592023265475696
+        },
+        {
+          "city": "St.Gallen",
+          "contribution": 9.7775,
+          "anti_mean_per_opportunity": 1.936339522546419,
+          "anti_share": 0.5476369092273068
+        },
+        {
+          "city": "Zurich",
+          "contribution": 9.495,
+          "anti_mean_per_opportunity": 1.9581151832460733,
+          "anti_share": 0.5931800158604282
+        }
+      ],
+      "city_alignment": {
+        "n_cities": 16,
+        "contribution_llm_vs_human": 0.06176470588235294,
+        "anti_mean_llm_vs_human": 0.5205882352941177,
+        "anti_share_llm_vs_human": 0.3382352941176471,
+        "llm_contribution_vs_civic": -0.11071428571428568,
+        "llm_contribution_vs_ruleoflaw": -0.049999999999999996,
+        "llm_anti_mean_vs_civic": -0.8892857142857141,
+        "llm_anti_mean_vs_ruleoflaw": -0.29705882352941176
+      }
+    },
+    "llama-3-1-8b": {
+      "conditional_punishment": {
+        "[-20,-11]": {
+          "mean": 2.8363636363636364,
+          "n": 110,
+          "total": 312.0
+        },
+        "[-10,-1]": {
+          "mean": 2.8615023474178405,
+          "n": 426,
+          "total": 1219.0
+        },
+        "[0]": {
+          "mean": 2.6015625,
+          "n": 128,
+          "total": 333.0
+        },
+        "[1,10]": {
+          "mean": 2.7816901408450705,
+          "n": 426,
+          "total": 1185.0
+        },
+        "[11,20]": {
+          "mean": 2.5272727272727273,
+          "n": 110,
+          "total": 278.0
+        }
+      },
+      "conditional_alignment": {
+        "rmse": 1.9314224668495485,
+        "pearson": 0.5425641569662853,
+        "spearman": 0.6
+      },
+      "mechanism_regression": {
+        "n": 10,
+        "r2": 0.3162600486483452,
+        "coefficients": {
+          "const": {
+            "b": 8.381508911990512,
+            "se": 1.4263606874931265,
+            "p": 4.199186426390715e-09
+          },
+          "c1": {
+            "b": 0.2579630223967553,
+            "se": 0.14245972250600417,
+            "p": 0.07017512421229914
+          },
+          "prosocial": {
+            "b": 0.19872025162215934,
+            "se": 0.4798370341322268,
+            "p": 0.6787707523955493
+          },
+          "antisocial": {
+            "b": 0.012988106441579994,
+            "se": 0.6838244076134327,
+            "p": 0.9848464219005261
+          }
+        }
+      },
+      "reaction": {
+        "n": 360,
+        "slope": 0.001895080171195964,
+        "se": 0.0790568137001902,
+        "p": 0.9808756469725682,
+        "adjusted_slope": -0.001940185353264727,
+        "adjusted_se": 0.05630995561539088,
+        "adjusted_p": 0.9725139600039452,
+        "mean_delta_by_received": {
+          "0": 2.857142857142857,
+          "1-3": 1.2641509433962264,
+          "4-6": -0.05970149253731343,
+          "7+": 0.34513274336283184
+        }
+      },
+      "distribution": {
+        "N": {
+          "n_units": 40,
+          "mean": 10.67,
+          "sd": 2.0737925124311216,
+          "q10": 7.99,
+          "median": 10.4,
+          "q90": 13.42,
+          "raw_zero_share": 0.0475,
+          "raw_full_share": 0.06,
+          "wasserstein_vs_human": 3.1841263940520443
+        },
+        "P": {
+          "n_units": 40,
+          "mean": 10.752500000000001,
+          "sd": 1.8966890855328629,
+          "q10": 8.56,
+          "median": 10.7,
+          "q90": 13.42,
+          "raw_zero_share": 0.055,
+          "raw_full_share": 0.0825,
+          "wasserstein_vs_human": 4.328035714285715
+        }
+      },
+      "trajectory": {
+        "N": {
+          "means": [
+            8.525,
+            10.15,
+            10.875,
+            10.225,
+            11.1,
+            10.275,
+            11.55,
+            11.5,
+            10.975,
+            11.525
+          ],
+          "rmse_vs_human": 3.262522474442506,
+          "pearson_vs_human": -0.6344921612313429
+        },
+        "P": {
+          "means": [
+            8.025,
+            10.95,
+            10.0,
+            10.55,
+            10.825,
+            10.8,
+            11.4,
+            11.375,
+            11.05,
+            12.55
+          ],
+          "rmse_vs_human": 2.607047179017374,
+          "pearson_vs_human": 0.7338918157408736
+        }
+      },
+      "city": [
+        {
+          "city": "Athens",
+          "contribution": 10.5375,
+          "anti_mean_per_opportunity": 2.768875192604006,
+          "anti_share": 0.5279083431257344
+        },
+        {
+          "city": "Bonn",
+          "contribution": 10.3675,
+          "anti_mean_per_opportunity": 2.754276827371695,
+          "anti_share": 0.5258313539192399
+        },
+        {
+          "city": "Boston",
+          "contribution": 10.1525,
+          "anti_mean_per_opportunity": 2.8946540880503147,
+          "anti_share": 0.5414705882352941
+        },
+        {
+          "city": "Chengdu",
+          "contribution": 10.6075,
+          "anti_mean_per_opportunity": 3.060185185185185,
+          "anti_share": 0.5300721732157178
+        },
+        {
+          "city": "Copenhagen",
+          "contribution": 10.16,
+          "anti_mean_per_opportunity": 3.044753086419753,
+          "anti_share": 0.5371630819493602
+        },
+        {
+          "city": "Dnipropetrovsk",
+          "contribution": 10.3,
+          "anti_mean_per_opportunity": 2.970633693972179,
+          "anti_share": 0.5530935251798561
+        },
+        {
+          "city": "Istanbul",
+          "contribution": 10.0725,
+          "anti_mean_per_opportunity": 2.9604863221884496,
+          "anti_share": 0.5538811487062838
+        },
+        {
+          "city": "Melbourne",
+          "contribution": 10.3275,
+          "anti_mean_per_opportunity": 2.8996913580246915,
+          "anti_share": 0.5418108419838523
+        },
+        {
+          "city": "Minsk",
+          "contribution": 10.405,
+          "anti_mean_per_opportunity": 2.932411674347158,
+          "anti_share": 0.5417139614074915
+        },
+        {
+          "city": "Muscat",
+          "contribution": 10.6325,
+          "anti_mean_per_opportunity": 3.026771653543307,
+          "anti_share": 0.5203031943692474
+        },
+        {
+          "city": "Nottingham",
+          "contribution": 10.68,
+          "anti_mean_per_opportunity": 2.9104938271604937,
+          "anti_share": 0.5373219373219373
+        },
+        {
+          "city": "Riyadh",
+          "contribution": 10.125,
+          "anti_mean_per_opportunity": 2.935185185185185,
+          "anti_share": 0.5301003344481605
+        },
+        {
+          "city": "Samara",
+          "contribution": 10.0125,
+          "anti_mean_per_opportunity": 2.879815100154083,
+          "anti_share": 0.5287128712871287
+        },
+        {
+          "city": "Seoul",
+          "contribution": 10.9575,
+          "anti_mean_per_opportunity": 3.0424886191198786,
+          "anti_share": 0.5794797687861272
+        },
+        {
+          "city": "St.Gallen",
+          "contribution": 10.6075,
+          "anti_mean_per_opportunity": 3.0489296636085625,
+          "anti_share": 0.5769675925925926
+        },
+        {
+          "city": "Zurich",
+          "contribution": 10.3975,
+          "anti_mean_per_opportunity": 2.78125,
+          "anti_share": 0.5313432835820896
+        }
+      ],
+      "city_alignment": {
+        "n_cities": 16,
+        "contribution_llm_vs_human": 0.17365714782305175,
+        "anti_mean_llm_vs_human": 0.0,
+        "anti_share_llm_vs_human": -0.18823529411764706,
+        "llm_contribution_vs_civic": -0.033958905427861195,
+        "llm_contribution_vs_ruleoflaw": 0.23546731908210405,
+        "llm_anti_mean_vs_civic": 0.33928571428571425,
+        "llm_anti_mean_vs_ruleoflaw": -0.044117647058823525
+      }
+    }
+  }
+}
