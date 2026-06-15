@@ -121,138 +121,6 @@
 
 \begin{document}
 
-%% ================= TITLE =================
-\begin{frame}[plain,noframenumbering]
-  \begin{tikzpicture}[remember picture,overlay]
-    \fill[primary] (current page.south west) rectangle (current page.north east);
-    \fill[primaryDark] ([yshift=-1.35cm]current page.north west) rectangle (current page.north east);
-    \fill[amber] ([yshift=-1.40cm]current page.north west) rectangle ([yshift=-1.47cm]current page.north east);
-  \end{tikzpicture}
-
-  \vspace{0.32cm}
-  \centering{\color{amber}\bfseries Báo cáo tiến độ \;·\; 2 papers đồng hành}
-
-  \vfill
-  \begin{center}
-    {\color{white}\fontsize{27}{32}\selectfont\bfseries LLM agents có phải là\\[3pt] ``silicon samples'' hợp lệ?}\\[0.55em]
-    {\color{white!80!primary}\Large cho hành vi hợp tác của con người}\\[0.95em]
-    {\color{amber}\rule{4.5cm}{1.4pt}}\\[0.95em]
-    {\color{white!85!primary} Hai thí nghiệm hợp tác kinh điển}\\[5pt]
-    {\color{white}\large rủi ro khí hậu\, {\footnotesize(Milinski 2008)} \;\textcolor{amber}{\textbullet}\; trừng phạt public-goods\, {\footnotesize(Herrmann 2008)}}
-  \end{center}
-  \vfill
-
-  {\color{white!70!primary}\small Nghiên cứu sinh — Game Theory \quad·\quad FAIRGAME \quad·\quad \today}
-  \vspace{0.5cm}
-\end{frame}
-
-%% ================= OUTLINE =================
-\begin{frame}{Nội dung báo cáo}
-  \vspace{0.2cm}
-  \begin{columns}[T]
-    \begin{column}{0.52\textwidth}
-      \begin{enumerate}
-        \item \hl{Bối cảnh \& câu hỏi chung} — LLM làm ``silicon samples'' \& tiêu chí \emph{behavioural validity}
-        \item \pA{Paper A — Collective-risk climate dilemma} (rủi ro thảm họa)
-        \item \pB{Paper B — Public-goods game với trừng phạt} (antisocial punishment)
-        \item \hl{Tổng hợp \& Kết luận} — một tiêu chí, hai dissociation
-      \end{enumerate}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-      \begin{block}{Thông điệp một câu}
-        Cả 2 paper cho cùng kết luận: LLM agents tái tạo \hlg{bề mặt} của hợp tác, nhưng \hlr{đánh mất cấu trúc chẩn đoán} làm nên ý nghĩa khoa học của thí nghiệm.
-      \end{block}
-      \vspace{0.2cm}
-      {\footnotesize\color{mute}Hai paper đồng hành (companion), dùng chung framework, model và tiêu chí đánh giá.}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-%% ================= SECTION 1 =================
-\section{Bối cảnh \& Câu hỏi chung}
-
-\begin{frame}{LLM làm ``silicon samples'' thay người}
-  \begin{columns}[T]
-    \begin{column}{0.58\textwidth}
-      \begin{itemize}
-        \item LLM ngày càng được dùng làm \hl{người chơi nhân tạo} trong economic games (``homo silicus'', ``generative agents'').
-        \item Hứa hẹn: \hl{rẻ, nhanh, mở rộng được} — pilot cho thiết kế thí nghiệm, mô phỏng dân số khó tuyển.
-        \item Có báo cáo: phản hồi LLM vượt qua ``Turing test hành vi''.
-      \end{itemize}
-      \vspace{0.2cm}
-      \begin{block}{Tiền đề then chốt: \emph{behavioural validity}}
-        LLM chỉ hữu ích nếu tái tạo \hlr{cách hành vi người \emph{phản ứng}} với đòn bẩy thí nghiệm — không chỉ mức trung bình.
-      \end{block}
-    \end{column}
-    \begin{column}{0.42\textwidth}
-      \centering
-      \begin{tikzpicture}[every node/.style={font=\small}]
-        \node[draw=primary,very thick,rounded corners,fill=lightbg,minimum width=2.6cm,minimum height=1cm,align=center] (h) at (0,2) {\bfseries Con người\\ \footnotesize phản ứng với\\ \footnotesize biến thí nghiệm};
-        \node[draw=accent,very thick,rounded corners,fill=lightbg,minimum width=2.6cm,minimum height=1cm,align=center] (l) at (0,0) {\bfseries LLM agent\\ \footnotesize có tái tạo\\ \footnotesize phản ứng đó?};
-        \draw[-{Latex[length=3mm]},very thick,primary] (h) -- (l) node[midway,right=2mm,align=left,text=mute]{\footnotesize comparative\\ \footnotesize statics?};
-      \end{tikzpicture}\\[0.3cm]
-      {\scriptsize\color{mute}Argyle 2023; Horton 2023; Park 2023; Aher 2023; Mei 2024}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{Tiêu chí hợp lệ: phản ứng, không phải mức trung bình}
-  \begin{block}{Luận điểm thống nhất của 2 paper}
-    \centering
-    Một surrogate hợp lệ phải tái tạo \hlr{phản ứng với biến thao tác / cấu trúc quan hệ} — \emph{không phải} \emph{mức} hành vi trung bình mà nó thể hiện.
-  \end{block}
-  \vspace{0.2cm}
-  \begin{columns}[T]
-    \begin{column}{0.5\textwidth}
-      \centering\pA{Paper A — CRSD (Climate)}\\[0.3em]
-      \begin{itemize}\small
-        \item Biến chẩn đoán: \pA{loss probability $p$}.
-        \item Test: hợp tác có \emph{giảm} khi rủi ro giảm như ở người không?
-      \end{itemize}
-    \end{column}
-    \begin{column}{0.5\textwidth}
-      \centering\pB{Paper B — PGG (Punishment)}\\[0.3em]
-      \begin{itemize}\small
-        \item 2 chữ ký chẩn đoán:
-        \begin{itemize}
-          \item \pB{trừng phạt có nâng hợp tác?}
-          \item \pB{cấu trúc xuyên văn hóa} của antisocial punishment.
-        \end{itemize}
-      \end{itemize}
-    \end{column}
-  \end{columns}
-  \vspace{0.15cm}
-  {\footnotesize\color{mute}Cùng kiểm chứng một câu hỏi: LLM có \emph{cơ chế} của con người, hay chỉ \emph{bề mặt}?}
-\end{frame}
-
-\begin{frame}{Phương pháp chung (cả 2 paper)}
-  \begin{columns}[T]
-    \begin{column}{0.55\textwidth}
-      \begin{itemize}
-        \item Mỗi agent nhận 1 prompt: \hl{luật chơi + lịch sử + disposition/society}, rồi xuất dòng quyết định parse được (\texttt{CONTRIBUTION = X}\,\ldots).
-        \item Quyết định thu theo \hl{lô đồng bộ} mỗi vòng $\Rightarrow$ thật sự đồng thời.
-        \item \hl{3 open models} (vLLM, \emph{temp} 0.8, seed cố định, offline RTX PRO 6000):
-        \begin{itemize}
-          \item Qwen2.5-7B · Gemma-2-9B · Llama-3.1-8B
-        \end{itemize}
-        \item \hl{Replication trung thành} các thí nghiệm người kinh điển.
-      \end{itemize}
-    \end{column}
-    \begin{column}{0.45\textwidth}
-      \begin{block}{Thiết kế giai thừa}
-        \begin{itemize}\setlength\itemsep{1pt}
-          \item \hl{5 ngôn ngữ}: EN · FR · AR · ZH · VI
-          \item \hl{4 disposition}: neutral, cooperative, selfish, \pA{risk-averse}/\pB{vengeful}
-          \item \hl{10 nhóm độc lập / điều kiện}
-          \item Paper B: $+$\pB{16 society personas} (TP của Herrmann)
-        \end{itemize}
-      \end{block}
-      \vspace{0.05cm}
-      {\footnotesize\color{mute}Framework: \hl{FAIRGAME}. Benchmark người: Milinski 2008 \& Herrmann 2008.}
-    \end{column}
-  \end{columns}
-\end{frame}
-
 %% ================= SECTION 2 : PAPER A =================
 \section{Paper A — Collective-risk climate dilemma}
 
@@ -330,11 +198,11 @@
   {\footnotesize\color{mute}ANOVA $F$: \hl{13.78} (người) vs \hl{1.76 / 2.23 / 3.64} \;\textbullet\; TOST $p\le.014$ \;\textbullet\; $\mathrm{BF}_{01}$ 4.8 / 3.0 (Llama equivocal)}
 \end{frame}
 
-\begin{frame}{\pA{A3} — Hợp tác là ``núm vặn'', bất biến ngôn ngữ}
+\begin{frame}{\pA{A3} — Hợp tác do disposition chi phối, bất biến qua ngôn ngữ}
   \centering
   \includegraphics[width=0.84\textwidth]{fig2_moderators.pdf}\\[0.45em]
   {\small\textbf{\textcolor{accent}{Đổi 1 câu disposition: selfish $\to$ 0\% thành công. Nội dung bất biến qua 5 ngôn ngữ.}}}\\[0.3em]
-  {\footnotesize\color{mute}Selfish 0\% (Qwen,Gemma) / 27\% (Llama) \;\textbullet\; risk-averse 73--93\% \;\textbullet\; parse-fallback Gemma/AR 13.7\%, Llama/VI 14.8\% (EN $\approx$0\%)}
+  {\footnotesize\color{mute}Selfish 0\% (Qwen,Gemma) / 27\% (Llama) \;\textbullet\; risk-averse 73--93\% \;\textbullet\; \hl{5 ngôn ngữ đều $>$\eur120}; ô thấp nhất khác nhau theo model (Qwen/VI \eur140 · Gemma/AR \eur145 · Llama/ZH \eur141) $\Rightarrow$ ``yếu'' đặc thù-model, không phải thứ bậc ngôn ngữ}
 \end{frame}
 
 \begin{frame}{\pA{Paper A} — Tóm tắt}
@@ -452,85 +320,6 @@
     \centering
     ``Cooperation is \hlg{real as output}, \hlr{absent as mechanism}.'' — bề mặt giống người \emph{không} bảo chứng cho cơ chế giống người.
   \end{block}
-\end{frame}
-
-\begin{frame}{Tiêu chí ``behavioural validity'' (đóng góp lý thuyết)}
-  \begin{columns}[T]
-    \begin{column}{0.55\textwidth}
-      \begin{itemize}
-        \item Test một ``silicon subject'' \hlr{không phải} bằng \emph{mức} hành vi trung bình\ldots
-        \item \ldots mà bằng \hl{phản ứng với biến thao tác} \& \hl{cấu trúc quan hệ/điều kiện}.
-        \item Nghiên cứu chỉ đọc \emph{marginals} sẽ kết luận \hlr{sai} rằng agent ``tái tạo'' được kết quả người.
-        \item Hành vi bị chi phối bởi \hl{prompt} (model được bảo \emph{là ai}), không phải \hl{incentive} của game.
-      \end{itemize}
-    \end{column}
-    \begin{column}{0.45\textwidth}
-      \begin{block}{Hệ quả}
-        \begin{itemize}\small
-          \item \hl{Computational social science}: validate trên chữ ký chẩn đoán, không phải vẻ ngoài hợp lý.
-          \item \hl{Multi-agent LLM systems}: thể chế trừng phạt của con người \hlr{không tự động chuyển giao}.
-          \item Dùng agent mô phỏng đàm phán/chính sách $\to$ dễ \hlr{dự báo sai} comparative statics.
-        \end{itemize}
-      \end{block}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{Hạn chế (chung cho cả 2 paper)}
-  \begin{itemize}
-    \item \hl{Phạm vi model}: 3 open model 7--9B, 1 temperature $\Rightarrow$ chưa kết luận cho model lớn/frontier.
-    \item \hl{Confound thiết kế}: CRSD không hiển thị tổng tích lũy (self-summation); PGG so sánh between-group còn người là within-subject.
-    \item \hl{Cross-language confound}: parse-fallback không đồng đều (PGG: Gemma/AR tới 31--43\%) $\Rightarrow$ một số ô mẫu nhỏ hơn.
-    \item \hl{Persona tối giản} (PGG): chỉ nhãn thành phố, chưa test persona giàu chuẩn mực.
-    \item \hl{Prompt-sensitive} \& \hl{alignment training}: nhiều khả năng thổi phồng hợp tác và làm phẳng trừng phạt.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Kết luận}
-  \begin{columns}[T]
-    \begin{column}{0.6\textwidth}
-      \begin{itemize}
-        \item Hai thí nghiệm hợp tác kinh điển, cùng một kết luận: open LLM agents tái tạo \hlg{bề mặt} nhưng \hlr{mất cấu trúc chẩn đoán}.
-        \item \pA{CRSD}: hợp tác cao nhưng \hlr{vô cảm với rủi ro thảm họa}.
-        \item \pB{PGG}: trừng phạt tồn tại (đa phần antisocial) nhưng \hlr{không nâng hợp tác, không cấu trúc văn hóa}.
-        \item Test validity đúng $=$ \hl{phản ứng với manipulation}; trên đó, agent \hlr{chưa thay thế được con người}.
-      \end{itemize}
-    \end{column}
-    \begin{column}{0.4\textwidth}
-      \begin{block}{Hướng tiếp theo}
-        \begin{itemize}\small
-          \item Model frontier: chữ ký chẩn đoán có hồi phục theo scale?
-          \item Persona giàu chuẩn mực; cho phép giao tiếp \& reciprocity.
-          \item Tách risk-response khỏi running-total (CRSD).
-          \item Agent huấn luyện bằng RL trong chính game.
-        \end{itemize}
-      \end{block}
-    \end{column}
-  \end{columns}
-  \vfill
-  \begin{center}
-    \colorbox{primary}{\color{white}\bfseries\ \ Cảm ơn Thầy — rất mong nhận góp ý!\ \ }
-  \end{center}
-\end{frame}
-
-%% ================= APPENDIX =================
-\begin{frame}[noframenumbering]{Phụ lục — Human vs LLM: căn chỉnh trực tiếp (PGG)}
-  \begin{columns}[T]
-    \begin{column}{0.6\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{fig_alignment_posthoc.pdf}
-    \end{column}
-    \begin{column}{0.4\textwidth}
-      \footnotesize
-      4 góc nhìn so sánh người (đen) vs 3 model:
-      \begin{itemize}
-        \item \textbf{Conditional punishment}: chỉ Gemma bám hình dạng người.
-        \item \textbf{Contribution trajectories}: model giữ/giảm, không có cú nâng nhờ punishment.
-        \item \textbf{City alignment}: điểm model nằm lệch khỏi đường chéo (không khớp người).
-        \item \textbf{Next-period reaction}: phản ứng với điểm bị phạt khác người.
-      \end{itemize}
-    \end{column}
-  \end{columns}
 \end{frame}
 
 \end{document}

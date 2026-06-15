@@ -278,12 +278,12 @@ def make_figures(pgg):
     for xx, yy, nm in zip(cs["antisocial_total"], cs["mean_contribution"], cs["societies"]):
         ax.annotate(nm, (xx, yy), fontsize=5.5, xytext=(2, 2), textcoords="offset points")
     ax.set_xlabel("Antisocial punishment (total pts)"); ax.set_ylabel("Mean contribution (of 20)")
-    ax.set_title(f"(a) rho={cs['spearman_antisocial_vs_coop']:+.2f} (human −0.90)")
+    ax.set_title(rf"(a) $\rho={cs['spearman_antisocial_vs_coop']:+.2f}$ (human $-0.90$)")
     ax = axes[1]
     valid = [(c, h) for c, h in zip(cs["mean_contribution"], cs["human_contribution"]) if h == h]
     ax.scatter([h for _, h in valid], [c for c, _ in valid], color="#DD8452", s=18)
     ax.set_xlabel("Human contribution, Herrmann (of 20)"); ax.set_ylabel("LLM contribution (of 20)")
-    ax.set_title(f"(b) rank rho={cs['spearman_llm_vs_human_rank']:+.2f}")
+    ax.set_title(rf"(b) rank $\rho={cs['spearman_llm_vs_human_rank']:+.2f}$")
     fig.tight_layout(); save(fig, "fig2_cross")
     print("figures ->", FIGDIR)
 
