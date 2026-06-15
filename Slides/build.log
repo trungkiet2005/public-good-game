@@ -1,0 +1,230 @@
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(LLM_Cooperation_Talk.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-04-28>
+(D:\Application\MiKTeX\tex/latex/beamer\beamer.cls
+Document Class: beamer 2025/08/13 v3.76 A class for typesetting presentations
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasemodes.sty
+(D:\Application\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasedecode.sty))
+(D:\Application\MiKTeX\tex/generic/iftex\iftex.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbaseoptions.sty
+(D:\Application\MiKTeX\tex/latex/graphics\keyval.sty))
+(D:\Application\MiKTeX\tex/latex/geometry\geometry.sty
+(D:\Application\MiKTeX\tex/generic/iftex\ifvtex.sty)
+(D:\Application\MiKTeX\tex/latex/geometry\geometry.cfg))
+(D:\Application\MiKTeX\tex/latex/pgf/math\pgfmath.sty
+(D:\Application\MiKTeX\tex/latex/pgf/utilities\pgfrcs.sty
+(D:\Application\MiKTeX\tex/generic/pgf/utilities\pgfutil-common.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/utilities\pgfutil-latex.def)
+(D:\Application\MiKTeX\tex/generic/pgf/utilities\pgfrcs.code.tex
+(D:\Application\MiKTeX\tex/generic/pgf\pgf.revision.tex)))
+(D:\Application\MiKTeX\tex/latex/pgf/utilities\pgfkeys.sty
+(D:\Application\MiKTeX\tex/generic/pgf/utilities\pgfkeys.code.tex
+(D:\Application\MiKTeX\tex/generic/pgf/utilities\pgfkeyslibraryfiltered.code.te
+x))) (D:\Application\MiKTeX\tex/generic/pgf/math\pgfmath.code.tex
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathutil.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathparser.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.basic.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.trigonometric.code
+.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.random.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.comparison.code.te
+x) (D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.base.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.round.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.misc.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.integerarithmetics
+.code.tex) (D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathcalc.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfmathfloat.code.tex)))
+(D:\Application\MiKTeX\tex/latex/base\size11.clo)
+(D:\Application\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.sty
+(D:\Application\MiKTeX\tex/latex/graphics\graphicx.sty
+(D:\Application\MiKTeX\tex/latex/graphics\graphics.sty
+(D:\Application\MiKTeX\tex/latex/graphics\trig.sty)
+(D:\Application\MiKTeX\tex/latex/graphics-cfg\graphics.cfg)
+(D:\Application\MiKTeX\tex/latex/graphics-def\xetex.def)))
+(D:\Application\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.sty
+(D:\Application\MiKTeX\tex/generic/pgf/systemlayer\pgfsys.code.tex
+(D:\Application\MiKTeX\tex/generic/pgf/systemlayer\pgf.cfg)
+(D:\Application\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-xetex.def
+(D:\Application\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-dvipdfmx.def
+(D:\Application\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-common-pdf.def))))
+(D:\Application\MiKTeX\tex/generic/pgf/systemlayer\pgfsyssoftpath.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/systemlayer\pgfsysprotocol.code.tex))
+(D:\Application\MiKTeX\tex/latex/xcolor\xcolor.sty
+(D:\Application\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+(D:\Application\MiKTeX\tex/latex/graphics\mathcolor.ltx))
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcore.code.tex
+(D:\Application\MiKTeX\tex/generic/pgf/math\pgfint.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepoints.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathconstruct.code.tex
+) (D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathusage.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcorescopes.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcoregraphicstate.code.tex)
+
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransformations.code.t
+ex) (D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcorequick.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreobjects.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathprocessing.code.te
+x) (D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcorearrows.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreshade.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreimage.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreexternal.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcorelayers.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransparency.code.tex)
+ (D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepatterns.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/basiclayer\pgfcorerdf.code.tex)))
+(D:\Application\MiKTeX\tex/latex/pgf/utilities\xxcolor.sty)
+(D:\Application\MiKTeX\tex/latex/base\atbegshi-ltx.sty)
+(D:\Application\MiKTeX\tex/latex/hyperref\hyperref.sty
+(D:\Application\MiKTeX\tex/generic/infwarerr\infwarerr.sty)
+(D:\Application\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty)
+(D:\Application\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty)
+(D:\Application\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+(D:\Application\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+(D:\Application\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty))
+(D:\Application\MiKTeX\tex/latex/hycolor\hycolor.sty)
+(D:\Application\MiKTeX\tex/latex/letltxmacro\letltxmacro.sty)
+(D:\Application\MiKTeX\tex/latex/auxhook\auxhook.sty)
+(D:\Application\MiKTeX\tex/latex/hyperref\nameref.sty
+(D:\Application\MiKTeX\tex/latex/refcount\refcount.sty)
+(D:\Application\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
+(D:\Application\MiKTeX\tex/latex/kvoptions\kvoptions.sty))
+
+Package nameref Warning: The definition of \label has changed! 
+(nameref)                Check your packages! 
+(nameref)                Replacing it with the kernel definition on input line 
+149.
+
+) (D:\Application\MiKTeX\tex/latex/hyperref\pd1enc.def)
+(D:\Application\MiKTeX\tex/generic/intcalc\intcalc.sty)
+(D:\Application\MiKTeX\tex/latex/hyperref\puenc.def)
+(D:\Application\MiKTeX\tex/latex/url\url.sty)
+(D:\Application\MiKTeX\tex/generic/bitset\bitset.sty
+(D:\Application\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty))
+
+Package hyperref Message: Stopped early.
+
+) (D:\Application\MiKTeX\tex/latex/hyperref\hxetex.def
+(D:\Application\MiKTeX\tex/generic/stringenc\stringenc.sty)
+(D:\Application\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
+(D:\Application\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty)))
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbaserequires.sty
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasecompatibility.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasefont.sty
+(D:\Application\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(D:\Application\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+(D:\Application\MiKTeX\tex/latex/sansmathaccent\sansmathaccent.sty
+(D:\Application\MiKTeX\tex/latex/koma-script\scrlfile.sty
+(D:\Application\MiKTeX\tex/latex/koma-script\scrlfile-hook.sty
+(D:\Application\MiKTeX\tex/latex/koma-script\scrlogo.sty)))))
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasetranslator.sty
+(D:\Application\MiKTeX\tex/latex/translator\translator.sty))
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasemisc.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasetwoscreens.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbaseoverlay.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasetitle.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasesection.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbaseframe.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbaseverbatim.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbaseframesize.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbaseframecomponents.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasecolor.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasenotes.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasetoc.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasetemplates.sty
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbaseauxtemplates.sty
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbaseboxes.sty)))
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbaselocalstructure.sty
+(D:\Application\MiKTeX\tex/latex/tools\enumerate.sty))
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasenavigation.sty
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasenavigationsymbols.tex))
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasetheorems.sty
+(D:\Application\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(D:\Application\MiKTeX\tex/latex/amsmath\amstext.sty
+(D:\Application\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(D:\Application\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(D:\Application\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(D:\Application\MiKTeX\tex/latex/amscls\amsthm.sty))
+(D:\Application\MiKTeX\tex/latex/beamer\beamerbasethemes.sty))
+(D:\Application\MiKTeX\tex/latex/beamer\beamerthemedefault.sty
+(D:\Application\MiKTeX\tex/latex/beamer\beamerfontthemedefault.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamercolorthemedefault.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerinnerthemedefault.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerouterthemedefault.sty)))
+(D:\Application\MiKTeX\tex/latex/fontspec\fontspec.sty
+(D:\Application\MiKTeX\tex/latex/l3packages/xparse\xparse.sty
+(D:\Application\MiKTeX\tex/latex/l3kernel\expl3.sty
+(D:\Application\MiKTeX\tex/latex/l3backend\l3backend-xetex.def)))
+(D:\Application\MiKTeX\tex/latex/fontspec\fontspec-xetex.sty
+(D:\Application\MiKTeX\tex/latex/base\fontenc.sty)
+(D:\Application\MiKTeX\tex/latex/fontspec\fontspec.cfg)))
+(D:\Application\MiKTeX\tex/latex/booktabs\booktabs.sty)
+(D:\Application\MiKTeX\tex/latex/colortbl\colortbl.sty
+(D:\Application\MiKTeX\tex/latex/tools\array.sty)
+new hooks used!!
+) (D:\Application\MiKTeX\tex/latex/pgf/frontendlayer\tikz.sty
+(D:\Application\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
+(D:\Application\MiKTeX\tex/generic/pgf/modules\pgfmoduleshapes.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/modules\pgfmoduleplot.code.tex)
+(D:\Application\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-0-65.sty)
+(D:\Application\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-1-18.sty))
+(D:\Application\MiKTeX\tex/latex/pgf/utilities\pgffor.sty
+(D:\Application\MiKTeX\tex/generic/pgf/utilities\pgffor.code.tex))
+(D:\Application\MiKTeX\tex/generic/pgf/frontendlayer/tikz\tikz.code.tex
+(D:\Application\MiKTeX\tex/generic/pgf/libraries\pgflibraryplothandlers.code.te
+x) (D:\Application\MiKTeX\tex/generic/pgf/modules\pgfmodulematrix.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrary
+topaths.code.tex)))
+(D:\Application\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrary
+positioning.code.tex)
+(D:\Application\MiKTeX\tex/generic/pgf/libraries\pgflibraryarrows.meta.code.tex
+) (D:\Application\MiKTeX\tex/latex/ragged2e\ragged2e.sty)
+(D:\Application\MiKTeX\tex/latex/beamer\beamerfontthemeprofessionalfonts.sty)
+(LLM_Cooperation_Talk.aux)
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
+(LLM_Cooperation_Talk.out) (LLM_Cooperation_Talk.out)
+(D:\Application\MiKTeX\tex/latex/translator\translator-basic-dictionary-English
+.dict)
+(D:\Application\MiKTeX\tex/latex/translator\translator-bibliography-dictionary-
+English.dict)
+(D:\Application\MiKTeX\tex/latex/translator\translator-environment-dictionary-E
+nglish.dict)
+(D:\Application\MiKTeX\tex/latex/translator\translator-months-dictionary-Englis
+h.dict)
+(D:\Application\MiKTeX\tex/latex/translator\translator-numbers-dictionary-Engli
+sh.dict)
+(D:\Application\MiKTeX\tex/latex/translator\translator-theorem-dictionary-Engli
+sh.dict) (LLM_Cooperation_Talk.nav)
+[1] (D:\Application\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(D:\Application\MiKTeX\tex/latex/amsfonts\umsb.fd)
+Overfull \hbox (19.30495pt too wide) in paragraph at lines 160--160
+ [][] 
+
+[2]
+[3]
+[4]
+[5]
+[6]
+[7]
+[8]
+[9]
+Overfull \vbox (4.99268pt too high) detected at line 272
+
+[10]
+[11]
+Overfull \hbox (4.13216pt too wide) in paragraph at lines 295--295
+ [][] 
+
+Overfull \vbox (1.76016pt too high) detected at line 295
+
+[12]
+[13] (LLM_Cooperation_Talk.aux) )
+(see the transcript file for additional information)
+Output written on LLM_Cooperation_Talk.pdf (13 pages).
+Transcript written on LLM_Cooperation_Talk.log.

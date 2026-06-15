@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2026.6.10)  15 JUN 2026 18:31
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2026.6.10)  15 JUN 2026 18:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1108,10 +1108,6 @@ File: figures/fig1_risk.pdf Graphic file (type pdf)
 File: figures/fig2_moderators.pdf Graphic file (type pdf)
 <use figures/fig2_moderators.pdf>
 
-Overfull \vbox (18.34784pt too high) detected at line 206
- []
-
-
 
 [5
 
@@ -1128,47 +1124,43 @@ Overfull \vbox (18.34784pt too high) detected at line 206
 [8
 
 ]
-
-[9
-
-]
 File: figures/fig1_punishment.pdf Graphic file (type pdf)
 <use figures/fig1_punishment.pdf>
 
 
-[10
+[9
 
 ]
 File: figures/fig2_cross.pdf Graphic file (type pdf)
 <use figures/fig2_cross.pdf>
 
-Overfull \vbox (4.99268pt too high) detected at line 287
+Overfull \vbox (4.99268pt too high) detected at line 272
  []
 
 
 
+[10
+
+]
+
 [11
 
 ]
+Overfull \hbox (4.13216pt too wide) in paragraph at lines 295--295
+ [][] 
+ []
+
+
+Overfull \vbox (1.76016pt too high) detected at line 295
+ []
+
+
 
 [12
 
 ]
 
 [13
-
-]
-Overfull \hbox (4.13216pt too wide) in paragraph at lines 323--323
- [][] 
- []
-
-
-Overfull \vbox (1.76016pt too high) detected at line 323
- []
-
-
-
-[14
 
 ]
 \tf@nav=\write6
@@ -1190,11 +1182,11 @@ Package rerunfilecheck Info: File `LLM_Cooperation_Talk.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  27409 strings out of 402943
- 573951 string characters out of 5462413
+ 573976 string characters out of 5462413
  1022321 words of memory out of 5000000
  55621 multiletter control sequences out of 15000+600000
  633781 words of font info for 119 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  128i,15n,123p,435b,958s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on LLM_Cooperation_Talk.pdf (14 pages).
+Output written on LLM_Cooperation_Talk.pdf (13 pages).

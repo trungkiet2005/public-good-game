@@ -202,22 +202,7 @@
   \centering
   \includegraphics[width=0.84\textwidth]{fig2_moderators.pdf}\\[0.45em]
   {\small\textbf{\textcolor{accent}{Đổi 1 câu disposition: selfish $\to$ 0\% thành công. Nội dung bất biến qua 5 ngôn ngữ.}}}\\[0.3em]
-  {\footnotesize\color{mute}Selfish 0\% (Qwen,Gemma) / 27\% (Llama) \;\textbullet\; risk-averse 73--93\% \;\textbullet\; \hl{5 ngôn ngữ đều $>$\eur120}; ô thấp nhất khác nhau theo model (Qwen/VI \eur140 · Gemma/AR \eur145 · Llama/ZH \eur141) $\Rightarrow$ ``yếu'' đặc thù-model, không phải thứ bậc ngôn ngữ}
-\end{frame}
-
-\begin{frame}{\pA{Paper A} — Tóm tắt}
-  \begin{block}{Chân dung}
-    \centering\large
-    \pA{Risk-insensitive · prompt-steerable · over-cooperator}
-  \end{block}
-  \vspace{0.2cm}
-  \begin{itemize}
-    \item Tái tạo \hlg{bề mặt} của hành động khí hậu hợp tác (đạt target, chia sẻ gánh nặng)\ldots
-    \item \ldots nhưng \hlr{thiếu cơ chế} kết nối với rủi ro thảm họa — thứ tạo ra \& điều biến hành động đó ở người.
-    \item Manipulation làm thí nghiệm \emph{có ý nghĩa} lại gần như \hlr{không tác động} lên model.
-  \end{itemize}
-  \vspace{0.2cm}
-  {\footnotesize\color{mute}\textbf{Phản biện trước (self-summation):} agent không được xem tổng tích lũy, nhưng gánh nặng số học \emph{không đổi} giữa các mức risk $\Rightarrow$ không giải thích được vì sao hành vi không khác nhau \emph{giữa} các mức rủi ro.}
+  {\footnotesize\color{mute}Selfish 0\% (Qwen,Gemma) / 27\% (Llama) \;\textbullet\; risk-averse 73--93\% \;\textbullet\; \hl{5 ngôn ngữ đều $>$\eur120}}
 \end{frame}
 
 %% ================= SECTION 3 : PAPER B =================
@@ -286,19 +271,6 @@
   {\footnotesize\color{mute}$\rho=$ \hlr{$-0.09 / -0.15 / +0.30$} (người $-0.90$; Fisher-$z$ $p\le.0011$) \;\textbullet\; rank $\rho$ vs người $+0.33 / +0.06 / +0.17$}
 \end{frame}
 
-\begin{frame}{\pB{Paper B} — Tóm tắt}
-  \begin{block}{Dissociation}
-    \centering\large
-    Tái tạo \hlg{sự tồn tại} của (anti)social punishment\\ — nhưng \hlr{không} chức năng thể chế, \hlr{không} cấu trúc văn hóa
-  \end{block}
-  \vspace{0.2cm}
-  \begin{itemize}
-    \item Marginals trông ``giống người'' (kể cả antisocial punishment cao bất ngờ)\ldots
-    \item \ldots nhưng 2 thuộc tính \hl{quan hệ} làm nên giá trị khoa học đều biến mất: \hlr{trừng phạt $\to$ hợp tác}, và \hlr{biến thiên xuyên văn hóa}.
-    \item Trao quyền trừng phạt cho agent có thể thành \hlr{gánh nặng}, không phải lá chắn cho hợp tác.
-  \end{itemize}
-\end{frame}
-
 %% ================= SECTION 4 : SYNTHESIS =================
 \section{Tổng hợp \& Kết luận}
 
@@ -320,6 +292,20 @@
     \centering
     ``Cooperation is \hlg{real as output}, \hlr{absent as mechanism}.'' — bề mặt giống người \emph{không} bảo chứng cho cơ chế giống người.
   \end{block}
+\end{frame}
+
+%% ================= THANK YOU =================
+\begin{frame}[plain,noframenumbering]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[primary] (current page.south west) rectangle (current page.north east);
+    \fill[amber] ([yshift=-3.2cm]current page.west) rectangle ([yshift=-3.4cm]current page.east);
+  \end{tikzpicture}
+  \vfill
+  \begin{center}
+    {\color{white}\Huge\bfseries Cảm ơn}\\[0.6em]
+    {\color{white!75!primary}\large Câu hỏi \& thảo luận}
+  \end{center}
+  \vfill
 \end{frame}
 
 \end{document}
